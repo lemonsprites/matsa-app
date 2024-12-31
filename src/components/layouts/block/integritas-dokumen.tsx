@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/components/ui/card';
+import { Card, CardTitle, CardContent } from '@/components/ui/card';
 import { Download } from 'lucide-react';
 
 const IntegritasDokumen = () => {
