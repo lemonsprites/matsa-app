@@ -10,6 +10,7 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  base: "/", // Adjust this if your app is hosted under a subpath
   build: {
     outDir: 'dist', // Ensure this matches Vercel's build expectations
   },

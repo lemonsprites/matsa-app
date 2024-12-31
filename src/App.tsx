@@ -12,59 +12,44 @@ import { useState } from 'react';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import './App.css';
 
-
-
 function App() {
   const [suratList] = useState<Surat[]>([]);
 
-  // async function getData() {
-  //   const { data, error } = await supabase
-  //     .from('tb_surat')
-  //     .select('*'); // Select all columns
-
-  //   if (error) {
-  //     console.error('Error fetching data:', error);
-  //   } else {
-  //     setSuratList(data)
-  //   }
-  // }
-  // getData();
   return (
     <Router>
       <ZonaIntegritasPop />
       <Routes>
+        {/* Landing Layout */}
         <Route path="/" element={<LandingLayout />}>
           <Route index element={<LandingPage />} />
-          <Route path="/integritas" element={<ZonaIntegritas />}></Route>
+          <Route path="integritas" element={<ZonaIntegritas />} />
         </Route>
 
-        <Route path='admin' element={<AdminLayout />}>
+        {/* Admin Layout */}
+        <Route path="admin" element={<AdminLayout />}>
+          {/* Default Admin Dashboard */}
           <Route index element={<AdminDashboard />} />
-          <Route path='dashboard' element={<AdminDashboard />} />
 
           {/* Surat Menu */}
           <Route path="surat">
             <Route index element={<NaskahOverview suratList={suratList} />} />
             <Route path="overview" element={<NaskahOverview suratList={suratList} />} />
-            {/* <Route path="kodefikasi" element={<SuratKodefikasi />} /> */}
           </Route>
 
-
           {/* Pegawai Menu */}
-          <Route path='pegawai'>
-            <Route index element={<IntegritasIkhtisar />} />
-            <Route path='overview' element={<PegawaiOverview />} />
+          <Route path="pegawai">
+            <Route index element={<PegawaiOverview />} />
+            <Route path="overview" element={<PegawaiOverview />} />
           </Route>
 
           {/* Zona Integritas */}
-          <Route path='integritas'>
-            <Route path='ikhtisar' element={<IntegritasIkhtisar />} />
+          <Route path="integritas">
+            <Route path="ikhtisar" element={<IntegritasIkhtisar />} />
           </Route>
-
         </Route>
       </Routes>
     </Router>
-  )
+  );
 }
 
-export default App
+export default App;
