@@ -27,7 +27,7 @@ jobs:
       run: npm install
 
     - name: Auto-increment version
-      run: node src/lib/version-increment.cjs
+      run: node src/lib/version-utils.cjs
 
     - name: Generate and update changelog
       run: node src/lib/update-changelog.cjs
