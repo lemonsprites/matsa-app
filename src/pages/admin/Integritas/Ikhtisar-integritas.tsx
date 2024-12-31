@@ -1,16 +1,12 @@
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Table, TableBody, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import supabase from '@/lib/supabase';
-import { Surat } from '@/lib/type/surat-type';
 import React, { useState } from 'react';
 import { generateNomorSurat } from '@/lib/generateNumber';  // Assuming generateNomorSurat is in a separate file
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { CartesianGrid, Line, LineChart, XAxis } from 'recharts';
-import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import SimpleCard from '@/components/simple-card';
 
 const chartData: any[] = [
@@ -169,7 +165,6 @@ const IntegritasIkhtisar = () => {
     }
   };
 
-  const handleOpenDialog = () => setIsDialogOpen(true);
   const handleCloseDialog = () => {
     setIsDialogOpen(false);
   };
