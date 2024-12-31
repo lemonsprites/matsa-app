@@ -1,6 +1,6 @@
 // components/Layout.tsx
 import LandingFooter from "@/components/layouts/block/landing-footer";
-import Navbar from "@/components/Navbar";
+import Navbar from "@/components/layouts/landing-navbar";
 import React from "react";
 import { Outlet } from "react-router-dom";
 import { ScrollArea } from "@/components/ui/scroll-area"

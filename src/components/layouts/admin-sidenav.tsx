@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/sidebar"
 import { Link } from "react-router-dom"
 
-export function AdminNav({
+export function AdminSideNav({
   items,
 }: {
   items: {
@@ -35,7 +35,7 @@ export function AdminNav({
 }) {
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>Platform</SidebarGroupLabel>
+      <SidebarGroupLabel className="text-white">Main Menu</SidebarGroupLabel>
       <SidebarMenu>
         {items.map((item) => (
           <Collapsible
@@ -46,21 +46,23 @@ export function AdminNav({
           >
             <SidebarMenuItem>
               <CollapsibleTrigger asChild>
-                <SidebarMenuButton tooltip={item.title}>
-                  {item.icon && <item.icon />}
-                  <span>{item.title}</span>
-                  {item.items && item.items.length > 0 && (
-                    <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
-                  )}
-                </SidebarMenuButton>
+                <Link to={item.url} className="text-[#e1e0e0]">
+                  <SidebarMenuButton tooltip={item.title}>
+                    {item.icon && <item.icon />}
+                    <span>{item.title}</span>
+                    {item.items && item.items.length > 0 && (
+                      <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+                    )}
+                  </SidebarMenuButton>
+                </Link>
               </CollapsibleTrigger>
               {item.items && item.items.length > 0 && (
                 <CollapsibleContent>
                   <SidebarMenuSub>
                     {item.items.map((subItem) => (
-                      <SidebarMenuSubItem key={subItem.title}>
+                      <SidebarMenuSubItem key={subItem.title} >
                         <SidebarMenuSubButton asChild>
-                          <Link to={subItem.url}>
+                          <Link to={subItem.url} className="text-[#e1e0e0]">
                             <span>{subItem.title}</span>
                           </Link>
                         </SidebarMenuSubButton>

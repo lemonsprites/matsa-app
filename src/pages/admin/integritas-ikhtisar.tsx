@@ -1,9 +1,9 @@
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Table, TableBody, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import supabase from '@/lib/supabase';
+import supabase from '@/lib/supabase-client';
 import React, { useState } from 'react';
-import { generateNomorSurat } from '@/lib/generateNumber';  // Assuming generateNomorSurat is in a separate file
+import { generateNomorSurat } from '@/lib/generate-number';  // Assuming generateNomorSurat is in a separate file
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { CartesianGrid, Line, LineChart, XAxis } from 'recharts';

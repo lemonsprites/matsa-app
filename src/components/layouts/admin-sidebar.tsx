@@ -4,33 +4,59 @@ import {
     BookOpen,
     Feather,
     Frame,
+    LayoutGrid,
+    MailCheck,
     Map,
     PieChart,
     Settings2,
-    LayoutGrid,
-    ShieldCheck,
-    MailCheck
+    ShieldCheck
 } from "lucide-react"
 import * as React from "react"
+import logoMTs from "@/assets/img/logo.png";
 
 
-import { AdminNav } from "@/components/layouts/components/admin-nav"
+import { AdminSideNav } from "@/components/layouts/admin-sidenav"
+import { ScrollArea } from "@/components/ui/scroll-area"
 import {
     Sidebar,
     SidebarContent,
     SidebarHeader,
+    SidebarMenuButton,
     SidebarRail
 } from "@/components/ui/sidebar"
-import { ScrollArea } from "@/components/ui/scroll-area"
+import { Link } from "react-router-dom";
 
 // This is sample data.
 const data = {
     navMain: [
         {
             title: "Dashboard",
-            url: "#",
+            url: "/admin",
             icon: LayoutGrid,
             isActive: true
+        },
+        {
+            title: "Kepegawaian",
+            url: "#",
+            icon: LayoutGrid,
+            items: [
+                {
+                    title: "Overview Pegawai",
+                    url: 'pegawai/overview',
+                },
+                {
+                    title: "RUH Beban Kerja",
+                    url: 'pegawai/abk-ruh'
+                },
+                {
+                    title: "Monitoring Anjab",
+                    url: 'pegawai/anjab'
+                },
+                {
+                    title: "referensi",
+                    url: 'pegawai/ref'
+                }
+            ]
         },
         {
             title: "Surat/Naskah Dinas",
@@ -39,7 +65,7 @@ const data = {
             items: [
                 {
                     title: "Overview Naskah",
-                    url: 'surat/overview',
+                    url: 'surat',
                 },
                 {
                     title: "Referensi Kodefikasi",
@@ -173,15 +199,23 @@ const data = {
 
 export function AdminSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     return (
-        <Sidebar collapsible="icon" {...props}>
+        <Sidebar collapsible="icon" {...props} >
             <ScrollArea>
 
 
                 <SidebarHeader>
-                    <h1>Matsa Admin App</h1>
+                    <Link to="/admin" className="flex items-center bg-transparent">
+                        <SidebarMenuButton tooltip="Logo" className=" hover:bg-transparent active:bg-transparent active:text-inherit mt-3 hover:text-white">
+                            <img src={logoMTs} width={32} height={32}></img>
+                            <div className="pl-4">
+                                <h1 className="font-bold">MTSN 1 CIAMIS</h1>
+                                <small>Matsa Dashboard</small>
+                            </div>
+                        </SidebarMenuButton>
+                    </Link>
                 </SidebarHeader>
                 <SidebarContent>
-                    <AdminNav items={data.navMain} />
+                    <AdminSideNav items={data.navMain} />
                 </SidebarContent>
 
                 <SidebarRail />

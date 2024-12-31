@@ -1,33 +1,34 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import './App.css'
-import LandingPage from './pages/landing-page'
-import ZonaIntegritasPop from '@/components/integritas-popup';
-import ZonaIntegritas from '@/pages/integritas-page';
-import LandingLayout from '@/components/layouts/landing-layout';
 import AdminLayout from '@/components/layouts/admin-layout';
-import DashboardPage from '@/pages/admin/dashboard-page';
-import SuratOverview from '@/pages/admin/NaskahMenu/overview-naskah';
-import { useState } from 'react';
+import ZonaIntegritasPop from '@/components/layouts/integritas-popup';
+import LandingLayout from '@/components/layouts/landing-layout';
 import { Surat } from '@/lib/type/surat-type';
-import supabase from '@/lib/supabase';
-import IntegritasIkhtisar from '@/pages/admin/Integritas/Ikhtisar-integritas';
+import AdminDashboard from '@/pages/admin/admin-dashboard';
+import IntegritasIkhtisar from '@/pages/admin/integritas-ikhtisar';
+import NaskahOverview from '@/pages/admin/naskah-overview';
+import PegawaiOverview from '@/pages/admin/pegawai-overview';
+import ZonaIntegritas from '@/pages/integritas-page';
+import LandingPage from '@/pages/landing-page';
+import { useState } from 'react';
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import './App.css';
+
 
 
 function App() {
-  const [suratList, setSuratList] = useState<Surat[]>([]);
+  const [suratList] = useState<Surat[]>([]);
 
-  async function getData() {
-    const { data, error } = await supabase
-      .from('tb_surat')
-      .select('*'); // Select all columns
+  // async function getData() {
+  //   const { data, error } = await supabase
+  //     .from('tb_surat')
+  //     .select('*'); // Select all columns
 
-    if (error) {
-      console.error('Error fetching data:', error);
-    } else {
-      setSuratList(data)
-    }
-  }
-  getData();
+  //   if (error) {
+  //     console.error('Error fetching data:', error);
+  //   } else {
+  //     setSuratList(data)
+  //   }
+  // }
+  // getData();
   return (
     <Router>
       <ZonaIntegritasPop />
@@ -38,18 +39,28 @@ function App() {
         </Route>
 
         <Route path='admin' element={<AdminLayout />}>
-          <Route index element={<DashboardPage />} />
+          <Route index element={<AdminDashboard />} />
+          <Route path='dashboard' element={<AdminDashboard />} />
+
+          {/* Surat Menu */}
           <Route path="surat">
-            <Route path="overview" element={<SuratOverview suratList={suratList} />} />
+            <Route index element={<NaskahOverview suratList={suratList} />} />
+            <Route path="overview" element={<NaskahOverview suratList={suratList} />} />
             {/* <Route path="kodefikasi" element={<SuratKodefikasi />} /> */}
           </Route>
-          
+
+
+          {/* Pegawai Menu */}
+          <Route path='pegawai'>
+            <Route index element={<IntegritasIkhtisar />} />
+            <Route path='overview' element={<PegawaiOverview />} />
+          </Route>
+
+          {/* Zona Integritas */}
           <Route path='integritas'>
             <Route path='ikhtisar' element={<IntegritasIkhtisar />} />
           </Route>
 
-
-          <Route path='dashboard' element={<DashboardPage />} />
         </Route>
       </Routes>
     </Router>

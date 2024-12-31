@@ -1,12 +1,12 @@
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import supabase from '@/lib/supabase';
+import supabase from '@/lib/supabase-client';
 import { Surat } from '@/lib/type/surat-type';
 import React, { useState } from 'react';
-import { generateNomorSurat } from '@/lib/generateNumber';  // Assuming generateNomorSurat is in a separate file
+import { generateNomorSurat } from '@/lib/generate-number';  // Assuming generateNomorSurat is in a separate file
 
-const SuratOverview: React.FC<{ suratList: Surat[] }> = ({ suratList }) => {
+const NaskahOverview: React.FC<{ suratList: Surat[] }> = ({ suratList }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [formData, setFormData] = useState({
     nomorSurat: '',
@@ -174,4 +174,4 @@ const SuratOverview: React.FC<{ suratList: Surat[] }> = ({ suratList }) => {
   );
 };
 
-export default SuratOverview;
+export default NaskahOverview;
