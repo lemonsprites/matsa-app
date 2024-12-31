@@ -26,5 +26,6 @@ if (branch === 'main') {
 
 // Write updated version back to package.json
 fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2), 'utf8');
+console.log(`Version updated to ${packageJson.version}`);
 
 console.log(`Version updated to ${packageJson.version}`);
