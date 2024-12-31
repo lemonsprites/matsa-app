@@ -279,25 +279,48 @@ const IntegritasIkhtisar = () => {
         </CardContent>
       </Card>
 
-      <Card className="col-span">
-        <SimpleCard title='Dokumen Pendukung' count={2}/>
-        <SimpleCard title='Standar Operasional Prosedur' count={2}/>
-        <SimpleCard title='Artikel Kegiatan' count={2}/>
-        <SimpleCard title='Aplikasi Pelayanan Publik' count={2}/>
+      <Card className="col-span-1">
+        <SimpleCard title='Dokumen Pendukung' count={2} />
+        <SimpleCard title='Standar Operasional Prosedur' count={2} />
+        <SimpleCard title='Artikel Kegiatan' count={2} />
+        <SimpleCard title='Aplikasi Pelayanan Publik' count={2} />
 
       </Card>
 
-      <Table className="w-full">
-        <TableHeader>
-          <TableRow>
-            <TableHead className="text-left">Nomor Surat</TableHead>
-            <TableHead className="text-left">Perihal</TableHead>
-            <TableHead className="text-left">Tanggal Surat</TableHead>
-            <TableHead className="text-left">Jenis Surat</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {/* {suratList.map((surat) => (
+      {/* Tim ZI */}
+      <Card className="col-span-2 w-full">
+        <CardHeader className='flex flex-col items-stretch space-y-0 border-b p-0 sm:flex-row'>
+          <div className="flex flex-1 flex-col justify-center gap-1 px-6 py-2">
+            <CardTitle>Tim Zona Integritas</CardTitle>
+            <CardDescription>
+              Menampilkan Anggota Tim Generasi saat ini
+            </CardDescription>
+          </div>
+          <div className="flex">
+            <div
+              className="flex flex-1 flex-col justify-center px-6 py-2 gap-1 border-t text-left even:border-l data-[active=true]:bg-muted/50 sm:border-l sm:border-t-0"
+            >
+              <span className="text-xs text-muted-foreground">
+                Generasi Tim
+              </span>
+              <span className="text-lg font-bold leading-none sm:text-3xl">
+                001
+              </span>
+            </div>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <Table className='border'>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="text-left">Nomor Surat</TableHead>
+                <TableHead className="text-left">Perihal</TableHead>
+                <TableHead className="text-left">Tanggal Surat</TableHead>
+                <TableHead className="text-left">Jenis Surat</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {/* {suratList.map((surat) => (
             <TableRow key={surat.id}>
               <TableCell>{surat.nomorSurat}</TableCell>
               <TableCell>{surat.perihal}</TableCell>
@@ -305,8 +328,34 @@ const IntegritasIkhtisar = () => {
               <TableCell>{surat.jenisSurat}</TableCell>
             </TableRow>
           ))} */}
-        </TableBody>
-      </Table>
+            </TableBody>
+          </Table>
+        </CardContent>
+
+      </Card>
+
+      {/* Role Model */}
+      <Card className='overflow-hidden'>
+        <CardHeader className='flex flex-col items-stretch space-y-0 border-b p-0 sm:flex-row'>
+          <div className="flex flex-1 flex-col justify-center gap-1 px-6 py-2">
+            <CardTitle>Role Model</CardTitle>
+          </div>
+          <button className="flex bg-green-400 text-black">
+            <div
+              className="flex flex-1 flex-col justify-center px-6 py-2 gap-1 border-t text-left even:border-l data-[active=true]:bg-muted/50 sm:border-l sm:border-t-0"
+            >
+              <span className="text-xs">
+                Generasi Tim
+              </span>
+            </div>
+          </button>
+        </CardHeader>
+        <CardContent>
+          asd
+        </CardContent>
+
+      </Card>
+
       {/* Dialog for generating surat */}
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent>

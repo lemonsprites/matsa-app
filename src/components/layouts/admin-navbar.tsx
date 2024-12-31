@@ -7,7 +7,7 @@ const AdminNavbar = () => {
 
 
     return (
-        <nav className="bg-blue-900 text-white shadow-sm sticky top-0 z-50 flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-16">
+        <nav className="bg-blue-900 text-white shadow-md sticky top-0 z-50 flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-16">
             <div className="flex items-center gap-2 px-4 justify-between relative w-full">
                 <div className="flex h-16 w-full items-center justify-between px-2">
                     <div className="flex shrink-0 items-center">
