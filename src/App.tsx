@@ -1,34 +1,13 @@
-import AdminLayout from '@/components/layouts/admin-layout';
-import LandingLayout from '@/components/layouts/landing-layout';
-import AdminDashboard from '@/pages/admin/admin-dashboard';
-import IntegritasIkhtisar from '@/pages/admin/integritas-ikhtisar';
-import PegawaiOverview from '@/pages/admin/pegawai-overview';
-import ZonaIntegritas from '@/pages/integritas-page';
-import LandingPage from '@/pages/landing-page';
+
+import { appRoutes } from '@/lib/metadata/app-routes';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './App.css';
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <LandingLayout />,
-    children: [
-      { index: true, element: <LandingPage /> },
-      { path: "integritas", element: <ZonaIntegritas /> },
-      { path: "*", element: <div>Page Not Found</div> },
-    ],
-  },
-  {
-    path: "/admin",
-    element: <AdminLayout />, // Wraps admin routes
-    children: [
-      { index: true, element: <AdminDashboard /> },
-      { path: "integritas", element: <IntegritasIkhtisar /> },
-      { path: "pegawai", element: <PegawaiOverview /> },
-      { path: "*", element: <div>Admin Page Not Found</div> },
-    ],
-  },
-]);
+const router = createBrowserRouter(appRoutes, {
+  future: {
+    v7_relativeSplatPath: true
+  }
+});
 
 function App() {
   return (

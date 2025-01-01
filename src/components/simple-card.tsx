@@ -1,5 +1,5 @@
-import React from "react";
 import { CardTitle } from "@/components/ui/card";
+import React from "react";
 
 interface SimpleCardProps {
   title: string;

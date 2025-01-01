@@ -5,103 +5,12 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Table, TableBody, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { getIntegritasEvidence } from '@/lib/api/integritas-api';
+import { useGetApiGuard } from '@/hooks/use-api-guard';
+import { integritasChartData } from '@/lib/metadata/integritas-chart';
+import { getIntegritasEvidenceCount } from '@/lib/services/integritas-services';
 import React, { useEffect, useState } from 'react';
 import { CartesianGrid, Line, LineChart, XAxis } from 'recharts';
 
-const chartData: any[] = [
-  { date: "2024-04-01", desktop: 222, mobile: 150 },
-  { date: "2024-04-02", desktop: 97, mobile: 180 },
-  { date: "2024-04-03", desktop: 167, mobile: 120 },
-  { date: "2024-04-04", desktop: 242, mobile: 260 },
-  { date: "2024-04-05", desktop: 373, mobile: 290 },
-  { date: "2024-04-06", desktop: 301, mobile: 340 },
-  { date: "2024-04-07", desktop: 245, mobile: 180 },
-  { date: "2024-04-08", desktop: 409, mobile: 320 },
-  { date: "2024-04-09", desktop: 59, mobile: 110 },
-  { date: "2024-04-10", desktop: 261, mobile: 190 },
-  { date: "2024-04-11", desktop: 327, mobile: 350 },
-  { date: "2024-04-12", desktop: 292, mobile: 210 },
-  { date: "2024-04-13", desktop: 342, mobile: 380 },
-  { date: "2024-04-14", desktop: 137, mobile: 220 },
-  { date: "2024-04-15", desktop: 120, mobile: 170 },
-  { date: "2024-04-16", desktop: 138, mobile: 190 },
-  { date: "2024-04-17", desktop: 446, mobile: 360 },
-  { date: "2024-04-18", desktop: 364, mobile: 410 },
-  { date: "2024-04-19", desktop: 243, mobile: 180 },
-  { date: "2024-04-20", desktop: 89, mobile: 150 },
-  { date: "2024-04-21", desktop: 137, mobile: 200 },
-  { date: "2024-04-22", desktop: 224, mobile: 170 },
-  { date: "2024-04-23", desktop: 138, mobile: 230 },
-  { date: "2024-04-24", desktop: 387, mobile: 290 },
-  { date: "2024-04-25", desktop: 215, mobile: 250 },
-  { date: "2024-04-26", desktop: 75, mobile: 130 },
-  { date: "2024-04-27", desktop: 383, mobile: 420 },
-  { date: "2024-04-28", desktop: 122, mobile: 180 },
-  { date: "2024-04-29", desktop: 315, mobile: 240 },
-  { date: "2024-04-30", desktop: 454, mobile: 380 },
-  { date: "2024-05-01", desktop: 165, mobile: 220 },
-  { date: "2024-05-02", desktop: 293, mobile: 310 },
-  { date: "2024-05-03", desktop: 247, mobile: 190 },
-  { date: "2024-05-04", desktop: 385, mobile: 420 },
-  { date: "2024-05-05", desktop: 481, mobile: 390 },
-  { date: "2024-05-06", desktop: 498, mobile: 520 },
-  { date: "2024-05-07", desktop: 388, mobile: 300 },
-  { date: "2024-05-08", desktop: 149, mobile: 210 },
-  { date: "2024-05-09", desktop: 227, mobile: 180 },
-  { date: "2024-05-10", desktop: 293, mobile: 330 },
-  { date: "2024-05-11", desktop: 335, mobile: 270 },
-  { date: "2024-05-12", desktop: 197, mobile: 240 },
-  { date: "2024-05-13", desktop: 197, mobile: 160 },
-  { date: "2024-05-14", desktop: 448, mobile: 490 },
-  { date: "2024-05-15", desktop: 473, mobile: 380 },
-  { date: "2024-05-16", desktop: 338, mobile: 400 },
-  { date: "2024-05-17", desktop: 499, mobile: 420 },
-  { date: "2024-05-18", desktop: 315, mobile: 350 },
-  { date: "2024-05-19", desktop: 235, mobile: 180 },
-  { date: "2024-05-20", desktop: 177, mobile: 230 },
-  { date: "2024-05-21", desktop: 82, mobile: 140 },
-  { date: "2024-05-22", desktop: 81, mobile: 120 },
-  { date: "2024-05-23", desktop: 252, mobile: 290 },
-  { date: "2024-05-24", desktop: 294, mobile: 220 },
-  { date: "2024-05-25", desktop: 201, mobile: 250 },
-  { date: "2024-05-26", desktop: 213, mobile: 170 },
-  { date: "2024-05-27", desktop: 420, mobile: 460 },
-  { date: "2024-05-28", desktop: 233, mobile: 190 },
-  { date: "2024-05-29", desktop: 78, mobile: 130 },
-  { date: "2024-05-30", desktop: 340, mobile: 280 },
-  { date: "2024-05-31", desktop: 178, mobile: 230 },
-  { date: "2024-06-01", desktop: 178, mobile: 200 },
-  { date: "2024-06-02", desktop: 470, mobile: 410 },
-  { date: "2024-06-03", desktop: 103, mobile: 160 },
-  { date: "2024-06-04", desktop: 439, mobile: 380 },
-  { date: "2024-06-05", desktop: 88, mobile: 140 },
-  { date: "2024-06-06", desktop: 294, mobile: 250 },
-  { date: "2024-06-07", desktop: 323, mobile: 370 },
-  { date: "2024-06-08", desktop: 385, mobile: 320 },
-  { date: "2024-06-09", desktop: 438, mobile: 480 },
-  { date: "2024-06-10", desktop: 155, mobile: 200 },
-  { date: "2024-06-11", desktop: 92, mobile: 150 },
-  { date: "2024-06-12", desktop: 492, mobile: 420 },
-  { date: "2024-06-13", desktop: 81, mobile: 130 },
-  { date: "2024-06-14", desktop: 426, mobile: 380 },
-  { date: "2024-06-15", desktop: 307, mobile: 350 },
-  { date: "2024-06-16", desktop: 371, mobile: 310 },
-  { date: "2024-06-17", desktop: 475, mobile: 520 },
-  { date: "2024-06-18", desktop: 107, mobile: 170 },
-  { date: "2024-06-19", desktop: 341, mobile: 290 },
-  { date: "2024-06-20", desktop: 408, mobile: 450 },
-  { date: "2024-06-21", desktop: 169, mobile: 210 },
-  { date: "2024-06-22", desktop: 317, mobile: 270 },
-  { date: "2024-06-23", desktop: 480, mobile: 530 },
-  { date: "2024-06-24", desktop: 132, mobile: 180 },
-  { date: "2024-06-25", desktop: 141, mobile: 190 },
-  { date: "2024-06-26", desktop: 434, mobile: 380 },
-  { date: "2024-06-27", desktop: 448, mobile: 490 },
-  { date: "2024-06-28", desktop: 149, mobile: 200 },
-  { date: "2024-06-29", desktop: 103, mobile: 160 },
-  { date: "2024-06-30", desktop: 446, mobile: 400 },
-]
 
 const IntegritasIkhtisar = () => {
   const [count, setCount] = useState<number>(0);
@@ -119,17 +28,36 @@ const IntegritasIkhtisar = () => {
     kodeKategori: ''
   });
 
-  const fetchCount = async () => {
-    const count = await getIntegritasEvidence();  // Ambil jumlah total dokumen
-    setCount(count);
-    console.log(count)
-  };
+  const { fetchData, isLoading, error } = useGetApiGuard({
+    key: 'tb_integritas_evidence_count',
+    query: getIntegritasEvidenceCount,
+  });
+
+
 
   useEffect(() => {
-    if (uploadStatus) {
-      fetchCount(); // Refetch data setelah upload selesai
-      setUploadStatus(false);  // Reset status upload setelah refetch
-    }
+    const handleFetch = async () => {
+      if (isLoading) {
+        // Don't call fetchData if the query is already loading
+        return;
+      }
+
+      try {
+        const res = await fetchData(); // Fetch data
+        if (res) {
+          setCount(res); // Update state only if data exists
+        }
+      } catch (err) {
+        console.error('Error fetching evidence count:', err);
+        // Handle error (optionally set an error state to display)
+      } finally {
+        if (uploadStatus) {
+          setUploadStatus(false); // Reset upload status after fetch
+        }
+      }
+    };
+
+    handleFetch();
   }, [uploadStatus]);
 
   const handleInputChange = (e: any) => {
@@ -204,8 +132,8 @@ const IntegritasIkhtisar = () => {
 
   const total = React.useMemo(
     () => ({
-      desktop: chartData.reduce((acc, curr) => acc + curr.desktop, 0),
-      mobile: chartData.reduce((acc, curr) => acc + curr.mobile, 0),
+      desktop: integritasChartData.reduce((acc, curr) => acc + curr.desktop, 0),
+      mobile: integritasChartData.reduce((acc, curr) => acc + curr.mobile, 0),
     }),
     []
   )
@@ -249,7 +177,7 @@ const IntegritasIkhtisar = () => {
             className="aspect-auto h-[250px] w-full"
           >
             <LineChart
-              data={chartData as any[]}
+              data={integritasChartData as any[]}
               margin={{
                 left: 12,
                 right: 12,
@@ -377,117 +305,13 @@ const IntegritasIkhtisar = () => {
       {/* Menu Pengungkit */}
       <h1 className='col-span-4 text-center text-2xl font-bold mt-5'>Menu Pengungkit</h1>
 
-      <IntegritasUpload bucketPath="public-data/zi/p1" />
-      <IntegritasUpload bucketPath="public-data/zi/p2" />
-      <IntegritasUpload bucketPath="public-data/zi/p3" />
-      <IntegritasUpload bucketPath="public-data/zi/p4" />
-      <IntegritasUpload bucketPath="public-data/zi/p5" className="col-span-2" />
-      <IntegritasUpload bucketPath="public-data/zi/p6" className="col-span-2" />
+      <IntegritasUpload title="P1" desc="Manajemen Perubahan" bucketPath="public-data/zi/p1" />
+      <IntegritasUpload title="P2" desc="Penataan Tatalaksana" bucketPath="public-data/zi/p2" />
+      <IntegritasUpload title="P3" desc="Penataan SDM" bucketPath="public-data/zi/p3" />
+      <IntegritasUpload title="P4" desc="Penataan Akuntabilitas" bucketPath="public-data/zi/p4" />
+      <IntegritasUpload title="P5" desc="Penataan Pengawasan" bucketPath="public-data/zi/p5" className="col-span-2" />
+      <IntegritasUpload title="P6" desc="Penataan Kualitas Layanan" bucketPath="public-data/zi/p6" className="col-span-2" />
 
-      <Card className='overflow-hidden'>
-        <CardHeader className='flex flex-col items-stretch space-y-0 border-b p-0 sm:flex-row'>
-          <div className="flex flex-1 flex-col justify-center gap-1 px-6 py-2">
-            <CardTitle>Role Model</CardTitle>
-          </div>
-          <button className="flex bg-green-400 text-black">
-            <div
-              className="flex flex-1 flex-col justify-center px-6 py-2 gap-1 border-t text-left even:border-l data-[active=true]:bg-muted/50 sm:border-l sm:border-t-0"
-            >
-              <span className="text-xs">
-                Generasi Tim
-              </span>
-            </div>
-          </button>
-        </CardHeader>
-        <CardContent>
-          asd
-        </CardContent>
-
-      </Card>
-
-      <Card className='overflow-hidden'>
-        <CardHeader className='flex flex-col items-stretch space-y-0 border-b p-0 sm:flex-row'>
-          <div className="flex flex-1 flex-col justify-center gap-1 px-6 py-2">
-            <CardTitle>Role Model</CardTitle>
-          </div>
-          <button className="flex bg-green-400 text-black">
-            <div
-              className="flex flex-1 flex-col justify-center px-6 py-2 gap-1 border-t text-left even:border-l data-[active=true]:bg-muted/50 sm:border-l sm:border-t-0"
-            >
-              <span className="text-xs">
-                Generasi Tim
-              </span>
-            </div>
-          </button>
-        </CardHeader>
-        <CardContent>
-          asd
-        </CardContent>
-
-      </Card>
-
-      <Card className='overflow-hidden'>
-        <CardHeader className='flex flex-col items-stretch space-y-0 border-b p-0 sm:flex-row'>
-          <div className="flex flex-1 flex-col justify-center gap-1 px-6 py-2">
-            <CardTitle>Role Model</CardTitle>
-          </div>
-          <button className="flex bg-green-400 text-black">
-            <div
-              className="flex flex-1 flex-col justify-center px-6 py-2 gap-1 border-t text-left even:border-l data-[active=true]:bg-muted/50 sm:border-l sm:border-t-0"
-            >
-              <span className="text-xs">
-                Generasi Tim
-              </span>
-            </div>
-          </button>
-        </CardHeader>
-        <CardContent>
-          asd
-        </CardContent>
-
-      </Card>
-
-      <Card className='overflow-hidden col-span-2'>
-        <CardHeader className='flex flex-col items-stretch space-y-0 border-b p-0 sm:flex-row'>
-          <div className="flex flex-1 flex-col justify-center gap-1 px-6 py-2">
-            <CardTitle>Role Model</CardTitle>
-          </div>
-          <button className="flex bg-green-400 text-black">
-            <div
-              className="flex flex-1 flex-col justify-center px-6 py-2 gap-1 border-t text-left even:border-l data-[active=true]:bg-muted/50 sm:border-l sm:border-t-0"
-            >
-              <span className="text-xs">
-                Generasi Tim
-              </span>
-            </div>
-          </button>
-        </CardHeader>
-        <CardContent>
-          asd
-        </CardContent>
-
-      </Card>
-
-      <Card className='overflow-hidden col-span-2'>
-        <CardHeader className='flex flex-col items-stretch space-y-0 border-b p-0 sm:flex-row'>
-          <div className="flex flex-1 flex-col justify-center gap-1 px-6 py-2">
-            <CardTitle>Role Model</CardTitle>
-          </div>
-          <button className="flex bg-green-400 text-black">
-            <div
-              className="flex flex-1 flex-col justify-center px-6 py-2 gap-1 border-t text-left even:border-l data-[active=true]:bg-muted/50 sm:border-l sm:border-t-0"
-            >
-              <span className="text-xs">
-                Generasi Tim
-              </span>
-            </div>
-          </button>
-        </CardHeader>
-        <CardContent>
-          asd
-        </CardContent>
-
-      </Card>
 
       {/* Dialog for generating surat */}
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
