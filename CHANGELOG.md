@@ -1,3 +1,12 @@
+# 0.7.0 (2025-01-01)
+
+
+### Features
+
+* upgrading react-router-dom to future version. ([de86c39](https://github.com/lemonsprites/matsa-app/commit/de86c3967659da4d1705e1f5c86e0173b122e8ae))
+
+
+
 # 0.6.0 (2024-12-31)
 
 
