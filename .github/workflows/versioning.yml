@@ -5,7 +5,6 @@ on:
     branches:
       - main
       - dev
-      - 'feature/*' # You can also include other branches as needed
 
 jobs:
   update-version:
@@ -24,7 +23,7 @@ jobs:
         run: npm install
 
       - name: Update version in package.json
-        run: src/lib/version-utils.cjs # Adjust the path to your script
+        run: src/lib/version-utils.js # Adjust the path to your script
 
       - name: Commit version change
         run: |
