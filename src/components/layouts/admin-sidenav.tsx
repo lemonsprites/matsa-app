@@ -62,7 +62,7 @@ export function AdminSideNav({
                     {item.items.map((subItem) => (
                       <SidebarMenuSubItem key={subItem.title} >
                         <SidebarMenuSubButton asChild>
-                          <Link to={subItem.url} className="text-[#e1e0e0]">
+                          <Link to={subItem.url} className="hover:text-black text-white">
                             <span>{subItem.title}</span>
                           </Link>
                         </SidebarMenuSubButton>

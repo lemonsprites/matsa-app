@@ -200,12 +200,12 @@ const data = {
 export function AdminSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     return (
         <Sidebar collapsible="icon" {...props} >
-            <ScrollArea>
+            <ScrollArea >
 
 
                 <SidebarHeader>
                     <Link to="/admin" className="flex items-center bg-transparent">
-                        <SidebarMenuButton tooltip="Logo" className=" hover:bg-transparent active:bg-transparent active:text-inherit mt-3 hover:text-white">
+                        <SidebarMenuButton tooltip="Logo" className=" hover:bg-transparent active:bg-transparent active:text-white text-white mt-3 hover:text-white">
                             <img src={logoMTs} width={32} height={32}></img>
                             <div className="pl-4">
                                 <h1 className="font-bold">MTSN 1 CIAMIS</h1>

@@ -1,13 +1,13 @@
+import IntegritasUpload from '@/components/layouts/integritas-upload';
+import SimpleCard from '@/components/simple-card';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Table, TableBody, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import supabase from '@/lib/supabase-client';
-import React, { useState } from 'react';
-import { generateNomorSurat } from '@/lib/generate-number';  // Assuming generateNomorSurat is in a separate file
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
-import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
+import { getIntegritasEvidence } from '@/lib/api/integritas-api';
+import React, { useEffect, useState } from 'react';
 import { CartesianGrid, Line, LineChart, XAxis } from 'recharts';
-import SimpleCard from '@/components/simple-card';
 
 const chartData: any[] = [
   { date: "2024-04-01", desktop: 222, mobile: 150 },
@@ -104,6 +104,9 @@ const chartData: any[] = [
 ]
 
 const IntegritasIkhtisar = () => {
+  const [count, setCount] = useState<number>(0);
+  const [uploadStatus, setUploadStatus] = useState(false);
+
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [activeChart, setActiveChart] =
     React.useState<keyof typeof chartConfig>("desktop")
@@ -116,6 +119,19 @@ const IntegritasIkhtisar = () => {
     kodeKategori: ''
   });
 
+  const fetchCount = async () => {
+    const count = await getIntegritasEvidence();  // Ambil jumlah total dokumen
+    setCount(count);
+    console.log(count)
+  };
+
+  useEffect(() => {
+    if (uploadStatus) {
+      fetchCount(); // Refetch data setelah upload selesai
+      setUploadStatus(false);  // Reset status upload setelah refetch
+    }
+  }, [uploadStatus]);
+
   const handleInputChange = (e: any) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -127,36 +143,38 @@ const IntegritasIkhtisar = () => {
   const handleGenerateSurat = async () => {
     try {
       // Generate nomorSurat using the generateNomorSurat function
-      const generatedNomorSurat = await generateNomorSurat({
-        jenisSurat: formData.jenisSurat,
-        kodeUnitKerja: formData.kodeUnitKerja,
-        kodeKategori: formData.kodeKategori,
-        tanggal: formData.tanggalSurat,
-      });
+      // const generatedNomorSurat = await generateNomorSurat({
+      //   jenisSurat: formData.jenisSurat,
+      //   kodeUnitKerja: formData.kodeUnitKerja,
+      //   kodeKategori: formData.kodeKategori,
+      //   tanggal: formData.tanggalSurat,
+      // });
 
-      if (!generatedNomorSurat) {
-        throw new Error("Failed to generate nomor surat.");
-      }
+      // if (!generatedNomorSurat) {
+      //   throw new Error("Failed to generate nomor surat.");
+      // }
 
-      // Insert data into Supabase table (assuming your table is called 'tb_surat')
-      const { data, error } = await supabase
-        .from('tb_surat')
-        .insert([
-          {
-            nomorSurat: generatedNomorSurat,
-            perihal: formData.perihal,
-            tanggalSurat: formData.tanggalSurat,
-            jenisSurat: formData.jenisSurat,
-          },
-        ]);
+      // // Insert data into Supabase table (assuming your table is called 'tb_surat')
+      // const { data, error } = await supabase
+      //   .from('tb_surat')
+      //   .insert([
+      //     {
+      //       nomorSurat: generatedNomorSurat,
+      //       perihal: formData.perihal,
+      //       tanggalSurat: formData.tanggalSurat,
+      //       jenisSurat: formData.jenisSurat,
+      //     },
+      //   ]);
 
-      if (error) {
-        throw error; // If there's an error, throw it
-      }
+      // if (error) {
+      //   throw error; // If there's an error, throw it
+      // }
+
+
 
       // Close the dialog if data is successfully inserted
       handleCloseDialog();
-      console.log('Surat generated successfully!', data);
+      // console.log('Surat generated successfully!', data);
 
       // Optionally, you can refresh the surat list or show a success message
 
@@ -280,7 +298,7 @@ const IntegritasIkhtisar = () => {
       </Card>
 
       <Card className="col-span-1">
-        <SimpleCard title='Dokumen Pendukung' count={2} />
+        <SimpleCard title='Dokumen Pendukung' count={count} />
         <SimpleCard title='Standar Operasional Prosedur' count={2} />
         <SimpleCard title='Artikel Kegiatan' count={2} />
         <SimpleCard title='Aplikasi Pelayanan Publik' count={2} />
@@ -336,6 +354,121 @@ const IntegritasIkhtisar = () => {
 
       {/* Role Model */}
       <Card className='overflow-hidden'>
+        <CardHeader className='flex flex-col items-stretch space-y-0 border-b p-0 sm:flex-row'>
+          <div className="flex flex-1 flex-col justify-center gap-1 px-6 py-2">
+            <CardTitle>Role Model</CardTitle>
+          </div>
+          <button className="flex bg-green-400 text-black">
+            <div
+              className="flex flex-1 flex-col justify-center px-6 py-2 gap-1 border-t text-left even:border-l data-[active=true]:bg-muted/50 sm:border-l sm:border-t-0"
+            >
+              <span className="text-xs">
+                Generasi Tim
+              </span>
+            </div>
+          </button>
+        </CardHeader>
+        <CardContent>
+          asd
+        </CardContent>
+
+      </Card>
+
+      {/* Menu Pengungkit */}
+      <h1 className='col-span-4 text-center text-2xl font-bold mt-5'>Menu Pengungkit</h1>
+
+      <IntegritasUpload bucketPath="public-data/zi/p1" />
+      <IntegritasUpload bucketPath="public-data/zi/p2" />
+      <IntegritasUpload bucketPath="public-data/zi/p3" />
+      <IntegritasUpload bucketPath="public-data/zi/p4" />
+      <IntegritasUpload bucketPath="public-data/zi/p5" className="col-span-2" />
+      <IntegritasUpload bucketPath="public-data/zi/p6" className="col-span-2" />
+
+      <Card className='overflow-hidden'>
+        <CardHeader className='flex flex-col items-stretch space-y-0 border-b p-0 sm:flex-row'>
+          <div className="flex flex-1 flex-col justify-center gap-1 px-6 py-2">
+            <CardTitle>Role Model</CardTitle>
+          </div>
+          <button className="flex bg-green-400 text-black">
+            <div
+              className="flex flex-1 flex-col justify-center px-6 py-2 gap-1 border-t text-left even:border-l data-[active=true]:bg-muted/50 sm:border-l sm:border-t-0"
+            >
+              <span className="text-xs">
+                Generasi Tim
+              </span>
+            </div>
+          </button>
+        </CardHeader>
+        <CardContent>
+          asd
+        </CardContent>
+
+      </Card>
+
+      <Card className='overflow-hidden'>
+        <CardHeader className='flex flex-col items-stretch space-y-0 border-b p-0 sm:flex-row'>
+          <div className="flex flex-1 flex-col justify-center gap-1 px-6 py-2">
+            <CardTitle>Role Model</CardTitle>
+          </div>
+          <button className="flex bg-green-400 text-black">
+            <div
+              className="flex flex-1 flex-col justify-center px-6 py-2 gap-1 border-t text-left even:border-l data-[active=true]:bg-muted/50 sm:border-l sm:border-t-0"
+            >
+              <span className="text-xs">
+                Generasi Tim
+              </span>
+            </div>
+          </button>
+        </CardHeader>
+        <CardContent>
+          asd
+        </CardContent>
+
+      </Card>
+
+      <Card className='overflow-hidden'>
+        <CardHeader className='flex flex-col items-stretch space-y-0 border-b p-0 sm:flex-row'>
+          <div className="flex flex-1 flex-col justify-center gap-1 px-6 py-2">
+            <CardTitle>Role Model</CardTitle>
+          </div>
+          <button className="flex bg-green-400 text-black">
+            <div
+              className="flex flex-1 flex-col justify-center px-6 py-2 gap-1 border-t text-left even:border-l data-[active=true]:bg-muted/50 sm:border-l sm:border-t-0"
+            >
+              <span className="text-xs">
+                Generasi Tim
+              </span>
+            </div>
+          </button>
+        </CardHeader>
+        <CardContent>
+          asd
+        </CardContent>
+
+      </Card>
+
+      <Card className='overflow-hidden col-span-2'>
+        <CardHeader className='flex flex-col items-stretch space-y-0 border-b p-0 sm:flex-row'>
+          <div className="flex flex-1 flex-col justify-center gap-1 px-6 py-2">
+            <CardTitle>Role Model</CardTitle>
+          </div>
+          <button className="flex bg-green-400 text-black">
+            <div
+              className="flex flex-1 flex-col justify-center px-6 py-2 gap-1 border-t text-left even:border-l data-[active=true]:bg-muted/50 sm:border-l sm:border-t-0"
+            >
+              <span className="text-xs">
+                Generasi Tim
+              </span>
+            </div>
+          </button>
+        </CardHeader>
+        <CardContent>
+          asd
+        </CardContent>
+
+      </Card>
+
+      <Card className='overflow-hidden col-span-2'>
         <CardHeader className='flex flex-col items-stretch space-y-0 border-b p-0 sm:flex-row'>
           <div className="flex flex-1 flex-col justify-center gap-1 px-6 py-2">
             <CardTitle>Role Model</CardTitle>
