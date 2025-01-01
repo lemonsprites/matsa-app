@@ -28,7 +28,7 @@ const IntegritasIkhtisar = () => {
     kodeKategori: ''
   });
 
-  const { fetchData, isLoading, error } = useGetApiGuard({
+  const { fetchData, isLoading } = useGetApiGuard({
     key: 'tb_integritas_evidence_count',
     query: getIntegritasEvidenceCount,
   });

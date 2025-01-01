@@ -7,6 +7,7 @@ import PegawaiOverview from '@/pages/admin/pegawai-overview';
 import ZonaIntegritas from '@/pages/integritas-page';
 import LandingPage from '@/pages/landing-page';
 import AdminNotFound from "@/components/layouts/admin-not-found";
+import SuratOverview from "@/pages/admin/surat-overview";
 
 export const appRoutes: RouteObject[] = [
   {
@@ -30,6 +31,9 @@ export const appRoutes: RouteObject[] = [
       { path: "integritas/tim", element: <AdminNotFound /> },
       { path: "integritas/monitoring", element: <AdminNotFound /> },
       { path: "integritas/laporan", element: <AdminNotFound /> },
+
+      // Surat Route
+      { path: "surat", element: <SuratOverview /> },
 
       // Pegawai Route
       { path: "pegawai", element: <PegawaiOverview /> },

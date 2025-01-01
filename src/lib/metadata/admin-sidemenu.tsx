@@ -1,4 +1,4 @@
-import { LayoutGrid, MailCheck, Feather, BookOpen, ShieldCheck, Settings2, Frame, PieChart } from "lucide-react";
+import { LayoutGrid, MailCheck, Feather, BookOpen, ShieldCheck, Settings2 } from "lucide-react";
 
 export const adminSidemenu = {
     main: [
@@ -41,16 +41,16 @@ export const adminSidemenu = {
                     url: 'surat',
                 },
                 {
-                    title: "Referensi Kodefikasi",
-                    url: 'surat/kodefikasi'
-                },
-                {
                     title: "Laporan/Cetak",
                     url: '#'
                 },
                 {
                     title: "Monitoring",
                     url: '#'
+                },
+                {
+                    title: "Referensi Kodefikasi",
+                    url: 'surat/kodefikasi'
                 }
             ]
         },
