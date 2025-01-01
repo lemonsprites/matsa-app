@@ -24,7 +24,7 @@ jobs:
         run: npm install
 
       - name: Update version in package.json
-        run: node path/to/your/version-script.js # Adjust the path to your script
+        run: src/lib/version-utils.cjs # Adjust the path to your script
 
       - name: Commit version change
         run: |
