@@ -1,0 +1,91 @@
+/* Default style for markdown content */
+.markdown {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    color: #333;
+  }
+  
+  /* Styling for headers */
+  .markdown h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: #2c3e50;
+  }
+  
+  .markdown h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #34495e;
+  }
+  
+  .markdown h3 {
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+    color: #7f8c8d;
+  }
+  
+  /* Paragraphs */
+  .markdown p {
+    margin-bottom: 1rem;
+  }
+  
+  /* Lists */
+  .markdown ul, .markdown ol {
+    padding-left: 20px;
+  }
+  
+  .markdown li {
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Code blocks */
+  .markdown pre {
+    background-color: #f4f4f4;
+    padding: 15px;
+    border-radius: 5px;
+    overflow-x: auto;
+    white-space: pre-wrap;
+  }
+  
+  .markdown code {
+    background-color: #f4f4f4;
+    padding: 0.2rem 0.4rem;
+    border-radius: 5px;
+    font-size: 0.9rem;
+  }
+  
+  /* Links */
+  .markdown a {
+    color: #3498db;
+    text-decoration: none;
+  }
+  
+  .markdown a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Blockquotes */
+  .markdown blockquote {
+    border-left: 4px solid #ccc;
+    padding-left: 16px;
+    font-style: italic;
+    color: #7f8c8d;
+    margin: 1rem 0;
+  }
+  
+  /* Images */
+  .markdown img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  /* Horizontal rules */
+  .markdown hr {
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1rem 0;
+  }
+
+  .matsa-grid {
+    @apply mt-6 grid grid-cols-4 gap-6;
+  }
