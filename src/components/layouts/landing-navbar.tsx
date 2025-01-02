@@ -31,10 +31,10 @@ import {
 
 
 import { cn } from "@/lib/utils";
-import MenuItem from "@/components/layouts/menu/menu-item";
+import MenuItem from "@/components/layouts/menu-item";
 
 
-const Navbar = () => {
+const LandingNavbar = () => {
     return (
         <nav className="shadow-md bg-[#fff] sticky top-0 z-40">
             <div className="flex matsa-wrapper items-center h-full justify-between">
@@ -47,7 +47,7 @@ const Navbar = () => {
                     <div id="menu-kanan">
                         <NavigationMenu className="ml-5">
                             <NavigationMenuList>
-                                <MenuItem href="" label="Beranda" />
+                                <MenuItem href="/" label="Beranda" />
                                 <MenuItem href="" label="Program Madrasah" />
                                 <NavigationMenuItem>
                                     <NavigationMenuTrigger>
@@ -86,6 +86,7 @@ const Navbar = () => {
                                 </NavigationMenuItem>
                                 
                                 <MenuItem href="" label="Repositori" />
+                                <MenuItem href="/integritas" label="Zona Integritas" />
 
                             </NavigationMenuList>
                         </NavigationMenu>
@@ -258,4 +259,4 @@ const ListItem = React.forwardRef<
 ListItem.displayName = "ListItem"
 
 
-export default Navbar
+export default LandingNavbar
