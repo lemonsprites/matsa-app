@@ -8,6 +8,7 @@ import ZonaIntegritas from '@/pages/integritas-page';
 import LandingPage from '@/pages/landing-page';
 import AdminNotFound from "@/components/layouts/admin-not-found";
 import SuratOverview from "@/pages/admin/surat-overview";
+import MaintenantePage from "@/pages/maintenance.page";
 
 export const appRoutes: RouteObject[] = [
   {
@@ -43,3 +44,34 @@ export const appRoutes: RouteObject[] = [
     ],
   },
 ]
+
+
+export const maintenanceRoutes = [
+  {
+    path: '*',
+    element: <MaintenantePage />,
+  },
+  {
+    path: "/admin",
+    element: <AdminLayout />, // Wraps admin routes
+    children: [
+      { index: true, element: <AdminDashboard /> },
+
+      // Integritas Route
+      { path: "integritas", element: <IntegritasIkhtisar /> },
+      { path: "integritas/ikhtisar", element: <IntegritasIkhtisar /> },
+      { path: "integritas/tim", element: <AdminNotFound /> },
+      { path: "integritas/monitoring", element: <AdminNotFound /> },
+      { path: "integritas/laporan", element: <AdminNotFound /> },
+
+      // Surat Route
+      { path: "surat", element: <SuratOverview /> },
+
+      // Pegawai Route
+      { path: "pegawai", element: <PegawaiOverview /> },
+
+      // Exception
+      { path: "*", element: <AdminNotFound /> },
+    ],
+  },
+];
