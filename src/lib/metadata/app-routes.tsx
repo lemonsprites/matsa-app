@@ -37,7 +37,7 @@ export const appRoutes: RouteObject[] = [
       { path: "surat", element: <SuratOverview /> },
 
       // Pegawai Route
-      { path: "pegawai", element: <PegawaiOverview /> },
+      { path: "pegawai/overview", element: <PegawaiOverview title="Ikhtisar Pegawai" /> },
 
       // Exception
       { path: "*", element: <AdminNotFound /> },
@@ -56,22 +56,6 @@ export const maintenanceRoutes = [
     element: <AdminLayout />, // Wraps admin routes
     children: [
       { index: true, element: <AdminDashboard /> },
-
-      // Integritas Route
-      { path: "integritas", element: <IntegritasIkhtisar /> },
-      { path: "integritas/ikhtisar", element: <IntegritasIkhtisar /> },
-      { path: "integritas/tim", element: <AdminNotFound /> },
-      { path: "integritas/monitoring", element: <AdminNotFound /> },
-      { path: "integritas/laporan", element: <AdminNotFound /> },
-
-      // Surat Route
-      { path: "surat", element: <SuratOverview /> },
-
-      // Pegawai Route
-      { path: "pegawai", element: <PegawaiOverview /> },
-
-      // Exception
-      { path: "*", element: <AdminNotFound /> },
     ],
   },
 ];
