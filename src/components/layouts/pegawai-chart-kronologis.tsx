@@ -30,7 +30,7 @@ const chartConfig = {
   
 
 
-const PegawaiChartKronologis = ({totalPegawai}:any) => {
+const PegawaiChartKronologis = ({classVar, totalPegawai}:any) => {
 
     const [pegawaiData, setPegawaiData] = useState<
         { year: string; male: number; female: number }[]
@@ -50,9 +50,9 @@ const PegawaiChartKronologis = ({totalPegawai}:any) => {
         <Card className='col-span-3'>
             <CardHeader className="flex flex-col items-stretch space-y-0 border-b p-0 sm:flex-row">
                 <div className="flex flex-1 flex-col justify-center gap-1 px-6 py-5 sm:py-6">
-                    <CardTitle>Rekapitulasi Pegawai MTsN 1 Ciamis</CardTitle>
+                    <CardTitle>Rekapitulasi Pegawai</CardTitle>
                     <CardDescription>
-                        Sebaran Kronologi Pegawai MTsN 1 Ciamis
+                        Sebaran data jumlah pegawai per Tahun.
                     </CardDescription>
                 </div>
                 <div className="flex">
@@ -85,7 +85,7 @@ const PegawaiChartKronologis = ({totalPegawai}:any) => {
             <CardContent className="px-2 sm:p-6">
                 <ChartContainer
                     config={chartConfig}
-                    className="aspect-auto h-[180px] w-full"
+                    className="aspect-auto h-[150px] w-full"
                 >
                     <BarChart accessibilityLayer data={pegawaiData} >
                         <CartesianGrid vertical={false} />
