@@ -1,4 +1,4 @@
-import IntegritasUpload from '@/components/layouts/integritas-upload';
+import IntegritasUpload from '@/components/layouts/integritas/integritas-upload';
 import SimpleCard from '@/components/simple-card';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';

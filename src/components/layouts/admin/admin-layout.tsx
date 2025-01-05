@@ -3,12 +3,12 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 
 
-import { AdminSidebar } from "@/components/layouts/admin-sidebar";
+import { AdminSidebar } from "@/components/layouts/admin/admin-sidebar";
 import {
     SidebarInset,
     SidebarProvider
 } from "@/components/ui/sidebar";
-import AdminNavbar from "@/components/layouts/admin-navbar";
+import AdminNavbar from "@/components/layouts/admin/admin-navbar";
 
 const AdminLayout: React.FC = () => {
     return (

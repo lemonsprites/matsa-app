@@ -4,7 +4,7 @@ import logoMTs from "@/assets/img/logo.png";
 import * as React from "react";
 
 
-import { AdminSideNav } from "@/components/layouts/admin-sidenav";
+import { AdminSideNav } from "@/components/layouts/admin/admin-sidenav";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
     Sidebar,

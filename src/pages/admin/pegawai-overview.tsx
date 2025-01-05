@@ -1,10 +1,10 @@
-import AdminWrapper from "@/components/layouts/admin-wrapper"
+import AdminWrapper from "@/components/layouts/admin/admin-wrapper"
 
 
-import PegawaiChartKronologis from "@/components/layouts/pegawai-chart-kronologis"
-import PegawaiGender from "@/components/layouts/pegawai-gender"
-import PegawaiSebaran from "@/components/layouts/pegawai-sebaran"
-import PegawaiTkPendidikan from "@/components/layouts/pegawai-tk-pendidikan"
+import PegawaiChartKronologis from "@/components/layouts/kepegawaian/pegawai-chart-kronologis"
+import PegawaiGender from "@/components/layouts/kepegawaian/pegawai-gender"
+import PegawaiSebaran from "@/components/layouts/kepegawaian/pegawai-sebaran"
+import PegawaiTkPendidikan from "@/components/layouts/kepegawaian/pegawai-tk-pendidikan"
 import { fetchGenderCount } from "@/lib/services/pegawai-services"
 import supabase from "@/lib/supabase-client"
 import { useEffect, useState } from "react"

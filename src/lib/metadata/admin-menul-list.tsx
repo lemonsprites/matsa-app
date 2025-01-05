@@ -30,6 +30,10 @@ export const adminMenulist = {
                     url: '/admin/pegawai/manajemen-jabatan'
                 },
                 {
+                    title: "Manajemen Kelas",
+                    url: '/admin/pegawai/manajemen-kelas'
+                },
+                {
                     title: "Laporan/Cetak",
                     url: '/admin/pegawai/laporan'
                 },
