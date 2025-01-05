@@ -1,5 +1,5 @@
-import { Link, useLocation } from "react-router-dom";
 import Construct from '@/assets/img/asset-construction.png';
+import { Link, useLocation } from "react-router-dom";
 
 const AdminNotFound = () => {
   const location = useLocation();

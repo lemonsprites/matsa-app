@@ -25,6 +25,8 @@ const PegawaiOverview = ({ title }: any) => {
   });
 
   useEffect(() => {
+
+
     const fetchData = async () => {
       const { data, error } = await supabase.rpc('get_pegawai_counts');
 

@@ -1,6 +1,6 @@
 import { LayoutGrid, MailCheck, Feather, BookOpen, ShieldCheck, Settings2 } from "lucide-react";
 
-export const adminSidemenu = {
+export const adminMenulist = {
     main: [
         {
             title: "Dashboard",
@@ -15,20 +15,67 @@ export const adminSidemenu = {
             items: [
                 {
                     title: "Overview Pegawai",
-                    url: 'pegawai/overview',
+                    url: '/admin/pegawai',
                 },
                 {
-                    title: "RUH Beban Kerja",
-                    url: 'pegawai/abk-ruh'
+                    title: "Manajemen Pegawai",
+                    url: '/admin/pegawai/manajemen'
                 },
                 {
-                    title: "Monitoring Anjab",
-                    url: 'pegawai/anjab'
+                    title: "Manajemen Mapel Pegawai",
+                    url: '/admin/pegawai/manajemen-mapel'
                 },
                 {
-                    title: "referensi",
-                    url: 'pegawai/ref'
-                }
+                    title: "Manajemen Jabatan",
+                    url: '/admin/pegawai/manajemen-jabatan'
+                },
+                {
+                    title: "Laporan/Cetak",
+                    url: '/admin/pegawai/laporan'
+                },
+                {
+                    title: "Monitoring Jadwal",
+                    url: '/admin/pegawai/monitoring-jadwal'
+                },
+                {
+                    title: "Referensi Kepegawaian",
+                    url: '/admin/pegawai/referensi'
+                },
+            ]
+        },
+        {
+            title: "Sub-Organisasi",
+            url: "#",
+            icon: LayoutGrid,
+            items: [
+                {
+                    title: "Overview",
+                    url: '/admin/pegawai',
+                },
+                {
+                    title: "Manajemen Organisasi",
+                    url: '/admin/pegawai/manajemen'
+                },
+                {
+                    title: "Manajemen Beban Kerja",
+                    url: '/admin/pegawai/manajemen-abk'
+                },
+                {
+                    title: "Manajemen Jabatan",
+                    url: '/admin/pegawai/manajemen-jabatan'
+                },
+                {
+                    title: "Laporan/Cetak",
+                    url: '/admin/pegawai/laporan'
+                },
+                {
+                    title: "Monitoring Jadwal",
+                    url: '/admin/pegawai/monitoring-jadwal'
+                },
+                {
+                    title: "Referensi Kepegawaian",
+                    url: '/admin/pegawai/referensi'
+                },
             ]
         },
         {

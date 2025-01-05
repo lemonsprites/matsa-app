@@ -35,21 +35,21 @@ const LandingFooter = () => {
                 <div>
                     <h3 className="text-lg font-semibold mb-4">Akademik</h3>
                     <ul className="space-y-2">
-                        <li>
+                        <span>
                             <a href="#" className="hover:underline">
                                 Organisasi Intra Sekolah
                             </a>
-                        </li>
-                        <li>
+                        </span>
+                        <span>
                             <a href="#" className="hover:underline">
                                 Gerakan Disiplin Madrasah
                             </a>
-                        </li>
-                        <li>
+                        </span>
+                        <span>
                             <a href="#" className="hover:underline">
                                 Tim Adiwiyata Madrasah
                             </a>
-                        </li>
+                        </span>
                     </ul>
                 </div>
 
@@ -57,21 +57,21 @@ const LandingFooter = () => {
                 <div>
                     <h3 className="text-lg font-semibold mb-4">Tentang Madrasah</h3>
                     <ul className="space-y-2">
-                        <li>
+                        <span>
                             <a href="#" className="hover:underline">
                                 Sejarah Madrasah
                             </a>
-                        </li>
-                        <li>
+                        </span>
+                        <span>
                             <a href="#" className="hover:underline">
                                 Repositori
                             </a>
-                        </li>
-                        <li>
+                        </span>
+                        <span>
                             <a href="#" className="hover:underline">
                                 Profil Dewan Guru
                             </a>
-                        </li>
+                        </span>
                     </ul>
                 </div>
 
@@ -79,21 +79,21 @@ const LandingFooter = () => {
                 <div>
                     <h3 className="text-lg font-semibold mb-4">Hubungi Kami</h3>
                     <ul className="space-y-2">
-                        <li>
+                        <span>
                             <a href="#" className="hover:underline">
                                 Kunjungan Madrasah
                             </a>
-                        </li>
-                        <li>
+                        </span>
+                        <span>
                             <a href="#" className="hover:underline">
                                 Denah Madrasah
                             </a>
-                        </li>
-                        <li>
+                        </span>
+                        <span>
                             <a href="#" className="hover:underline">
                                 Sitemap
                             </a>
-                        </li>
+                        </span>
                     </ul>
                 </div>
             </div>

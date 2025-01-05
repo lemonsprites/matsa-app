@@ -13,7 +13,7 @@ import {
     SidebarMenuButton,
     SidebarRail
 } from "@/components/ui/sidebar";
-import { adminSidemenu } from "@/lib/metadata/admin-sidemenu";
+import { adminMenulist } from "@/lib/metadata/admin-menul-list";
 import { Link } from "react-router-dom";
 
 // This is sample data.
@@ -37,7 +37,7 @@ export function AdminSidebar({ ...props }: React.ComponentProps<typeof Sidebar>)
 
 
                 <SidebarContent className="pb-20">
-                    <AdminSideNav items={adminSidemenu.main} />
+                    <AdminSideNav items={adminMenulist.main} />
                 </SidebarContent>
 
                 <SidebarRail />
