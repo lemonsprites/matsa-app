@@ -1,3 +1,5 @@
+import AppSlot from "@/components/app-slot";
+import AdminWrapper from "@/components/layouts/admin/admin-wrapper";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogFooter, DialogHeader } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -15,7 +17,7 @@ type Pegawai = {
     tk_pendidikan: string; // Tingkat Pendidikan
 };
 
-const PegawaiManajemen = () => {
+const PegawaiManajemen = ({ title }: any) => {
     const [pegawaiList, setPegawaiList] = useState<Pegawai[]>([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [currentData, setCurrentData] = useState<Pegawai | null>(null);
@@ -86,129 +88,130 @@ const PegawaiManajemen = () => {
     }, []);
 
     return (
-        <div className="space-y-4">
-            <div className="flex justify-between items-center">
-                <h2 className="text-2xl font-bold">Manajemen Pegawai</h2>
-                <Button onClick={() => setIsModalOpen(true)}>Tambah Pegawai</Button>
-            </div>
+        <AppSlot title={title}>
+            <AdminWrapper title={title}>
+                <div className="col-span-4">
 
-            <Table>
-                <thead>
-                    <tr>
-                        <th>Nama</th>
-                        <th>Jenis Kelamin</th>
-                        <th>TMT Masuk</th>
-                        <th>Status</th>
-                        <th>Tingkat Pendidikan</th>
-                        <th>Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {pegawaiList.map((item) => (
-                        <tr key={item.id}>
-                            <td>{item.nama}</td>
-                            <td>{item.jenis_kelamin}</td>
-                            <td>{new Date(item.tmt_masuk_satker).toLocaleDateString()}</td>
-                            <td>{item.status ? "Aktif" : "Non-Aktif"}</td>
-                            <td>{item.tk_pendidikan}</td>
-                            <td>
-                                <Button
-                                    variant="outline"
-                                    onClick={() => {
-                                        setCurrentData(item);
-                                        setIsModalOpen(true);
-                                    }}
-                                >
-                                    Edit
-                                </Button>
-                                <Button
-                                    variant="destructive"
-                                    onClick={() => handleDelete(item.id)}
-                                >
-                                    Hapus
-                                </Button>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </Table>
+                    <Button onClick={() => setIsModalOpen(true)}>Tambah Pegawai</Button>
+                    <Table>
+                        <thead>
+                            <tr>
+                                <th>Nama</th>
+                                <th>Jenis Kelamin</th>
+                                <th>TMT Masuk</th>
+                                <th>Status</th>
+                                <th>Tingkat Pendidikan</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {pegawaiList.map((item) => (
+                                <tr key={item.id}>
+                                    <td>{item.nama}</td>
+                                    <td>{item.jenis_kelamin}</td>
+                                    <td>{new Date(item.tmt_masuk_satker).toLocaleDateString()}</td>
+                                    <td>{item.status ? "Aktif" : "Non-Aktif"}</td>
+                                    <td>{item.tk_pendidikan}</td>
+                                    <td>
+                                        <Button
+                                            variant="outline"
+                                            onClick={() => {
+                                                setCurrentData(item);
+                                                setIsModalOpen(true);
+                                            }}
+                                        >
+                                            Edit
+                                        </Button>
+                                        <Button
+                                            variant="destructive"
+                                            onClick={() => handleDelete(item.id)}
+                                        >
+                                            Hapus
+                                        </Button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </Table>
 
-            <Dialog open={isModalOpen} onOpenChange={() => setIsModalOpen(false)}>
-                <DialogHeader>
-                    <h3>{currentData?.id ? "Edit Pegawai" : "Tambah Pegawai"}</h3>
-                </DialogHeader>
-                <DialogContent>
-                    <div className="space-y-4">
-                        <Input
-                            aria-label="Nama"
-                            value={currentData?.nama || ""}
-                            onChange={(e: any) =>
-                                setCurrentData((prev) =>
-                                    prev ? { ...prev, nama: e.target.value } : null
-                                )
-                            }
-                        />
-                        <Select
-                            aria-label="Jenis Kelamin"
-                            value={currentData?.jenis_kelamin || ""}
-                            onValueChange={(e: any) =>
-                                setCurrentData((prev) =>
-                                    prev
-                                        ? { ...prev, jenis_kelamin: e.target.value as Pegawai["jenis_kelamin"] }
-                                        : null
-                                )
-                            }
-                        >
-                            <option value="Laki-Laki">Laki-Laki</option>
-                            <option value="Perempuan">Perempuan</option>
-                        </Select>
-                        <Input
-                            aria-label="TMT Masuk"
-                            type="date"
-                            value={
-                                currentData?.tmt_masuk_satker
-                                    ? new Date(currentData.tmt_masuk_satker).toISOString().split("T")[0]
-                                    : ""
-                            }
-                            onChange={(e: any) =>
-                                setCurrentData((prev) =>
-                                    prev ? { ...prev, tmt_masuk_satker: e.target.value } : null
-                                )
-                            }
-                        />
-                        <Select
-                            aria-label="Status"
-                            value={currentData?.status ? "true" : "false"}
-                            onValueChange={(e: any) =>
-                                setCurrentData((prev) =>
-                                    prev
-                                        ? { ...prev, status: e.target.value === "true" }
-                                        : null
-                                )
-                            }
-                        >
-                            <option value="true">Aktif</option>
-                            <option value="false">Non-Aktif</option>
-                        </Select>
-                        <Input
-                            aria-label="Tingkat Pendidikan"
-                            value={currentData?.tk_pendidikan || ""}
-                            onChange={(e: any) =>
-                                setCurrentData((prev) =>
-                                    prev ? { ...prev, tk_pendidikan: e.target.value } : null
-                                )
-                            }
-                        />
-                    </div>
-                </DialogContent>
-                <DialogFooter>
-                    <Button onClick={handleSave}>Simpan</Button>
-                    <Button variant="outline" onClick={() => setIsModalOpen(false)}>
-                        Batal
-                    </Button>
-                </DialogFooter>
-            </Dialog>
-        </div>
+                    <Dialog open={isModalOpen} onOpenChange={() => setIsModalOpen(false)}>
+                        <DialogHeader>
+                            <h3>{currentData?.id ? "Edit Pegawai" : "Tambah Pegawai"}</h3>
+                        </DialogHeader>
+                        <DialogContent>
+                            <div className="space-y-4">
+                                <Input
+                                    aria-label="Nama"
+                                    value={currentData?.nama || ""}
+                                    onChange={(e: any) =>
+                                        setCurrentData((prev) =>
+                                            prev ? { ...prev, nama: e.target.value } : null
+                                        )
+                                    }
+                                />
+                                <Select
+                                    aria-label="Jenis Kelamin"
+                                    value={currentData?.jenis_kelamin || ""}
+                                    onValueChange={(e: any) =>
+                                        setCurrentData((prev) =>
+                                            prev
+                                                ? { ...prev, jenis_kelamin: e.target.value as Pegawai["jenis_kelamin"] }
+                                                : null
+                                        )
+                                    }
+                                >
+                                    <option value="Laki-Laki">Laki-Laki</option>
+                                    <option value="Perempuan">Perempuan</option>
+                                </Select>
+                                <Input
+                                    aria-label="TMT Masuk"
+                                    type="date"
+                                    value={
+                                        currentData?.tmt_masuk_satker
+                                            ? new Date(currentData.tmt_masuk_satker).toISOString().split("T")[0]
+                                            : ""
+                                    }
+                                    onChange={(e: any) =>
+                                        setCurrentData((prev) =>
+                                            prev ? { ...prev, tmt_masuk_satker: e.target.value } : null
+                                        )
+                                    }
+                                />
+                                <Select
+                                    aria-label="Status"
+                                    value={currentData?.status ? "true" : "false"}
+                                    onValueChange={(e: any) =>
+                                        setCurrentData((prev) =>
+                                            prev
+                                                ? { ...prev, status: e.target.value === "true" }
+                                                : null
+                                        )
+                                    }
+                                >
+                                    <option value="true">Aktif</option>
+                                    <option value="false">Non-Aktif</option>
+                                </Select>
+                                <Input
+                                    aria-label="Tingkat Pendidikan"
+                                    value={currentData?.tk_pendidikan || ""}
+                                    onChange={(e: any) =>
+                                        setCurrentData((prev) =>
+                                            prev ? { ...prev, tk_pendidikan: e.target.value } : null
+                                        )
+                                    }
+                                />
+                            </div>
+                        </DialogContent>
+                        <DialogFooter>
+                            <Button onClick={handleSave}>Simpan</Button>
+                            <Button variant="outline" onClick={() => setIsModalOpen(false)}>
+                                Batal
+                            </Button>
+                        </DialogFooter>
+                    </Dialog>
+                </div>
+            </AdminWrapper>
+        </AppSlot>
     );
 };
 

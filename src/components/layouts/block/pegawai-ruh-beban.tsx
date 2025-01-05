@@ -6,6 +6,8 @@ import { Input } from "@/components/ui/input";
 import { Select } from "@/components/ui/select";
 import { Table } from "@/components/ui/table";
 import supabase from "@/lib/supabase-client";
+import AppSlot from "@/components/app-slot";
+import AdminWrapper from "@/components/layouts/admin/admin-wrapper";
 
 type BebanKerja = {
   id: number;
@@ -14,7 +16,7 @@ type BebanKerja = {
   status: boolean;
 };
 
-const RUHBebanKerja = () => {
+const RUHBebanKerja = ({ title }: any) => {
   const [bebanKerjaList, setBebanKerjaList] = useState<BebanKerja[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentData, setCurrentData] = useState<BebanKerja | null>(null);
@@ -83,98 +85,102 @@ const RUHBebanKerja = () => {
   }, []);
 
   return (
-    <div className="space-y-4">
-      <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold">RUH Beban Kerja</h2>
-        <Button onClick={() => setIsModalOpen(true)}>Tambah Beban Kerja</Button>
-      </div>
-
-      <Table>
-        <thead>
-          <tr>
-            <th>Jenis Pekerjaan</th>
-            <th>Durasi (Jam)</th>
-            <th>Status</th>
-            <th>Aksi</th>
-          </tr>
-        </thead>
-        <tbody>
-          {bebanKerjaList.map((item) => (
-            <tr key={item.id}>
-              <td>{item.jenisPekerjaan}</td>
-              <td>{item.durasiJam}</td>
-              <td>{item.status ? "Aktif" : "Non-Aktif"}</td>
-              <td>
-                <Button
-                  variant="outline"
-                  onClick={() => {
-                    setCurrentData(item);
-                    setIsModalOpen(true);
-                  }}
-                >
-                  Edit
-                </Button>
-                <Button
-                  variant="destructive"
-                  onClick={() => handleDelete(item.id)}
-                >
-                  Hapus
-                </Button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
-
-      <Dialog open={isModalOpen} onOpenChange={() => setIsModalOpen(false)}>
-        <DialogHeader>
-          <h3>{currentData?.id ? "Edit Beban Kerja" : "Tambah Beban Kerja"}</h3>
-        </DialogHeader>
-        <DialogContent>
-          <div className="space-y-4">
-            <Input
-              aria-label="Jenis Pekerjaan"
-              value={currentData?.jenisPekerjaan || ""}
-              onChange={(e:any) =>
-                setCurrentData((prev) =>
-                  prev ? { ...prev, jenisPekerjaan: e.target.value } : null
-                )
-              }
-            />
-            <Input
-              aria-label="Durasi (Jam)"
-              type="number"
-              value={currentData?.durasiJam || 0}
-              onChange={(e:any) =>
-                setCurrentData((prev) =>
-                  prev ? { ...prev, durasiJam: Number(e.target.value) } : null
-                )
-              }
-            />
-            <Select
-              aria-label="Status"
-              value={currentData?.status ? "true" : "false"}
-              onValueChange={(e:any) =>
-                setCurrentData((prev) =>
-                  prev
-                    ? { ...prev, status: e.target.value === "true" }
-                    : null
-                )
-              }
-            >
-              <option value="true">Aktif</option>
-              <option value="false">Non-Aktif</option>
-            </Select>
+    <AppSlot title={title}>
+      <AdminWrapper title={title}>
+        <div className="space-y-4">
+          <div className="flex justify-between items-center">
+            <h2 className="text-2xl font-bold">RUH Beban Kerja</h2>
+            <Button onClick={() => setIsModalOpen(true)}>Tambah Beban Kerja</Button>
           </div>
-        </DialogContent>
-        <DialogFooter>
-          <Button onClick={handleSave}>Simpan</Button>
-          <Button variant="outline" onClick={() => setIsModalOpen(false)}>
-            Batal
-          </Button>
-        </DialogFooter>
-      </Dialog>
-    </div>
+
+          <Table>
+            <thead>
+              <tr>
+                <th>Jenis Pekerjaan</th>
+                <th>Durasi (Jam)</th>
+                <th>Status</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody>
+              {bebanKerjaList.map((item) => (
+                <tr key={item.id}>
+                  <td>{item.jenisPekerjaan}</td>
+                  <td>{item.durasiJam}</td>
+                  <td>{item.status ? "Aktif" : "Non-Aktif"}</td>
+                  <td>
+                    <Button
+                      variant="outline"
+                      onClick={() => {
+                        setCurrentData(item);
+                        setIsModalOpen(true);
+                      }}
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      variant="destructive"
+                      onClick={() => handleDelete(item.id)}
+                    >
+                      Hapus
+                    </Button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+
+          <Dialog open={isModalOpen} onOpenChange={() => setIsModalOpen(false)}>
+            <DialogHeader>
+              <h3>{currentData?.id ? "Edit Beban Kerja" : "Tambah Beban Kerja"}</h3>
+            </DialogHeader>
+            <DialogContent>
+              <div className="space-y-4">
+                <Input
+                  aria-label="Jenis Pekerjaan"
+                  value={currentData?.jenisPekerjaan || ""}
+                  onChange={(e: any) =>
+                    setCurrentData((prev) =>
+                      prev ? { ...prev, jenisPekerjaan: e.target.value } : null
+                    )
+                  }
+                />
+                <Input
+                  aria-label="Durasi (Jam)"
+                  type="number"
+                  value={currentData?.durasiJam || 0}
+                  onChange={(e: any) =>
+                    setCurrentData((prev) =>
+                      prev ? { ...prev, durasiJam: Number(e.target.value) } : null
+                    )
+                  }
+                />
+                <Select
+                  aria-label="Status"
+                  value={currentData?.status ? "true" : "false"}
+                  onValueChange={(e: any) =>
+                    setCurrentData((prev) =>
+                      prev
+                        ? { ...prev, status: e.target.value === "true" }
+                        : null
+                    )
+                  }
+                >
+                  <option value="true">Aktif</option>
+                  <option value="false">Non-Aktif</option>
+                </Select>
+              </div>
+            </DialogContent>
+            <DialogFooter>
+              <Button onClick={handleSave}>Simpan</Button>
+              <Button variant="outline" onClick={() => setIsModalOpen(false)}>
+                Batal
+              </Button>
+            </DialogFooter>
+          </Dialog>
+        </div>
+      </AdminWrapper>
+    </AppSlot>
   );
 };
 

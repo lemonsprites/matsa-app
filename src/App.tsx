@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './App.css';
 import { useEffect, useState } from 'react';
 import supabase from '@/lib/supabase-client';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 
 
 function App() {
@@ -44,12 +45,15 @@ function App() {
   });
 
   return (
-    <RouterProvider
-      router={router}
-      future={{
-        v7_startTransition: true,
-      }}
-    />
+    <>
+      <RouterProvider
+        router={router}
+        future={{
+          v7_startTransition: true,
+        }}
+      />
+      <SpeedInsights />
+    </>
   );
 }
 

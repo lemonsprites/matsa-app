@@ -45,6 +45,10 @@ export const adminMenulist = {
                     title: "Referensi Kepegawaian",
                     url: '/admin/pegawai/referensi'
                 },
+                {
+                    title: "Referensi Kurikulum",
+                    url: '/admin/pegawai/kurikulum'
+                },
             ]
         },
         {

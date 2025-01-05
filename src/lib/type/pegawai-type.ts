@@ -11,3 +11,10 @@ export interface Pegawai {
     id: number;
     name: string;
 }
+
+export interface Kurikulum {
+    id: number;
+    nama_kurikulum: string;
+    berlaku_mulai: string;
+    status: boolean;
+}

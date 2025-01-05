@@ -1,10 +1,11 @@
+import AppSlot from '@/components/app-slot'
 import Slideshow from '@/components/layouts/landing-slideshow'
 
-const LandingPage = () => {
+const LandingPage = ({title}: any) => {
   return (
-    <>
-        <Slideshow/>
-    </>
+    <AppSlot title={title}>
+      <Slideshow />
+    </ AppSlot>
   )
 }
 

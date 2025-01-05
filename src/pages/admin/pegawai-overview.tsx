@@ -1,3 +1,4 @@
+import AppSlot from "@/components/app-slot"
 import AdminWrapper from "@/components/layouts/admin/admin-wrapper"
 
 
@@ -68,14 +69,18 @@ const PegawaiOverview = ({ title }: any) => {
   const totalPegawai = pegawaiData.reduce((sum, item) => sum + item.jml_pegawai, 0);
 
   return (
-    <AdminWrapper title={title}>
+    <AppSlot title={title}>
+      <AdminWrapper title={title}>
 
-      <PegawaiSebaran pegData={pegawaiData} totalPeg={totalPegawai} />
-      <PegawaiChartKronologis totalPegawai={genderData} />
-      <PegawaiTkPendidikan classVar="col-span-3"/>
-      <PegawaiGender data={genderData} totalPegawai={totalPegawai} classVar="flex flex-col col-span-1"/>
-      
-    </AdminWrapper>
+        <PegawaiSebaran pegData={pegawaiData} totalPeg={totalPegawai} />
+        <PegawaiChartKronologis totalPegawai={genderData} />
+        <PegawaiTkPendidikan classVar="col-span-3" />
+        <PegawaiGender data={genderData} totalPegawai={totalPegawai} classVar="flex flex-col col-span-1" />
+
+      </AdminWrapper>
+
+
+    </AppSlot>
   )
 }
 
