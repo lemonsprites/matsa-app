@@ -1,194 +1,205 @@
-import { useState, useEffect } from "react";
-import supabase from "@/lib/supabase-client";
-import PegawaiModalJadwalAdd from "@/components/layouts/block/pegawai-modal-jadwal-add";
 
-const PegawaiJadwalPreview = () => {
-    const [jadwal, setJadwal] = useState<any[]>([]); // Schedule data state
-    const [teachers, setTeachers] = useState<any[]>([]); // Teachers data state
-    const [classes, setClasses] = useState<any[]>([]); // Classes data state
-    const [generatedSchedules, setGeneratedSchedules] = useState<any[]>([]); // Generated schedules state
-    const [showModal, setShowModal] = useState(false);
-    const [selectedSlot, setSelectedSlot] = useState<any>(null);
-    const [isSaving, setIsSaving] = useState(false); // To control saving state
+import Toast from '@/components/toast';
+import supabase from '@/lib/supabase-client';
+import { useEffect, useState } from 'react';
+import CalendarHeatmap from 'react-calendar-heatmap';
+import 'react-calendar-heatmap/dist/styles.css';
 
-    // Constraints for daily teacher teaching hours
-    const min_teacher_jtm_per_day = 2; // Example min
-    const max_teacher_jtm_per_day = 4; // Example max
+export const fetchTeachingScheduleData = async (idPegawai: any) => {
+    // Ambil data tugas tambahan dan JTM yang terkait
+    const { data: tb_tugas_tambahan, error: tugasError } = await supabase
+        .from('tb_tugas_tambahan')
+        .select('created_at, tb_jabatan(jtm)')
+        .eq('id_pegawai', idPegawai);
+
+    // Ambil data jadwal mengajar
+    const { data: jadwalMengajar, error: jadwalError } = await supabase
+        .from('tb_jadwal')
+        .select('created_at AS tanggal, jtm')
+        .eq('id_pegawai', idPegawai);
+
+    // Tangani kesalahan jika ada
+    if (tugasError || jadwalError) {
+        console.error('Error fetching data:', tugasError || jadwalError);
+        throw new Error('Failed to fetch data');
+    }
+
+    // Gabungkan data dari tugas tambahan dan jadwal mengajar
+    const combinedData = [
+        ...tb_tugas_tambahan.map((tugas: any) => ({
+            date: tugas.created_at,
+            count: tugas.tb_jabatan.jtm,
+        })),
+        ...jadwalMengajar.map((jadwal: any) => ({
+            date: jadwal.tanggal,
+            count: jadwal.jtm,
+        })),
+    ];
+
+    return combinedData;
+};
+
+const PegawaiJadwalManajemen = ({ idPegawai = 1 }: any) => {
+    const [heatmapData, setHeatmapData] = useState<any[]>([]);
+    const [jadwalPreview, setJadwalPreview] = useState<any[]>([]); // State for temporary schedule
+    const [isConfirmed, setIsConfirmed] = useState<boolean>(false); // State for confirmation
 
     useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const data = await fetchTeachingScheduleData(idPegawai);
+                setHeatmapData(data);
+            } catch (error) {
+                console.error('Error loading heatmap data:', error);
+            }
+        };
+
         fetchData();
-    }, []);
+    }, [idPegawai]);
 
-    const fetchData = async () => {
-        // Fetch teachers, classes, and jadwal data
-        const { data: teacherData, error: teacherError } = await supabase
-            .from("tb_pegawai")
-            .select("*");
+    const generateSchedule = async () => {
+        try {
+            const { data: pegawai, error: pegawaiError } = await supabase.from('tb_pegawai').select('*');
+            const { data: kelas, error: kelasError } = await supabase.from('tb_kelas').select('*');
+            const { data: mapel, error: mapelError } = await supabase.from('tb_mapel').select('*');
+            const { data: tugasTambahan, error: tugasTambahanError } = await supabase.from('tb_tugas_tambahan').select('*');
 
-        if (teacherError) {
-            console.error("Error fetching teachers:", teacherError);
-        } else {
-            setTeachers(teacherData);
-        }
+            if (pegawaiError || kelasError || mapelError || tugasTambahanError) {
+                Toast({ title: "Error", variant: 'error', desc: 'Gagal memuat data untuk jadwal preview.' });
+                return;
+            }
 
-        const { data: classData, error: classError } = await supabase
-            .from("tb_kelas")
-            .select("*");
+            const hariList = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat'];
+            const preview: any[] = [];
+            const minMengajar = 2;
 
-        if (classError) {
-            console.error("Error fetching classes:", classError);
-        } else {
-            setClasses(classData);
-        }
+            pegawai.forEach((pgw) => {
+                const ekuivalensiJTM = tugasTambahan
+                    .filter((tugas) => tugas.id_pegawai === pgw.id)
+                    .reduce((sum, tugas) => sum + tugas.jtm, 0);
 
-        const { data: jadwalData, error: jadwalError } = await supabase
-            .from("tb_jadwal")
-            .select("*");
+                const totalJTM = pgw.jtm + ekuivalensiJTM;
+                let remainingJTM = totalJTM;
 
-        if (jadwalError) {
-            console.error("Error fetching jadwal:", jadwalError);
-        } else {
-            setJadwal(jadwalData);
-        }
-    };
+                let currentMengajar = 0;
+                for (const hari of hariList) {
+                    if (currentMengajar >= minMengajar) break;
+                    for (let jam = 1; jam <= 10; jam++) {
+                        if (currentMengajar >= minMengajar) break;
 
-    const findAvailableJtmForTeacher = (teacher: any, day: string) => {
-        const teacherSchedule = jadwal.filter(
-            (entry) => entry.id_pegawai === teacher.id
-        );
+                        const kelasRandom = kelas[Math.floor(Math.random() * kelas.length)];
+                        const mapelRandom = mapel[Math.floor(Math.random() * mapel.length)];
 
-        const totalJtmForWeek = teacherSchedule.reduce((acc, curr) => acc + curr.jtm, 0);
-        const availableJtm = Math.max(0, 24 - totalJtmForWeek);
-
-        const teacherDailySchedule = teacherSchedule.filter((entry) => entry.hari === day);
-        const totalJtmForDay = teacherDailySchedule.reduce((acc, curr) => acc + curr.jtm, 0);
-
-        return { availableJtm, totalJtmForDay };
-    };
-
-    const generateSchedules = () => {
-        const schedules: any[] = [];
-        const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
-
-        daysOfWeek.forEach((day) => {
-            classes.forEach((classItem) => {
-                let assignedTeacher = null;
-
-                for (let i = 0; i < teachers.length; i++) {
-                    const teacher = teachers[i];
-                    const { availableJtm, totalJtmForDay } = findAvailableJtmForTeacher(teacher, day);
-
-                    if (
-                        availableJtm >= classItem.jtm &&
-                        totalJtmForDay + classItem.jtm <= max_teacher_jtm_per_day &&
-                        totalJtmForDay + classItem.jtm >= min_teacher_jtm_per_day
-                    ) {
-                        schedules.push({
-                            id_pegawai: teacher.id,
-                            id_kelas: classItem.id,
-                            id_mapel: classItem.id_mapel,
-                            hari: day,
-                            jtm: classItem.jtm,
+                        preview.push({
+                            id_pegawai: pgw.id,
+                            id_mapel: mapelRandom.id,
+                            id_kelas: kelasRandom.id,
+                            hari,
+                            jam_slot: jam,
+                            jtm: 1,
                         });
 
-                        break;
+                        currentMengajar++;
+                        remainingJTM--;
                     }
                 }
 
-                if (!assignedTeacher) {
-                    console.log(`No available teacher for class ${classItem.id} on ${day}`);
+                for (const hari of hariList) {
+                    if (remainingJTM <= 0) break;
+                    for (let jam = 1; jam <= 10; jam++) {
+                        if (remainingJTM <= 0) break;
+
+                        const kelasRandom = kelas[Math.floor(Math.random() * kelas.length)];
+                        const mapelRandom = mapel[Math.floor(Math.random() * mapel.length)];
+
+                        preview.push({
+                            id_pegawai: pgw.id,
+                            id_mapel: mapelRandom.id,
+                            id_kelas: kelasRandom.id,
+                            hari,
+                            jam_slot: jam,
+                            jtm: 1,
+                        });
+
+                        remainingJTM--;
+                    }
                 }
             });
-        });
 
-        setGeneratedSchedules(schedules); // Store generated schedules in state
-    };
-
-    const handleSaveSchedules = async () => {
-        setIsSaving(true);
-        try {
-            // Save schedules to the database
-            const { error } = await supabase
-                .from("tb_jadwal")
-                .upsert(generatedSchedules);
-
-            if (error) {
-                console.error("Error saving schedules:", error);
-            } else {
-                alert("Schedules saved successfully!");
-            }
+            setJadwalPreview(preview);
         } catch (error) {
-            console.error("Error saving schedules:", error);
-        } finally {
-            setIsSaving(false);
+            Toast({ title: "Error", variant: 'error', desc: 'Gagal menghasilkan jadwal preview.' });
         }
     };
 
-    const handleSlotClick = (day: string, slot: string, slotData: any) => {
-        setSelectedSlot(slotData);
-        setShowModal(true);
-    };
+    const saveSchedule = async () => {
+        const { error } = await supabase.from('tb_jadwal').insert(jadwalPreview);
 
-    const handleSaveSlot = (formData: any) => {
-        console.log("Saving schedule", formData);
-        setShowModal(false);
+        if (error) {
+            Toast({ title: "Error", variant: 'error', desc: 'Gagal menyimpan jadwal!' });
+            return;
+        }
+
+        Toast({ title: "Success", variant: 'success', desc: 'Jadwal berhasil disimpan!' });
+        setJadwalPreview([]);
+        setIsConfirmed(false);
     };
 
     return (
-        <div>
-            {/* Button to generate schedules */}
-            <button
-                className="bg-blue-500 text-white py-2 px-4 rounded mb-4"
-                onClick={generateSchedules}
-            >
-                Generate Schedules for All Teachers
-            </button>
-
-            {/* Preview of generated schedules */}
-            {generatedSchedules.length > 0 && (
-                <div>
-                    <div className="grid grid-cols-5 gap-4">
-                        {generatedSchedules.map((schedule) => (
-                            <div
-                                key={`${schedule.id_pegawai}-${schedule.id_kelas}-${schedule.hari}`}
-                                className="border p-2 flex items-center justify-center cursor-pointer"
-                                onClick={() => handleSlotClick(schedule.hari, schedule.jtm, schedule)}
-                            >
-                                <div className="text-sm text-center">
-                                    <div>
-                                        Teacher:{" "}
-                                        {teachers.find((t) => t.id === schedule.id_pegawai)?.nama}
-                                    </div>
-                                    <div>
-                                        Class: {classes.find((c) => c.id === schedule.id_kelas)?.nama}
-                                    </div>
-                                    <div>Subject: {schedule.id_mapel}</div>
-                                    <div>Time Slot: {schedule.jtm} JTM</div>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-
-                    {/* Save Button */}
-                    <button
-                        className="bg-green-500 text-white py-2 px-4 rounded mt-4"
-                        onClick={handleSaveSchedules}
-                        disabled={isSaving}
-                    >
-                        {isSaving ? "Saving..." : "Save to Database"}
-                    </button>
-                </div>
+        <div className="p-4">
+            <h2 className="text-lg font-bold mb-4">Teaching Schedule Heatmap</h2>
+            {!jadwalPreview.length ? (
+                <button
+                    onClick={generateSchedule}
+                    className="bg-blue-500 text-white px-4 py-2 rounded"
+                >
+                    Generate Preview Jadwal
+                </button>
+            ) : (
+                <>
+                    <CalendarHeatmap
+                        startDate={new Date('2025-01-01')}
+                        endDate={new Date('2025-12-31')}
+                        values={heatmapData}
+                        showWeekdayLabels
+                        tooltipDataAttrs={(value) => {
+                            if (!value || !value.date) {
+                                return { 'aria-label': 'No data available' }; // Conform to the expected attribute structure
+                            }
+                            return { 'aria-label': `Date: ${value.date}, JTM: ${value.count}` }; // Use a valid HTML attribute
+                        }}
+                        classForValue={(value) => {
+                            if (!value || !value.count) {
+                                return 'color-empty';
+                            }
+                            if (value.count <= 5) {
+                                return 'color-scale-1';
+                            } else if (value.count <= 10) {
+                                return 'color-scale-2';
+                            } else {
+                                return 'color-scale-3';
+                            }
+                        }}
+                    />
+                    {!isConfirmed ? (
+                        <button
+                            onClick={() => setIsConfirmed(true)}
+                            className="bg-yellow-500 text-white px-4 py-2 rounded mt-4"
+                        >
+                            Konfirmasi Jadwal
+                        </button>
+                    ) : (
+                        <button
+                            onClick={saveSchedule}
+                            className="bg-green-500 text-white px-4 py-2 rounded mt-4"
+                        >
+                            Simpan Jadwal
+                        </button>
+                    )}
+                </>
             )}
-
-            {/* Modal for adding or editing schedules */}
-            <PegawaiModalJadwalAdd
-                show={showModal}
-                onClose={() => setShowModal(false)}
-                onSave={handleSaveSlot}
-                selectedSlot={selectedSlot}
-            />
         </div>
     );
 };
 
-export default PegawaiJadwalPreview;
+export default PegawaiJadwalManajemen;

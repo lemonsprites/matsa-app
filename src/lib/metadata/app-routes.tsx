@@ -1,7 +1,7 @@
 import AdminLayout from '@/components/layouts/admin/admin-layout';
 import AdminNotFound from "@/components/layouts/admin/admin-not-found";
 import RUHBebanKerja from "@/components/layouts/block/pegawai-ruh-beban";
-import PegawaiJadwalPreview from "@/components/layouts/kepegawaian/pegawai-jadwal-preview";
+import PegawaiJadwalManajemen from '@/components/layouts/kepegawaian/pegawai-jadwal-preview';
 import PegawaiKurikulum from "@/components/layouts/kepegawaian/pegawai-kurikulum";
 import PegawaiKurikulumJTM from "@/components/layouts/kepegawaian/pegawai-kurikulum-jtm";
 import PegawaiLaporan from "@/components/layouts/kepegawaian/pegawai-laporan";
@@ -54,7 +54,7 @@ export const appRoutes: RouteObject[] = [
       { path: "pegawai/manajemen-jabatan", element: <PegawaiManajemenJabatan /> },
       { path: "pegawai/manajemen-kelas", element: <PegawaiManajemenKelas /> },
       { path: "pegawai/laporan", element: <PegawaiLaporan /> },
-      { path: "pegawai/monitoring-jadwal", element: <PegawaiJadwalPreview /> },
+      { path: "pegawai/monitoring-jadwal", element: <PegawaiJadwalManajemen /> },
       { path: "pegawai/referensi", element: <PegawaiReferensi /> },
       { path: "pegawai/kurikulum", element: <PegawaiKurikulum title="Referensi Kurikulum" /> },
       { path: "pegawai/kurikulum/:idKurikulum", element: <PegawaiKurikulumJTM title="Referensi Kurikulum" /> },

@@ -1,7 +1,7 @@
 import supabase from '@/lib/supabase-client';
 import React, { useState, useEffect } from 'react';
 
-const JadwalForm = () => {
+const PegawaiJadwalManajemen = () => {
     const [pegawai, setPegawai] = useState<any[]>([]);
     const [kelas, setKelas] = useState<any[]>([]);
     const [mapel, setMapel] = useState<any[]>([]);
@@ -101,4 +101,4 @@ const JadwalForm = () => {
     );
 };
 
-export default JadwalForm;
+export default PegawaiJadwalManajemen;
