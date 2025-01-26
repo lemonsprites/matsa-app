@@ -1,9 +1,9 @@
 // src/pages/pegawai/EditPegawaiModal.tsx
-import React, { useState } from "react";
+import { useState } from "react";
 
-import supabase from "@/lib/supabase-client";
 import { Dialog } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import supabase from "@/lib/supabase-client";
 
 export const PegawaiModalEdit = ({ data, onClose, onRefresh }: any) => {
   const [form, setForm] = useState({

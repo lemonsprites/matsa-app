@@ -16,9 +16,22 @@ const comments = [
     { author: 'Charlie Green', comment: 'Looking forward to reading more articles like this!' },
 ];
 
+type Article = {
+    id: string
+    title: string
+    author: string
+    created_at: string
+    content: string
+    tags: string[]
+    updated_at: string
+    user_profiles: {
+        display_name: string
+    }
+}
+
 const ArtikelPage = () => {
     const { slug } = useParams<{ slug: string }>();
-    const [article, setArticle] = useState<any | null>(null);
+    const [article, setArticle] = useState<Article | null>(null);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
@@ -35,10 +48,10 @@ const ArtikelPage = () => {
                 // Safely handle missing author
                 const postWithAuthor = {
                     ...data,
-                    author: data.user_profiles ? data.user_profiles.display_name : "Unknown",
+                    author: data.user_profiles ? data.user_profiles : "Unknown",
                 };
 
-                setArticle(postWithAuthor);
+                setArticle(postWithAuthor as any);
             }
         };
 

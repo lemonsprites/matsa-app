@@ -1,8 +1,8 @@
 // src/pages/pegawai/AddPegawaiModal.tsx
-import React, { useState } from "react";
+import { Dialog } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import supabase from "@/lib/supabase-client";
-import { Dialog } from "@/components/ui/dialog";
+import { useState } from "react";
 
 export const PegawaiModalAdd = ({ onClose, onRefresh }: any) => {
   const [form, setForm] = useState({ name: "", nip: "", position: "", active: true });

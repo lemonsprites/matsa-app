@@ -11,7 +11,7 @@ const AdminArtikelEdit = () => {
     const { id } = useParams<{ id: string }>();
 
     const [title, setTitle] = useState("");
-    const [author, setAuthor] = useState("");
+    const [, setAuthor] = useState("");
     const [content, setContent] = useState("");
     const [isLoading, setIsLoading] = useState(false);
 

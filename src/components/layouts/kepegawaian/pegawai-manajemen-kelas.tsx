@@ -27,7 +27,7 @@ type Assignments = {
 
 const AssignTeacherToGrade = () => {
     const [grades, setGrades] = useState<string[]>([]); // List of grades
-    const [kelasByGrade, setKelasByGrade] = useState<Record<string, Kelas[]>>({});
+    const [, setKelasByGrade] = useState<Record<string, Kelas[]>>({});
     const [teachers, setTeachers] = useState<Teacher[]>([]); // List of teachers
     const [assignments, setAssignments] = useState<Assignments>({}); // Assignments
     const [activeGrade, setActiveGrade] = useState<string>("");

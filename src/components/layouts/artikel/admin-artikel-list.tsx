@@ -6,11 +6,8 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
+  TooltipProvider
+} from "@/components/ui/tooltip";
 
 type Artikel = {
   id: number;

@@ -24,7 +24,11 @@ export const generateJadwal = (
                         pegawaiId: pegawaiItem.id,
                         mapelId: mapel.id,
                         hari: hari,
-                        jam: 1, // Satu jam per jadwal
+                        jam: 1,
+                        kelas: "",
+                        jamMulai: 0,
+                        durasiJam: 0,
+                        mapel: ""
                     });
 
                     // Kurangi jam yang belum dijadwalkan

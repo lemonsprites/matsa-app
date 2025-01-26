@@ -30,7 +30,7 @@ const chartConfig = {
   
 
 
-const PegawaiChartKronologis = ({classVar, totalPegawai}:any) => {
+const PegawaiChartKronologis = ({totalPegawai}:any) => {
 
     const [pegawaiData, setPegawaiData] = useState<
         { year: string; male: number; female: number }[]

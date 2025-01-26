@@ -70,8 +70,6 @@ interface Jadwal {
                 {hariList.map((hari) => {
                   // Ambil jadwal pegawai untuk hari tertentu
                   const jadwalForHari = getJadwalForPegawai(pegawaiItem.id, hari);
-                  const jumlahJam = jadwalForHari.reduce((acc, item) => acc + item.durasiJam, 0) || null; // Menghitung jumlah jam, jika tidak ada set null
-                  const tugasTambahan = jadwalForHari.map((item) => item.tugasTambahan).filter(Boolean).join(", ") || null;  // Jika tidak ada, set null
                   
                   return (
                     <td key={hari} className="px-4 py-2">
