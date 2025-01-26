@@ -1,7 +1,14 @@
+import AppSlot from "@/components/app-slot"
+import AdminWrapper from "@/components/layouts/admin/admin-wrapper";
 
-const AdminDashboard = () => {
+const AdminDashboard = ({ title }: any) => {
   return (
-    <div>DashboardPage</div>
+    <AppSlot title={title}>
+      <AdminWrapper title={title}>
+        <div>DashboardPage</div>
+
+      </AdminWrapper>
+    </AppSlot>
   )
 }
 

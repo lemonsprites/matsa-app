@@ -1,9 +1,9 @@
 import {
-    NavigationMenuItem,
-    NavigationMenuLink,
-    navigationMenuTriggerStyle
+  NavigationMenuItem,
+  navigationMenuTriggerStyle
 } from "@/components/ui/navigation-menu";
 import React from "react";
+import { Link } from "react-router-dom";
 
 interface MenuItemProps {
   href: string;
@@ -13,11 +13,10 @@ interface MenuItemProps {
 const MenuItem: React.FC<MenuItemProps> = ({ href, label }) => {
   return (
     <NavigationMenuItem>
-      <a href={href}>
-        <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-          {label}
-        </NavigationMenuLink>
-      </a>
+
+      <Link className={navigationMenuTriggerStyle()} to={href}>
+        {label}
+      </Link>
     </NavigationMenuItem>
   );
 };

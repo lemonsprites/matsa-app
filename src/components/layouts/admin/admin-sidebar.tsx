@@ -4,7 +4,7 @@ import logoMTs from "@/assets/img/logo.png";
 import * as React from "react";
 
 
-import { AdminSideNav } from "@/components/layouts/admin-sidenav";
+import { AdminSideNav } from "@/components/layouts/admin/admin-sidenav";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
     Sidebar,
@@ -13,7 +13,7 @@ import {
     SidebarMenuButton,
     SidebarRail
 } from "@/components/ui/sidebar";
-import { adminSidemenu } from "@/lib/metadata/admin-sidemenu";
+import { adminMenulist } from "@/lib/metadata/admin-menu-list";
 import { Link } from "react-router-dom";
 
 // This is sample data.
@@ -37,7 +37,7 @@ export function AdminSidebar({ ...props }: React.ComponentProps<typeof Sidebar>)
 
 
                 <SidebarContent className="pb-20">
-                    <AdminSideNav items={adminSidemenu.main} />
+                    <AdminSideNav items={adminMenulist.main} />
                 </SidebarContent>
 
                 <SidebarRail />

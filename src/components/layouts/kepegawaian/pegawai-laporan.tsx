@@ -1,0 +1,8 @@
+
+const PegawaiLaporan = () => {
+  return (
+    <div>PegawaiLaporan</div>
+  )
+}
+
+export default PegawaiLaporan
