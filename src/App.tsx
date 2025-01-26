@@ -45,7 +45,7 @@ function App() {
   });
 
   return (
-    <>
+    <div className='bg-gray-50'>
       <RouterProvider
         router={router}
         future={{
@@ -53,7 +53,7 @@ function App() {
         }}
       />
       <SpeedInsights />
-    </>
+    </div>
   );
 }
 

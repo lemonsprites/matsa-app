@@ -1,5 +1,8 @@
 import AdminLayout from '@/components/layouts/admin/admin-layout';
 import AdminNotFound from "@/components/layouts/admin/admin-not-found";
+import AdminArtikelAdd from '@/components/layouts/artikel/admin-artikel-add';
+import AdminArtikelEdit from '@/components/layouts/artikel/admin-artikel-edit';
+import AdminArtikelList from '@/components/layouts/artikel/admin-artikel-list';
 import RUHBebanKerja from "@/components/layouts/block/pegawai-ruh-beban";
 import PegawaiJadwalManajemen from '@/components/layouts/kepegawaian/pegawai-jadwal-preview';
 import PegawaiKurikulum from "@/components/layouts/kepegawaian/pegawai-kurikulum";
@@ -15,9 +18,11 @@ import AdminDashboard from '@/pages/admin/admin-dashboard';
 import IntegritasIkhtisar from '@/pages/admin/integritas-ikhtisar';
 import PegawaiOverview from '@/pages/admin/pegawai-overview';
 import SuratOverview from "@/pages/admin/surat-overview";
-import ZonaIntegritas from '@/pages/integritas-page';
-import LandingPage from '@/pages/landing-page';
-import MaintenantePage from "@/pages/maintenance.page";
+import LoginPage from '@/pages/auth/login-page';
+import ArtikelPage from '@/pages/public/artikel-page';
+import ZonaIntegritas from '@/pages/public/integritas-page';
+import LandingPage from '@/pages/public/landing-page';
+import MaintenantePage from "@/pages/public/maintenance.page";
 import { RouteObject } from "react-router-dom";
 
 export const appRoutes: RouteObject[] = [
@@ -26,20 +31,26 @@ export const appRoutes: RouteObject[] = [
     element: <LandingLayout />,
     children: [
       { index: true, element: <LandingPage title="Selamat Datang" /> },
+      { path: "artikel/:slug", element: <ArtikelPage /> },
       { path: "integritas", element: <ZonaIntegritas title="Zona Integritas" /> },
       { path: "*", element: <AdminNotFound title="Tidak Ditemukan" /> },
     ],
   },
   {
+    path: "/login",
+    element: <LoginPage />,
+  },
+  {
     path: "/admin",
     element: <AdminLayout />, // Wraps admin routes
     children: [
-      { index: true, element: <AdminDashboard title="Dashboard"/> },
+      { index: true, element: <AdminDashboard title="Dashboard" /> },
+      { path: "profil-lembaga", element: <AdminDashboard title="Dashboard" /> },
 
       // Integritas Route
-      { path: "integritas", element:<IntegritasIkhtisar title="Overview Integritas" /> },
-      { path: "integritas/ikhtisar", element: <IntegritasIkhtisar  title="Overview Integritas"/> },
-      { path: "integritas/tim", element: <AdminNotFound title="Tidak Ditemukan" />},
+      { path: "integritas", element: <IntegritasIkhtisar title="Overview Integritas" /> },
+      { path: "integritas/ikhtisar", element: <IntegritasIkhtisar title="Overview Integritas" /> },
+      { path: "integritas/tim", element: <AdminNotFound title="Tidak Ditemukan" /> },
       { path: "integritas/monitoring", element: <AdminNotFound title="Tidak Ditemukan" /> },
       { path: "integritas/laporan", element: <AdminNotFound title="Tidak Ditemukan" /> },
 
@@ -47,8 +58,8 @@ export const appRoutes: RouteObject[] = [
       { path: "surat", element: <SuratOverview /> },
 
       // Pegawai Route
-      { path: "pegawai", element: <PegawaiOverview title="Overview Kepegawaian"/> },
-      { path: "pegawai/abk-ruh", element: <RUHBebanKerja title="Manajemen Beban Kerja"/> },
+      { path: "pegawai", element: <PegawaiOverview title="Overview Kepegawaian" /> },
+      { path: "pegawai/abk-ruh", element: <RUHBebanKerja title="Manajemen Beban Kerja" /> },
       { path: "pegawai/manajemen", element: <PegawaiManajemen title="Manajemen Pegawai" /> },
       { path: "pegawai/manajemen-mapel", element: <PegawaiManajemenMapel /> },
       { path: "pegawai/manajemen-jabatan", element: <PegawaiManajemenJabatan /> },
@@ -58,6 +69,12 @@ export const appRoutes: RouteObject[] = [
       { path: "pegawai/referensi", element: <PegawaiReferensi /> },
       { path: "pegawai/kurikulum", element: <PegawaiKurikulum title="Referensi Kurikulum" /> },
       { path: "pegawai/kurikulum/:idKurikulum", element: <PegawaiKurikulumJTM title="Referensi Kurikulum" /> },
+
+
+      // Artikel Route
+      { path: "artikel/daftar", element: <AdminArtikelList />},
+      { path: "artikel/tambah", element: <AdminArtikelAdd />},
+      { path: "artikel/:id/edit", element: <AdminArtikelEdit />},
 
 
       // Exception

@@ -13,7 +13,7 @@ import {
     SidebarMenuButton,
     SidebarRail
 } from "@/components/ui/sidebar";
-import { adminMenulist } from "@/lib/metadata/admin-menul-list";
+import { adminMenulist } from "@/lib/metadata/admin-menu-list";
 import { Link } from "react-router-dom";
 
 // This is sample data.

@@ -1,4 +1,4 @@
-import { LayoutGrid, MailCheck, Feather, BookOpen, ShieldCheck, Settings2 } from "lucide-react";
+import { LayoutGrid, MailCheck, Feather, BookOpen, ShieldCheck, Settings2, School } from "lucide-react";
 
 export const adminMenulist = {
     main: [
@@ -7,6 +7,11 @@ export const adminMenulist = {
             url: "/admin",
             icon: LayoutGrid,
             isActive: true
+        },
+        {
+            title: "Profil Lembaga",
+            url: "/admin/profil-lembaga",
+            icon: School
         },
         {
             title: "Kepegawaian",
@@ -124,7 +129,7 @@ export const adminMenulist = {
                 },
                 {
                     title: "Daftar Postingan",
-                    url: "#",
+                    url: "/admin/artikel/daftar",
                 },
                 {
                     title: "Monitoring",
