@@ -22,7 +22,7 @@ import LoginPage from '@/pages/auth/login-page';
 import ArtikelPage from '@/pages/public/artikel-page';
 import ZonaIntegritas from '@/pages/public/integritas-page';
 import LandingPage from '@/pages/public/landing-page';
-import MaintenantePage from "@/pages/public/maintenance.page";
+import MaintenancePage from "@/pages/public/maintenance.page";
 import { RouteObject } from "react-router-dom";
 
 export const appRoutes: RouteObject[] = [
@@ -87,7 +87,7 @@ export const appRoutes: RouteObject[] = [
 export const maintenanceRoutes = [
   {
     path: '*',
-    element: <MaintenantePage />,
+    element: <MaintenancePage />,
   },
   {
     path: "/admin",
