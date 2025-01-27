@@ -8,13 +8,10 @@ import PegawaiSebaran from "@/components/layouts/kepegawaian/pegawai-sebaran"
 import PegawaiTkPendidikan from "@/components/layouts/kepegawaian/pegawai-tk-pendidikan"
 import { fetchGenderCount } from "@/lib/services/pegawai-services"
 import supabase from "@/lib/supabase-client"
+import { PegawaiData } from "@/lib/type/pegawai-type"
 import { useEffect, useState } from "react"
 
-interface PegawaiData {
-  jenis_pegawai: string;
-  jml_pegawai: number;
-  fill: string;
-}
+
 
 const PegawaiOverview = ({ title }: any) => {
 

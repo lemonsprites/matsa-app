@@ -5,19 +5,19 @@ import { AiFillCaretRight, AiFillCaretLeft } from "react-icons/ai";
 const slides = [
   {
     id: 1,
-    imageUrl: 'https://source.unsplash.com/random/800x600?school',
+    imageUrl: 'https://lh3.googleusercontent.com/pw/AP1GczMstkmP_-a7F1Em1c0CFrMV4wZcOBXLpypN1r8PKrmwojvnDLPOnzJz5xhjtUf2eMy2lPwyJsZ99jKoEsiQL2d5r5_V7AUs56nshRcZaHdDUArcvpNtwRL3Fsz7ABL7gslJIB0cmKwCFiwN3wmeLwqGgw=w1304-h869-s-no-gm?authuser=0',
     headline: 'Welcome to Our Madrasah',
     subtitle: 'A Place of Excellence and Faith',
   },
   {
     id: 2,
-    imageUrl: 'https://source.unsplash.com/random/800x600?education',
+    imageUrl: 'https://lh3.googleusercontent.com/pw/AP1GczOuww3B5i5SXtYCx6iEVygCQLowMKl5VK8fdIGQmqrUHNDb3mevWiyWmzr0O3vatHxRTokny0ImZKoNh4d87BLz0bHb5LGxR12ATBKuZITkHkbVQef_g_IE4UFJBUdUkP2g_a8MbEFvbVu-mEbzEqmlZA=w1304-h869-s-no-gm?authuser=0',
     headline: 'Explore Our Programs',
     subtitle: 'Engaging and Inclusive Learning Experiences',
   },
   {
     id: 3,
-    imageUrl: 'https://source.unsplash.com/random/800x600?community',
+    imageUrl: 'https://lh3.googleusercontent.com/pw/AP1GczNJC01Ik59M-GXd8qya1xEeE5Mx5xyojKYtVnDI4W_b8gyS9z2jZmoYyIAlc4st4EMK2sry8PAkDX1EdUIy7-rlXkD395uHGXK-WmcNZ_KAdpIJ4u0fSrl6LhyJYPNQfhIRXmqtxQHanKj5YdK7PFIy=w1304-h869-s-no-gm?authuser=0',
     headline: 'Join Our Community',
     subtitle: 'Together in Learning and Growth',
   },
@@ -47,9 +47,8 @@ const Slideshow: React.FC = () => {
       {slides.map((slide, index) => (
         <div
           key={slide.id}
-          className={`absolute inset-0 transition-opacity duration-1000 ${
-            index === currentSlide ? 'opacity-100' : 'opacity-0'
-          }`}
+          className={`absolute inset-0 transition-opacity duration-1000 ${index === currentSlide ? 'opacity-100' : 'opacity-0'
+            }`}
           style={{
             backgroundImage: `url(${slide.imageUrl})`,
             backgroundSize: 'cover',

@@ -8,18 +8,8 @@ import { Link } from "react-router-dom";
 import {
   TooltipProvider
 } from "@/components/ui/tooltip";
+import { Artikel } from "@/lib/type/artikel-type";
 
-type Artikel = {
-  id: number;
-  title: string;
-  content: string;
-  author_id: string;
-  author: string;  // Display name of the author
-  thumbnail_url: string;
-  created_at: string;
-  updated_at: string;
-  status: number;
-};
 
 const AdminArtikelList: React.FC = () => {
   const [posts, setPosts] = useState<Artikel[]>([]);
@@ -28,7 +18,7 @@ const AdminArtikelList: React.FC = () => {
     const fetchPosts = async () => {
       const { data, error } = await supabase
         .from('tb_artikel')
-        .select('id, title, content, created_at, author_id, thumbnail_url, status, user_profiles(display_name)') // Join with user_profiles table
+        .select('id, title, content, created_at, author_id, slug, thumbnail_url, status, user_profiles(display_name)') // Join with user_profiles table
         .eq('status', 1); // If you want to fetch only active posts
 
       if (error) {
@@ -39,7 +29,7 @@ const AdminArtikelList: React.FC = () => {
       // Assuming user_profiles returns an array of user profile data
       const postsWithAuthors = data.map((article: any) => ({
         ...article,
-        author: article.user_profiles ? article.user_profiles.display_name : "Unknown", // Safely handle missing author
+        author: article.user_profiles ? article.user_profiles : "Unknown", // Safely handle missing author
       }));
 
       setPosts(postsWithAuthors);
@@ -48,8 +38,8 @@ const AdminArtikelList: React.FC = () => {
     fetchPosts();
   }, []);
 
-  const handleDelete = (id: number) => {
-    console.log(`Deleting article with ID: ${id}`);
+  const handleDelete = (uuid: string) => {
+    console.log(`Deleting article with ID: ${uuid}`);
     // Add deletion logic here (e.g., API call)
   };
 
@@ -88,7 +78,7 @@ const AdminArtikelList: React.FC = () => {
                 <TableCell className="max-w-xs truncate" title={article.title}>
                   {article.title}
                 </TableCell>
-                <TableCell>{article.author}</TableCell>
+                <TableCell>{article.author?.display_name}</TableCell>
                 <TableCell>{article.created_at}</TableCell>
                 <TableCell>{article.updated_at}</TableCell>
                 <TableCell className="flex justify-center gap-2">
@@ -107,7 +97,7 @@ const AdminArtikelList: React.FC = () => {
                     <Trash className="w-4 h-4" />
                     Delete
                   </Button>
-                  <Link to={`/artikel/${article.id}`}>
+                  <Link to={`/artikel/${article.slug}`}>
                     <Button variant="default" size="sm" className="flex items-center gap-1">
                       Lihat
                       <ExternalLink className="w-4 h-4" />

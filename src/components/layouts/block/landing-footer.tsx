@@ -34,7 +34,7 @@ const LandingFooter = () => {
                 {/* Akademik Links */}
                 <div>
                     <h3 className="text-lg font-semibold mb-4">Akademik</h3>
-                    <ul className="space-y-2">
+                    <ul className="space-y-2 flex flex-col">
                         <span>
                             <a href="#" className="hover:underline">
                                 Organisasi Intra Sekolah
@@ -56,7 +56,7 @@ const LandingFooter = () => {
                 {/* About Faculty Links */}
                 <div>
                     <h3 className="text-lg font-semibold mb-4">Tentang Madrasah</h3>
-                    <ul className="space-y-2">
+                    <ul className="space-y-2 flex flex-col">
                         <span>
                             <a href="#" className="hover:underline">
                                 Sejarah Madrasah
@@ -78,7 +78,7 @@ const LandingFooter = () => {
                 {/* Contact Us Links */}
                 <div>
                     <h3 className="text-lg font-semibold mb-4">Hubungi Kami</h3>
-                    <ul className="space-y-2">
+                    <ul className="space-y-2 flex flex-col">
                         <span>
                             <a href="#" className="hover:underline">
                                 Kunjungan Madrasah
