@@ -117,9 +117,9 @@ const KontenArtikel = () => {
                 <h2 className="text-xl sm:text-2xl font-bold mb-4">
                   {mainArticle.title}
                 </h2>
-                <p className="leading-relaxed text-sm sm:text-base">
+                <div className="leading-relaxed text-sm sm:text-base">
                   <ReactMarkdown>{firstWords(mainArticle.content, 50)}</ReactMarkdown>
-                </p>
+                </div>
               </CardContent>
             </Card>
           </Link>

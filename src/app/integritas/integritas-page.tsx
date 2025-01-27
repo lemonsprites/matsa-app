@@ -1,5 +1,4 @@
 
-import BannerZI from '@/assets/img/banner-zi-mtsn.jpg';
 import AppSlot from '@/components/app-slot';
 import IntegritasArtikel from '@/components/layouts/block/integritas-artikel';
 import IntegritasDokumen from '@/components/layouts/block/integritas-dokumen';
@@ -29,7 +28,7 @@ Dengan penerapan **WBBM** dan **Zona Integritas**, MTsN 1 Ciamis berusaha mencip
             <main className="matsa-wrapper px-4 sm:px-8">
                 {/* Banner Section */}
                 <div className="banner mb-5 mt-4">
-                    <img src={BannerZI} className="w-full rounded-md" alt="Banner ZI" />
+                    <img src={""} className="w-full rounded-md" alt="Banner ZI" />
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 mb-5">

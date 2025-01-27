@@ -1,4 +1,4 @@
-import Construct from '@/assets/img/asset-construction.png';
+
 import AppSlot from '@/components/app-slot';
 import { Link, useLocation } from "react-router-dom";
 
@@ -9,7 +9,7 @@ const AdminNotFound = ({ title }: any) => {
     <AppSlot title={title}>
       <div className="flex flex-col items-center mt-16 text-center">
         <div className="flex items-center">
-          <img src={Construct} width={200} />
+          <img src={""} width={200} />
           <h1 className="text-9xl font-bold text-gray-800">404</h1>
         </div>
         <h1 className="text-4xl mt-5 font-bold text-gray-800">NOT FOUND</h1>

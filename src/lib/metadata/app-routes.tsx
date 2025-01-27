@@ -21,7 +21,7 @@ import PegawaiOverview from '@/pages/admin/pegawai-overview';
 import SuratOverview from "@/pages/admin/surat-overview";
 import LoginPage from '@/pages/auth/login-page';
 import ArtikelPage from '@/pages/public/artikel-page';
-import ZonaIntegritas from '@/pages/public/integritas-page';
+import ZonaIntegritas from '@/app/integritas/integritas-page';
 import LandingPage from '@/pages/public/landing-page';
 import MaintenancePage from "@/pages/public/maintenance.page";
 import { RouteObject } from "react-router-dom";

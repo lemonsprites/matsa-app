@@ -1,6 +1,5 @@
 "use client"
 
-import logoMTs from "@/assets/img/logo.png";
 import * as React from "react";
 
 
@@ -25,7 +24,7 @@ export function AdminSidebar({ ...props }: React.ComponentProps<typeof Sidebar>)
             <SidebarHeader className="shadow-sm">
                 <Link to="/admin" className="flex items-center bg-transparent">
                     <SidebarMenuButton tooltip="Logo" className=" hover:bg-transparent active:bg-transparent active:text-white text-white mt-3 hover:text-white">
-                        <img src={logoMTs} width={32} height={32}></img>
+                        <img src={""} width={32} height={32}></img>
                         <div className="pl-4">
                             <h1 className="font-bold">MTSN 1 CIAMIS</h1>
                             <small>PIDL MTsn 1 Ciamis</small>

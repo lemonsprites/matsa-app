@@ -2,7 +2,6 @@
 
 
 
-import logoMTs from '@/assets/img/logo.svg';
 import {
     NavigationMenu,
     NavigationMenuList
@@ -50,7 +49,7 @@ export default LandingNavbar
 
 export const Logo = () => (
     <div id="brandLogo">
-        <img src={logoMTs} className="h-[80px]" />
+        <img src={""} className="h-[80px]" />
     </div>
 );
 

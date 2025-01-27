@@ -1,4 +1,3 @@
-import LogoMTs from "@/assets/img/logo-putih-out-text.svg";
 
 const LandingFooter = () => {
   const thProd = new Date().getFullYear();
@@ -11,7 +10,7 @@ const LandingFooter = () => {
             loading="lazy"
             decoding="async"
             width="320"
-            src={LogoMTs}
+            src={""}
             alt="MTsN 1 Ciamis Logo"
             className="mb-4 mr-4 w-40 sm:w-48"
           />
