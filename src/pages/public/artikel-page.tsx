@@ -102,123 +102,149 @@ const ArtikelPage = () => {
 
     return (
         <motion.div
-            className="matsa-wrapper my-8"
+            className=" my-8 px-4 md:px-8 max-w-screen-md mx-auto"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
         >
-            <div className="mx-auto w-[720px] overflow-hidden">
-                <motion.div
-                    id="artikel"
-                    className="text-left"
-                    initial={{ opacity: 0, y: -50 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6 }}
-                    viewport={{ once: true }}
-                >
-                    <div id="artikelHeader">
-                        <h1 className="mb-2">{article.title}</h1>
-                        <div id="metadata" className="text-sm flex justify-between mt-4">
-                            <div className="flex space-x-4">
-                                <Avatar className="shadow-md">
-                                    <AvatarImage src="https://github.com/lemonsprites.png" alt="@shadcn" />
-                                    <AvatarFallback>LS</AvatarFallback>
-                                </Avatar>
+            <motion.div
+                id="artikel"
+                className="text-left"
+                initial={{ opacity: 0, y: -50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                viewport={{ once: true }}
+            >
+                <div id="artikelHeader" className="mb-6">
+                    <h1 className="mb-2 text-2xl font-bold text-gray-800 md:text-3xl">
+                        {article.title}
+                    </h1>
+                    <div
+                        id="metadata"
+                        className="text-sm flex flex-col md:flex-row justify-between mt-4"
+                    >
+                        {/* Avatar and Author Info */}
+                        <div className="flex space-x-4 items-center mb-2 md:mb-0 md:w-full ">
+                            <Avatar className="shadow-md">
+                                <AvatarImage
+                                    src="https://github.com/lemonsprites.png"
+                                    alt="@shadcn"
+                                />
+                                <AvatarFallback>LS</AvatarFallback>
+                            </Avatar>
+                            <div className="w-full md:flex md:justify-between">
                                 <div className="flex flex-col">
                                     <span>{formatTanggal(article.created_at)}</span>
                                     <span>
-                                        Ditulis oleh <Link className="author" to="www.google.com">{article.author?.display_name}</Link>
+                                        Ditulis oleh{" "}
+                                        <Link className="author text-blue-600" to="www.google.com">
+                                            {article.author?.display_name}
+                                        </Link>
+                                    </span>
+                                </div>
+                                <div className="flex flex-col items-start md:items-end">
+                                    <span>
+                                        Estimasi waktu membaca{" "}
+                                        <u>
+                                            <b>{estimasiMembaca(article.content)}</b>
+                                        </u>
+                                    </span>
+                                    <span className="hidden md:block">
+                                        Direview oleh{" "}
+                                        <Link className="author text-blue-600" to="www.google.com">
+                                            {article.author?.display_name}
+                                        </Link>
+                                        .
                                     </span>
                                 </div>
                             </div>
-                            <div className="flex justify-end items-end flex-col">
-                                <span>
-                                    Estimasi waktu membaca <u><b>{estimasiMembaca(article.content)}</b></u>
-                                </span>
-                                <span>
-                                    Direview oleh <Link className="author" to="www.google.com">{article.author?.display_name}</Link>.
-                                </span>
-                            </div>
                         </div>
+
+                        {/* Reading Time and Reviewer Info */}
                     </div>
-                    <hr />
-                </motion.div>
-                <motion.div
-                    id="artikelKonten"
-                    className="markdown-content prose max-w-full pt-5"
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.7 }}
-                    viewport={{ once: true }}
-                >
-                    <ReactMarkdown remarkPlugins={[remarkGfm]}>{article.content.trim()}</ReactMarkdown>
-                </motion.div>
+
+                </div>
                 <hr />
-                <motion.div
-                    id="artikelFooter"
-                    className="text-left"
-                    initial={{ opacity: 0, y: 50 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.2 }}
-                    viewport={{ once: true }}
-                >
-                    <div>
-                        <p className="my-2">Tags:</p>
-                        <span className="flex flex-wrap gap-2 ">
-                            {tags && tags.length > 0 ? (
-                                tags.map((tag: Tag, index: number) => (
-                                    <Badge
-                                        key={index}
-                                        className="rounded-full cursor-pointer inline-flex items-center">
-                                        {tag.tag}
-                                    </Badge>
-                                ))
-                            ) : (
-                                <span className="text-gray-500 text-sm">No tags available</span>
-                            )}
-                        </span>
+            </motion.div>
+            <motion.div
+                id="artikelKonten"
+                className="markdown-content prose max-w-full pt-5 text-gray-800"
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.7 }}
+                viewport={{ once: true }}
+            >
+                <ReactMarkdown remarkPlugins={[remarkGfm]} className="overflow-hidden">
+                    {article.content.trim()}
+                </ReactMarkdown>
+            </motion.div>
+            <hr />
+            <motion.div
+                id="artikelFooter"
+                className="text-left"
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                viewport={{ once: true }}
+            >
+                <div className="mt-4 text-center md:text-left">
+                    <p className="mb-2 font-semibold text-gray-700">Tags:</p>
+                    <div className="flex flex-wrap gap-2 justify-center md:justify-start">
+                        {tags && tags.length > 0 ? (
+                            tags.map((tag: Tag, index: number) => (
+                                <Badge
+                                    key={index}
+                                    className="rounded-full cursor-pointer inline-flex items-center"
+                                >
+                                    {tag.tag}
+                                </Badge>
+                            ))
+                        ) : (
+                            <span className="text-gray-500 text-sm">No tags available</span>
+                        )}
                     </div>
-                </motion.div>
-                <motion.div
-                    className="mt-5"
-                    initial={{ opacity: 0, y: 50 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8 }}
-                    viewport={{ once: true }}
-                >
-                    <Card>
-                        <CardTitle className="flex justify-between items-center mb-6">
-                            <h2 className="text-lg lg:text-2xl font-bold text-gray-900 px-4 mt-5 dark:text-white">
-                                Komentar ({comments.length})
-                            </h2>
-                        </CardTitle>
-                        <CardContent>
-                            {comments.map((comment, index) => (
-                                <div key={index} className="mb-4">
-                                    <p><strong>{comment.author}</strong>: {comment.comment}</p>
-                                </div>
-                            ))}
-                            <form className="mt-6">
-                                <div className="py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
-                                    <label htmlFor="comment" className="sr-only">Your comment</label>
-                                    <textarea
-                                        id="comment"
-                                        rows={3}
-                                        className="resize-none px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-gray-800"
-                                        placeholder="Write a comment..."
-                                        required
-                                    ></textarea>
-                                </div>
-                                <div className="text-right">
-                                    <Button variant="default" type="submit">
-                                        Post comment
-                                    </Button>
-                                </div>
-                            </form>
-                        </CardContent>
-                    </Card>
-                </motion.div>
-            </div>
+                </div>
+            </motion.div>
+            <motion.div
+                className="mt-5"
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+                viewport={{ once: true }}
+            >
+                <Card>
+                    <CardTitle className="flex justify-between items-center mb-6">
+                        <h2 className="text-lg lg:text-2xl font-bold text-gray-900 px-4 mt-5 dark:text-white">
+                            Komentar ({comments.length})
+                        </h2>
+                    </CardTitle>
+                    <CardContent>
+                        {comments.map((comment, index) => (
+                            <div key={index} className="mb-4">
+                                <p>
+                                    <strong>{comment.author}</strong>: {comment.comment}
+                                </p>
+                            </div>
+                        ))}
+                        <form className="mt-6">
+                            <div className="py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200">
+                                <textarea
+                                    id="comment"
+                                    rows={3}
+                                    className="resize-none px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none"
+                                    placeholder="Write a comment..."
+                                    required
+                                ></textarea>
+                            </div>
+                            <div className="text-right">
+                                <Button variant="default" type="submit">
+                                    Post comment
+                                </Button>
+                            </div>
+                        </form>
+                    </CardContent>
+                </Card>
+            </motion.div>
         </motion.div>
     );
 };

@@ -22,14 +22,14 @@ import { Link } from "react-router-dom";
 const LandingNavbar = () => {
     return (
         <nav className="h-20 bg-background border-b sticky z-50 shadow-md top-0">
-            <div className="h-full matsa-wrapper flex items-center justify-between max-w-screen-lg mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="h-full matsa-wrapper flex items-center justify-between max-w-screen-lg mx-auto px-4 sm:px-8">
                 <div className="flex items-center  gap-8">
                     <Logo />
                     {/* Desktop Menu */}
                 </div>
                 <div className="flex items-center gap-3">
                     <NavMenu className="hidden md:block" />
-                    <Button>
+                    <Button className='hidden md:flex'>
                         Get Started <ArrowUpRight />
                     </Button>
                     {/* Mobile Menu */}
@@ -62,7 +62,7 @@ export const NavMenu = (props: NavigationMenuProps) => (
             <MenuListItem title="Profil Madrasah" data={foods}  />
             <MenuListItem title="Informasi Publik" data={travelMenuItems}  />
             <MenuItem href="/" label="Repositori" />
-            <MenuItem href="/" label="Zona Integritas" />
+            <MenuItem href="/integritas" label="Zona Integritas" />
         </NavigationMenuList>
     </NavigationMenu>
 );
@@ -108,6 +108,10 @@ export const NavigationSheet = () => {
                     </div>
                     <Link to="#" className='font-bold'>Repositori</Link>
                     <Link to="#" className='font-bold'>Zona Integritas</Link>
+
+                    <Button className='flex'>
+                        Get Started <ArrowUpRight />
+                    </Button>
 
                 </div>
             </SheetContent>
