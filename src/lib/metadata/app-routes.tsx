@@ -14,6 +14,7 @@ import PegawaiManajemenKelas from "@/components/layouts/kepegawaian/pegawai-mana
 import PegawaiManajemenMapel from "@/components/layouts/kepegawaian/pegawai-manajemen-mapel";
 import PegawaiReferensi from "@/components/layouts/kepegawaian/pegawai-referensi";
 import LandingLayout from '@/components/layouts/landing-layout';
+import AdminSettingGeneral from '@/components/layouts/settings/admin-setting-general';
 import AdminDashboard from '@/pages/admin/admin-dashboard';
 import IntegritasIkhtisar from '@/pages/admin/integritas-ikhtisar';
 import PegawaiOverview from '@/pages/admin/pegawai-overview';
@@ -72,9 +73,9 @@ export const appRoutes: RouteObject[] = [
 
 
       // Artikel Route
-      { path: "artikel/daftar", element: <AdminArtikelList />},
-      { path: "artikel/tambah", element: <AdminArtikelAdd />},
-      { path: "artikel/:id/edit", element: <AdminArtikelEdit />},
+      { path: "artikel/daftar", element: <AdminArtikelList /> },
+      { path: "artikel/tambah", element: <AdminArtikelAdd /> },
+      { path: "artikel/:id/edit", element: <AdminArtikelEdit /> },
 
 
       // Exception
@@ -88,6 +89,10 @@ export const maintenanceRoutes = [
   {
     path: '*',
     element: <MaintenancePage />,
+  },
+  {
+    path: "/login",
+    element: <LoginPage />,
   },
   {
     path: "/admin",
@@ -107,6 +112,8 @@ export const maintenanceRoutes = [
 
       // Pegawai Route
       { path: "pegawai", element: <PegawaiOverview /> },
+
+      {path: 'setting/general', element: <AdminSettingGeneral />},
 
       // Exception
       { path: "*", element: <AdminNotFound /> },

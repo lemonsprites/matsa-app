@@ -11,6 +11,8 @@ function App() {
   const [isUnderMaintenance, setIsUnderMaintenance] = useState<number>(2);
   const [loading, setLoading] = useState(true);
 
+  
+
 
   useEffect(() => {
     const fetchMaintenanceStatus = async () => {
@@ -38,7 +40,7 @@ function App() {
   }
 
 
-  const router = createBrowserRouter(isUnderMaintenance === 1 ? maintenanceRoutes : appRoutes, {
+  const router = createBrowserRouter(isUnderMaintenance === 1 ? appRoutes : maintenanceRoutes, {
     future: {
       v7_relativeSplatPath: true
     }

@@ -28,3 +28,9 @@ export interface MataPelajaran {
     totalJamPerMinggu: number
     
 }
+
+export interface PegawaiData {
+    jenis_pegawai: string;
+    jml_pegawai: number;
+    fill: string;
+  }

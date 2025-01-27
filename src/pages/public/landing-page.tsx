@@ -5,6 +5,7 @@ import SelayangPandang from '@/components/selayang-pandang'
 import StatistikLembaga from '@/components/statistik-lembaga'
 
 const LandingPage = ({title}: any) => {
+
   return (
     <AppSlot title={title}>
       <Slideshow />

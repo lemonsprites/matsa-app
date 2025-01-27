@@ -198,7 +198,7 @@ export const adminMenulist = {
             items: [
                 {
                     title: "General",
-                    url: "#",
+                    url: "/admin/setting/general"
                 },
                 {
                     title: "Team",

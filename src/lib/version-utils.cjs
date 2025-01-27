@@ -17,10 +17,10 @@ const [major, minor, patch] = packageJson.version.split('.').map(Number);
 // Increment version based on branch
 if (branch === 'main') {
   console.log('Incrementing major version for main branch...');
-  packageJson.version = `${major + 1}.0.0`; // Reset minor and patch after major increment
+  packageJson.version = `${major+1}.${minor}.${patch}`; // Reset minor and patch after major increment
 } else if (branch === 'preview') {
   console.log('Incrementing minor version for dev branch...');
-  packageJson.version = `${major}.${minor + 1}.0`; // Reset patch after minor increment
+  packageJson.version = `${major}.${minor + 1}.${patch}`; // Reset patch after minor increment
 } else {
   console.log(`Branch ${branch} detected. Incrementing patch version.`);
   packageJson.version = `${major}.${minor}.${patch + 1}`; // Increment patch by 1 for other branches
