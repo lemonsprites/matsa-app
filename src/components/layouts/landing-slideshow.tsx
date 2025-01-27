@@ -57,7 +57,7 @@ const Slideshow: React.FC = () => {
         >
           {/* Overlay content */}
           <div className="flex flex-col items-center justify-center h-full bg-black bg-opacity-50 text-white px-4">
-            <h1 className="text-4xl font-bold mb-2">{slide.headline}</h1>
+            <h1 className="text-4xl font-bold mb-2 text-center">{slide.headline}</h1>
             <p className="text-lg mb-4">{slide.subtitle}</p>
           </div>
         </div>
