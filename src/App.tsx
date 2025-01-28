@@ -40,7 +40,7 @@ function App() {
   }
 
 
-  const router = createBrowserRouter(isUnderMaintenance === 1 ? appRoutes : maintenanceRoutes, {
+  const router = createBrowserRouter(isUnderMaintenance === 0 ? appRoutes : maintenanceRoutes, {
     future: {
       v7_relativeSplatPath: true
     }
