@@ -1,7 +1,7 @@
 {
   "name": "matsa-app",
   "private": true,
-  "version": "3.0.1",
+  "version": "0.0.1",
   "scripts": {
     "dev": "next dev",
     "build": "tsc -b && node src/lib/version-utils.cjs && next build",
