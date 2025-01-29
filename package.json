@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "next dev",
-    "build": "tsc -b && node src/lib/version-utils.cjs && next build",
+    "build": "tsc -b && next build",
     "lint": "eslint .",
     "start": "next start",
     "preview": "vite preview",
