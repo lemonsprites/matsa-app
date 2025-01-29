@@ -1,0 +1,23 @@
+name: Deploy to CPanel
+
+on:
+  push:
+    branches:
+      - main  # Sesuaikan dengan branch utama kamu
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Upload via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./  # Folder lokal yang akan diunggah
+          server-dir: /matsa_app/  # Folder tujuan di CPanel
