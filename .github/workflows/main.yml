@@ -20,4 +20,4 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./  # Folder lokal yang akan diunggah
-          server-dir: /matsa_app/  # Folder tujuan di CPanel
+          server-dir: ./  # Folder tujuan di CPanel
