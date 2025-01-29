@@ -1,4 +1,3 @@
-import faviconImage from "@/public/favicon.png";
 import { ThemeProvider } from "next-themes";
 import { Geist } from "next/font/google";
 import "@/app/globals.css";
@@ -27,7 +26,7 @@ export default function RootLayout({
   return (
     <html lang="id" className={geistSans.className} suppressHydrationWarning>
       <head>
-        <link rel="icon" type="image/png" href={faviconImage.src} />
+        <link rel="icon" type="image/png" href="/favicon.png" />
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-WX176DS1C4"></script>
       </head>
       <body className="bg-background text-foreground">

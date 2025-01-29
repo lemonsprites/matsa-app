@@ -1,6 +1,5 @@
 import NextLogo from "@/components/matsa/landing/footer/next-logo";
 import SupabaseLogo from "@/components/matsa/landing/footer/supabase-logo";
-import logoMadrasahPutih from "@/public/img/logo-putih-out-text.svg";
 
 
 const LandingFooter = () => {
@@ -14,7 +13,7 @@ const LandingFooter = () => {
                         loading="lazy"
                         decoding="async"
                         width="320"
-                        src={logoMadrasahPutih.src}
+                        src="/public/img/logo-putih-out-text.svg"
                         alt="MTsN 1 Ciamis Logo"
                         className="mb-4 mr-4 w-40 sm:w-48"
                     />

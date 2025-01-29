@@ -1,7 +1,6 @@
 // import { useSpring, } from 'react-spring';
 import { FaBullseye } from 'react-icons/fa';
 
-import ibuIbuPic from "@/public/img/pic-ibu-ibu.png"
 import Image from 'next/image'; // Menggunakan Next.js Image untuk optimasi gambar
 import ReactMarkdown from "react-markdown";
 
@@ -31,7 +30,7 @@ Sebagai lembaga pendidikan, MTsN 1 Ciamis juga turut serta dalam pengembangan ka
                 </div>
 
                 <div className='ilustrasi col-span-2 gap-5 relative justify-center bg-teal-500 px-4 pt-8  truncate flex items-end rounded-2xl'>
-                    <Image src={ibuIbuPic.src} alt='Tim MTsN 1 Ciamis' width={500} height={1080} className='-mb-10' />
+                    <Image src="/public/img/pic-ibu-ibu.png" alt='Tim MTsN 1 Ciamis' width={500} height={1080} className='-mb-10' />
                 </div>
             </div>
         </section>

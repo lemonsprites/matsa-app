@@ -1,12 +1,10 @@
+import IntegritasArtikel from '@/components/matsa/integritas/integritas-artikel'
+import IntegritasDokumen from '@/components/matsa/integritas/integritas-dokumen'
 import LandingComponent from '@/components/matsa/landing/landing-component'
-import LandingNavbar from '@/components/matsa/landing/navbar/landing-navbar'
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
+import { ExternalLink } from 'lucide-react'
 import { NextPage } from 'next'
 import ReactMarkdown from 'react-markdown'
-import BannerZI from "@/public/assets/img/banner-zi-mtsn.jpg"
-import { ExternalLink } from 'lucide-react'
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
-import IntegritasDokumen from '@/components/matsa/integritas/integritas-dokumen'
-import IntegritasArtikel from '@/components/matsa/integritas/integritas-artikel'
 
 interface Props { }
 const md = `**WBBM (Wilayah Birokrasi Bersih dan Melayani)** adalah predikat yang diberikan kepada instansi pemerintah yang berkomitmen untuk memberikan pelayanan yang cepat, tepat, efisien, dan ramah. MTsN 1 Ciamis menerapkan prinsip **WBBM** untuk meningkatkan pelayanan kepada siswa, orang tua, dan masyarakat. Inisiatif yang dilakukan antara lain:
@@ -26,7 +24,7 @@ const Page: NextPage<Props> = ({ }) => {
       <div className="matsa-wrapper my-4 px-4 sm:px-8">
         {/* Banner Section */}
         <div className="banner mb-5">
-          <img src={BannerZI.src} className="w-full rounded-md" alt="Banner ZI" />
+          <img src="/public/assets/img/banner-zi-mtsn.jpg" className="w-full rounded-md" alt="Banner ZI" />
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 mb-5">
