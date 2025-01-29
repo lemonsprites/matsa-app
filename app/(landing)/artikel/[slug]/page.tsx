@@ -4,7 +4,7 @@ import { createClient } from '@/utils/supabase/client'
 
 
 type Props = {
-    params: Promise<{ slug: string }>
+    params: Promise<{ slug: string | null }>
 }
 
 
@@ -60,9 +60,9 @@ async function Page({ params }: Props) {
 export default Page;
 
 
-export async function generateMetadata({ params }: { params: { slug: string } }) {
+export async function generateMetadata({ params }: Props) {
     const supabase = createClient();
-    const slug = params.slug;
+    const slug = (await params).slug;
 
     try {
         // Fetch the article to get the title

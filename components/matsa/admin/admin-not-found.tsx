@@ -1,13 +1,12 @@
 
-import AppSlot from '@/components/app-slot';
 import { Link, useLocation } from "react-router-dom";
 
 const AdminNotFound = ({ title }: any) => {
   const location = useLocation();
 
   return (
-    <AppSlot title={title}>
-      <div className="flex flex-col items-center mt-16 text-center">
+    <>
+    <div className="flex flex-col items-center mt-16 text-center">
         <div className="flex items-center">
           <img src={""} width={200} />
           <h1 className="text-9xl font-bold text-gray-800">404</h1>
@@ -20,7 +19,7 @@ const AdminNotFound = ({ title }: any) => {
           Balik lagi ke dashboard aja! 👍
         </Link>
       </div>
-    </AppSlot>
+    </>
   );
 };
 
