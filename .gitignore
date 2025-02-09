@@ -19,6 +19,7 @@
 
 # production
 /build
+/lib/client_secret.json
 
 # misc
 .DS_Store

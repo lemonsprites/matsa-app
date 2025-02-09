@@ -1,20 +1,178 @@
-import Toast from '@/components/matsa/toast';
-import { Button } from '@/components/ui/button';
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { Input } from '@/components/ui/input';
-import { NextPage } from 'next'
+import { Button } from "@/components/ui/button"
+import {
+    Command,
+    CommandEmpty,
+    CommandGroup,
+    CommandInput,
+    CommandItem,
+    CommandList,
+} from "@/components/ui/command"
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuTrigger
+} from "@/components/ui/dropdown-menu"
 
+import Toast from "@/components/toast"
+import { Badge } from "@/components/ui/badge"
+import { Input } from "@/components/ui/input"
+import supabase from "@/lib/supabase-client"
+import { Tag } from "@/lib/type/tag.type"
+import Cookies from "js-cookie"
+import { useEffect, useState } from "react"
+import ReactMarkdown from "react-markdown"; // Import ReactMarkdown for rendering markdown content
 import MdEditor from "react-markdown-editor-lite"
 import "react-markdown-editor-lite/lib/index.css"
+import { generateSlug } from "@/lib/middleware/slug-generator"
 
 
-const AddPage: NextPage = ({ }) => {
-    
+const AdminArtikelAdd: React.FC = () => {
+    const [title, setTitle] = useState("");
+    const [author, setAuthor] = useState("");
+    const [content, setContent] = useState("");
+    const [open, setOpen] = useState(false)
+    const [toastData, setToastData] = useState<{
+        title: string;
+        desc: string;
+        variant: "success" | "error" | "warning";
+    } | null>(null);
+
+
+    const [selectLabel, setSelectLabel] = useState<Tag[]>([])
+    const [searchQr, setSearchQr] = useState<string>("all")
+    const [tags, setTags] = useState<Tag[]>([])
+
+    const fetchTags = async (query: string) => {
+        if (!query) {
+            setTags([]);
+            return;
+        }
+
+        try {
+            const { data, error } = searchQr === "all" ?
+                await supabase
+                    .from('tb_tag') // Replace with your table name
+                    .select('id, tag')
+                    .limit(5)
+                : await supabase
+                    .from('tb_tag') // Replace with your table name
+                    .select('id, tag')
+                    .ilike('tag', `%${query}%`)
+                    .limit(5)
+
+
+
+
+            if (error) {
+                console.error('Error fetching tags:', error);
+                setTags([]);
+            } else {
+                setTags(data || []);
+            }
+        } catch (err) {
+            console.error('Unexpected error:', err);
+            setTags([]);
+        }
+    };
+
+
+    useEffect(() => {
+        const delayDebounceFn = setTimeout(() => {
+            fetchTags(searchQr);
+        }, 300); // Debounce API call
+        return () => clearTimeout(delayDebounceFn); // Cleanup
+    }, [searchQr]);
+
+
+
+
+    const handleEditorChange = ({ text }: { text: string }) => {
+        setContent(text);
+    };
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        // Get the 'auth_user' cookie and parse it
+        const a = Cookies.get('auth_user');
+        if (!a) {
+            alert("User not authenticated!");
+            return;
+        }
+
+        let userAuth;
+        try {
+            userAuth = JSON.parse(a);
+        } catch (err) {
+            console.error("Error parsing auth_user cookie:", err);
+            alert("Failed to parse user information!");
+            return;
+        }
+
+        if (!userAuth?.id) {
+            alert("No valid user ID found!");
+            return;
+        }
+
+        // Save the article to Supabase
+        const { data, error }:any = await supabase
+            .from("tb_artikel")
+            .insert([
+                {
+                    title,
+                    author_id: userAuth.id,
+                    content,
+                    slug: generateSlug(title),
+                    status: 1,
+                    created_at: new Date().toISOString(),
+                },
+            ])
+            .select();
+
+        if (error) {
+            console.error("Error inserting artikel:", error);
+            return; // Stop execution if there's an error
+        }
+
+        if (data && data.length > 0) {
+            const artikelId = data[0].id;
+
+            // Loop through selectLabel and insert each tag
+            for (const loop of selectLabel) {
+                const { error: tagError } = await supabase
+                    .from("artikel_tag")
+                    .insert({
+                        artikel_id: artikelId,
+                        tag_id: loop.id,
+                    });
+
+                if (tagError) {
+                    console.error("Error inserting artikel_tag:", tagError);
+                }
+            }
+
+            console.log("Artikel and tags inserted successfully!");
+        }
+
+
+
+
+        if (error) {
+            console.error("Error saving article:", error.message);
+            alert("Failed to save article!");
+            return;
+        }
+
+        alert("Article created successfully!");
+        setTitle(""); // Reset the title input
+        setAuthor(""); // Reset the author input (optional, as you're using author from cookie)
+        setContent(""); // Reset the content input
+    };
+
     return (
         <div className="container mx-auto p-4">
             <h1 className="text-2xl font-bold mb-4">Create New Article</h1>
-            <form className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
                     <label htmlFor="title" className="block text-sm font-medium mb-1">
                         Title
@@ -22,8 +180,8 @@ const AddPage: NextPage = ({ }) => {
                     <Input
                         id="title"
                         placeholder="Article Title"
-                        // value={title}
-                        // onChange={(e) => setTitle(e.target.value)}
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
                         required
                     />
                 </div>
@@ -34,8 +192,8 @@ const AddPage: NextPage = ({ }) => {
                     <Input
                         id="author"
                         placeholder="Author Name"
-                        // value={author}
-                        // onChange={(e) => setAuthor(e.target.value)}
+                        value={author}
+                        onChange={(e) => setAuthor(e.target.value)}
                         required
                     />
                 </div>
@@ -44,15 +202,15 @@ const AddPage: NextPage = ({ }) => {
                         Kata Kunci
                     </label>
                     <div className="flex w-full flex-col items-start justify-between rounded-md border px-4 py-3 sm:flex-row sm:items-center">
-                        {/* <p className="text-sm font-medium leading-none space-x-2">
+                        <p className="text-sm font-medium leading-none space-x-2">
                             {selectLabel.length ? selectLabel.map((tag) => (
                                 <Badge key={tag.id} className="rounded-full">
                                     {tag.tag}
                                 </Badge>
                             )) : <span className="text-muted-foreground">Tambahkan kata kunci yang relevan</span>}
 
-                        </p> */}
-                        {/* <DropdownMenu open={open} onOpenChange={setOpen}>
+                        </p>
+                        <DropdownMenu open={open} onOpenChange={setOpen}>
                             <DropdownMenuTrigger asChild disabled={(selectLabel.length < 5) ? false : true}>
                                 <Button variant="default" disabled={(selectLabel.length < 5) ? false : true}>Tambahkan Keyword</Button>
                             </DropdownMenuTrigger>
@@ -106,10 +264,10 @@ const AddPage: NextPage = ({ }) => {
                                     </CommandList>
                                 </Command>
                             </DropdownMenuContent>
-                        </DropdownMenu> */}
+                        </DropdownMenu>
 
                     </div>
-                    {/* <div>
+                    <div>
                         <label htmlFor="content" className="block text-sm font-medium mb-1">
                             Content
                         </label>
@@ -120,22 +278,22 @@ const AddPage: NextPage = ({ }) => {
                             onChange={handleEditorChange}
                             value={content}
                         />
-                    </div> */}
+                    </div>
                     <Button type="submit" className="w-full">
                         Save Article
                     </Button>
                 </div>
             </form>
             {/* Render Toast only after form submission */}
-            {(
+            {toastData && (
                 <Toast
-                    title={"toastData.title"}
-                    desc={"toastData.desc"}
-                    variant={"error"}
+                    title={toastData.title}
+                    desc={toastData.desc}
+                    variant={toastData.variant}
                 />
             )}
         </div>
-    )
-}
+    );
+};
 
-export default AddPage
+export default AdminArtikelAdd;

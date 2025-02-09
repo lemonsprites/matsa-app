@@ -143,6 +143,10 @@ export const adminMenulist = {
                     url: "#",
                 },
                 {
+                    title: "Tulis Artikel",
+                    url: "/admin/artikel/tulis",
+                },
+                {
                     title: "Kategori/Tag",
                     url: "#",
                 },

@@ -1,19 +1,15 @@
-import AdminNavbar from "@/components/matsa/admin/admin-navbar";
 import { AdminSidebar } from "@/components/matsa/admin/admin-sidebar";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { createClient } from "@/utils/supabase/server";
-import getConfig from "next/config";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
 type Props = {
-  children: React.ReactNode
+  children: React.ReactNode,
+  title: string
 }
 
-export default async function AdminLayout({ children }: Props) {
-  const { publicRuntimeConfig } = getConfig();
-  const { __APP_VERSION__ } = publicRuntimeConfig;
-
+export default async function AdminLayout({ children, title }: Props) {
   const supabase = await createClient();
 
   const {
@@ -24,15 +20,12 @@ export default async function AdminLayout({ children }: Props) {
     return redirect("/masuk");
   }
 
+
   return (
     user ? (<SidebarProvider>
-      <AdminSidebar className=""/>
+      <AdminSidebar className="" />
       <SidebarInset>
-        <AdminNavbar />
-        <div className="flex flex-1 flex-col gap-4 px-6 py-4 overflow-y-auto">
-          {children}
-        </div>
-        <div className="flex justify-center text-xs text-muted-foreground p-4 italic">Versi {__APP_VERSION__} © Copyright {new Date().getFullYear()}, Tim PIDL MTsN 1 Ciamis</div>
+        {children}
       </SidebarInset>
     </SidebarProvider>) : (<>
       <Link href="/" />
@@ -41,3 +34,7 @@ export default async function AdminLayout({ children }: Props) {
   )
 
 }
+
+export const generateMetadata = () => ({
+  title: "Daftar Artikel",
+});

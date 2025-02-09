@@ -1,4 +1,5 @@
 import PostPageContent from '@/components/matsa/artikel/page-content'
+import LandingComponent from '@/components/matsa/landing/landing-component'
 import { Tag } from '@/lib/type/tag-type'
 import { createClient } from '@/utils/supabase/client'
 
@@ -40,14 +41,17 @@ async function Page({ params }: Props) {
         const formattedTags = tags?.map((item: any) => item.tb_tag) || []
 
         return (
-            <PostPageContent
-                article={{
-                    ...article,
-                    author: article.user_profiles ?? null,
-                }}
-                tags={formattedTags}
-                error={null}
-            />
+            <LandingComponent>
+
+                <PostPageContent
+                    article={{
+                        ...article,
+                        author: article.user_profiles ?? null,
+                    }}
+                    tags={formattedTags}
+                    error={null}
+                />
+            </LandingComponent>
         )
     } catch (err) {
         console.error('Error fetching article:', err)
