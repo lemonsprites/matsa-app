@@ -38,7 +38,3 @@ export async function generateMetadata() {
     return <div>Something went wrong</div>; // Handle catch errors
   }
 }
-
-export function reportWebVitals(metric: any) {
-  console.log(metric);
-}

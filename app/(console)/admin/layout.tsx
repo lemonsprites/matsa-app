@@ -6,10 +6,10 @@ import { redirect } from "next/navigation";
 
 type Props = {
   children: React.ReactNode,
-  title: string
 }
 
-export default async function AdminLayout({ children, title }: Props) {
+export default async function AdminLayout({ children}: Props) {
+
   const supabase = await createClient();
 
   const {
@@ -29,6 +29,7 @@ export default async function AdminLayout({ children, title }: Props) {
       </SidebarInset>
     </SidebarProvider>) : (<>
       <Link href="/" />
+
       {/* <Toast title="Auth Error" desc="Mohon maaf! Anda tidak terautentikasi!😉" variant="error" /> */}
     </>)
   )

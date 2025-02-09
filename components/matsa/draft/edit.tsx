@@ -1,7 +1,16 @@
-
 // @ts-nocheck
+"use client"
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import supabase from "@/lib/supabase-client";
+import React, { useEffect, useState } from "react";
+import ReactMarkdown from "react-markdown";
+import MdEditor from "react-markdown-editor-lite";
+import "react-markdown-editor-lite/lib/index.css";
+import { useParams } from "react-router-dom";
 
-import { Button } from "@/components/ui/button"
+
+
 import {
     Command,
     CommandEmpty,
@@ -9,41 +18,40 @@ import {
     CommandInput,
     CommandItem,
     CommandList,
-} from "@/components/ui/command"
+} from "@/components/ui/command";
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuTrigger
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
 
-import Toast from "@/components/toast"
-import { Badge } from "@/components/ui/badge"
-import { Input } from "@/components/ui/input"
-import supabase from "@/lib/supabase-client"
-import { Tag } from "@/lib/type/tag.type"
-import Cookies from "js-cookie"
-import { useEffect, useState } from "react"
-import ReactMarkdown from "react-markdown"; // Import ReactMarkdown for rendering markdown content
-import MdEditor from "react-markdown-editor-lite"
-import "react-markdown-editor-lite/lib/index.css"
-import { generateSlug } from "@/lib/middleware/slug-generator"
+import { Badge } from "@/components/ui/badge";
+import "react-markdown-editor-lite/lib/index.css";
+import { Tag } from "@/lib/type/tag.type";
 
+const AdminArtikelEdit = () => {
+    const { id } = useParams<{ id: string }>();
 
-const AdminArtikelAdd: React.FC = () => {
     const [title, setTitle] = useState("");
-    const [author, setAuthor] = useState("");
+    const [, setAuthor] = useState("");
     const [content, setContent] = useState("");
-    const [open, setOpen] = useState(false)
-    const [toastData, setToastData] = useState<{
+    const [isLoading, setIsLoading] = useState(false);
+    const [open, setOpen] = React.useState(false)
+
+    const [selectLabel, setSelectLabel] = useState<Tag[]>([])
+    const [searchQr, setSearchQr] = useState<string>("all")
+    const [tags, setTags] = useState<Tag[]>([])
+
+    const [, setToastData] = useState<{
         title: string;
         desc: string;
         variant: "success" | "error" | "warning";
     } | null>(null);
 
+    const handleEditorChange = ({ text }: { text: string }) => {
+        setContent(text);
+    };
 
-    const [selectLabel, setSelectLabel] = useState<Tag[]>([])
-    const [searchQr, setSearchQr] = useState<string>("all")
-    const [tags, setTags] = useState<Tag[]>([])
 
     const fetchTags = async (query: string) => {
         if (!query) {
@@ -63,12 +71,25 @@ const AdminArtikelAdd: React.FC = () => {
                     .ilike('tag', `%${query}%`)
                     .limit(5)
 
+            if (data) {
+                const { data: DATA } = await supabase.from('artikel_tag').select(
+                    "tb_tag(id, tag)"
+                ).eq('artikel_id', id)
 
 
+                const dataBaru: Tag[] = (DATA ?? []).map((item: any) => ({
+                    id: item.tb_tag.id,
+                    tag: item.tb_tag.tag,
+                    tag_slug: item.tb_tag.tag_slug, // If tag_slug exists, include it
+                }));
+
+                setSelectLabel(dataBaru)
+            }
 
             if (error) {
                 console.error('Error fetching tags:', error);
                 setTags([]);
+
             } else {
                 setTags(data || []);
             }
@@ -87,94 +108,92 @@ const AdminArtikelAdd: React.FC = () => {
     }, [searchQr]);
 
 
+    useEffect(() => {
+        const fetchPost = async () => {
+            try {
+                const { data, error } = await supabase
+                    .from("tb_artikel")
+                    .select("title, content, author_id")
+                    .eq("id", id)
+                    .single();
 
+                if (error) {
+                    console.error("Error fetching article:", error.message);
+                    return;
+                }
 
-    const handleEditorChange = ({ text }: { text: string }) => {
-        setContent(text);
-    };
+                if (data) {
+                    setTitle(data.title);
+                    setContent(data.content);
+                    setAuthor(data.author_id);
+                }
+            } catch (err) {
+                console.error("Unexpected error:", err);
+            }
+        };
+
+        fetchPost();
+    }, [id]); // Run only when the `id` changes
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        // Get the 'auth_user' cookie and parse it
-        const a = Cookies.get('auth_user');
-        if (!a) {
-            alert("User not authenticated!");
+        if (!title || !content) {
+            alert("Please fill in all required fields.");
             return;
         }
 
-        let userAuth;
+        setIsLoading(true);
+
         try {
-            userAuth = JSON.parse(a);
-        } catch (err) {
-            console.error("Error parsing auth_user cookie:", err);
-            alert("Failed to parse user information!");
-            return;
-        }
-
-        if (!userAuth?.id) {
-            alert("No valid user ID found!");
-            return;
-        }
-
-        // Save the article to Supabase
-        const { data, error }:any = await supabase
-            .from("tb_artikel")
-            .insert([
-                {
+            const { data, error } = await supabase
+                .from("tb_artikel")
+                .update({
                     title,
-                    author_id: userAuth.id,
                     content,
-                    slug: generateSlug(title),
-                    status: 1,
-                    created_at: new Date().toISOString(),
-                },
-            ])
-            .select();
+                    updated_at: new Date().toISOString(),
+                })
+                .eq("id", id)
+                .select();
 
-        if (error) {
-            console.error("Error inserting artikel:", error);
-            return; // Stop execution if there's an error
-        }
+            if (error) {
+                console.error("Error updating article:", error.message);
+                alert("Failed to update article!");
+                return;
+            }
+            if (data && data.length > 0) {
+                const artikelId = data[0].id;
 
-        if (data && data.length > 0) {
-            const artikelId = data[0].id;
+                // Loop through selectLabel and insert each tag
+                for (const loop of selectLabel) {
+                    const { error: tagError } = await supabase
+                        .from("artikel_tag")
+                        .insert({
+                            artikel_id: artikelId,
+                            tag_id: loop.id,
+                        });
 
-            // Loop through selectLabel and insert each tag
-            for (const loop of selectLabel) {
-                const { error: tagError } = await supabase
-                    .from("artikel_tag")
-                    .insert({
-                        artikel_id: artikelId,
-                        tag_id: loop.id,
-                    });
-
-                if (tagError) {
-                    console.error("Error inserting artikel_tag:", tagError);
+                    if (tagError) {
+                        console.error("Error inserting artikel_tag:", tagError);
+                    }
                 }
+
+                console.log("Artikel and tags inserted successfully!");
             }
 
-            console.log("Artikel and tags inserted successfully!");
+
+
+            alert("Article updated successfully!");
+        } catch (err) {
+            console.error("Unexpected error:", err);
+        } finally {
+            setIsLoading(false);
         }
-
-
-
-
-        if (error) {
-            console.error("Error saving article:", error.message);
-            alert("Failed to save article!");
-            return;
-        }
-
-        alert("Article created successfully!");
-        setTitle(""); // Reset the title input
-        setAuthor(""); // Reset the author input (optional, as you're using author from cookie)
-        setContent(""); // Reset the content input
     };
 
     return (
         <div className="container mx-auto p-4">
-            <h1 className="text-2xl font-bold mb-4">Create New Article</h1>
+            <h1 className="text-2xl font-bold mb-4">Edit Article</h1>
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
                     <label htmlFor="title" className="block text-sm font-medium mb-1">
@@ -185,18 +204,6 @@ const AdminArtikelAdd: React.FC = () => {
                         placeholder="Article Title"
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
-                        required
-                    />
-                </div>
-                <div>
-                    <label htmlFor="author" className="block text-sm font-medium mb-1">
-                        Author
-                    </label>
-                    <Input
-                        id="author"
-                        placeholder="Author Name"
-                        value={author}
-                        onChange={(e) => setAuthor(e.target.value)}
                         required
                     />
                 </div>
@@ -270,33 +277,25 @@ const AdminArtikelAdd: React.FC = () => {
                         </DropdownMenu>
 
                     </div>
-                    <div>
-                        <label htmlFor="content" className="block text-sm font-medium mb-1">
-                            Content
-                        </label>
-                        <MdEditor
-                            id="content"
-                            style={{ height: "300px" }}
-                            renderHTML={(text) => <ReactMarkdown>{text}</ReactMarkdown>} // Render markdown content
-                            onChange={handleEditorChange}
-                            value={content}
-                        />
-                    </div>
-                    <Button type="submit" className="w-full">
-                        Save Article
-                    </Button>
                 </div>
+                <div>
+                    <label htmlFor="content" className="block text-sm font-medium mb-1">
+                        Content
+                    </label>
+                    <MdEditor
+                        id="content"
+                        style={{ height: "300px" }}
+                        renderHTML={(text) => <ReactMarkdown className="markdown-content prose">{text}</ReactMarkdown>}
+                        onChange={handleEditorChange}
+                        value={content}
+                    />
+                </div>
+                <Button type="submit" className="w-full" disabled={isLoading}>
+                    {isLoading ? "Saving..." : "Save Changes"}
+                </Button>
             </form>
-            {/* Render Toast only after form submission */}
-            {toastData && (
-                <Toast
-                    title={toastData.title}
-                    desc={toastData.desc}
-                    variant={toastData.variant}
-                />
-            )}
         </div>
     );
 };
 
-export default AdminArtikelAdd;
+export default AdminArtikelEdit;
