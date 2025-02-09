@@ -24,6 +24,7 @@ const KontenArtikel = () => {
         const { data, error } = await supabase
           .from("tb_artikel")
           .select("*")
+          .limit(5)
           .order("created_at", { ascending: false });
 
         if (error) throw error;

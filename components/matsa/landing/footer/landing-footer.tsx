@@ -6,14 +6,14 @@ const LandingFooter = () => {
     const thProd = new Date().getFullYear();
     return (
         <footer className="bg-gray-900 text-white pt-8 border-t-4 border-yellow-300">
-            <div className="container mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 matsa-wrapper">
+            <div className="container mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 matsa-wrapper mb-8">
                 {/* Contact Information */}
                 <div>
                     <img
                         loading="lazy"
                         decoding="async"
                         width="320"
-                        src="/public/img/logo-putih-out-text.svg"
+                        src="/img/logo-putih-out-text.svg"
                         alt="MTsN 1 Ciamis Logo"
                         className="mb-4 mr-4 w-40 sm:w-48"
                     />
@@ -94,7 +94,7 @@ const LandingFooter = () => {
                         </li>
                     </ul>
                 </div>
-                <div className="flex gap-8 justify-start items-center">
+                {/* <div className="flex gap-8 justify-start items-center">
                     <div className="flex flex-col">
                         <span>Dibangun dengan:</span>
                         <div className="flex gap-8 items-center">
@@ -111,7 +111,7 @@ const LandingFooter = () => {
                             </a>
                         </div>
                     </div>
-                </div>
+                </div> */}
             </div>
 
 

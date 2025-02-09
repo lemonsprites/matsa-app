@@ -44,9 +44,9 @@ export const updateSession = async (request: NextRequest) => {
       return NextResponse.redirect(new URL("/masuk", request.url));
     }
 
-    if (request.nextUrl.pathname === "/masuk" && !user.error) {
-      return NextResponse.redirect(new URL("/admin", request.url));
-    }
+    // if (request.nextUrl.pathname === "/masuk" && user.error) {
+    //   return NextResponse.redirect(new URL("/", request.url));
+    // }
 
     return response;
   } catch (e) {

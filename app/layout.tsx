@@ -26,7 +26,7 @@ export default function RootLayout({
   return (
     <html lang="id" className={geistSans.className} suppressHydrationWarning>
       <head>
-        <link rel="icon" type="image/png" href="/favicon.png" />
+        <link rel="icon" href="/favicon.ico" />
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-WX176DS1C4"></script>
       </head>
       <body className="bg-background text-foreground">

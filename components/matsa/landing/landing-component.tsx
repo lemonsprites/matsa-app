@@ -1,12 +1,7 @@
-
-import KontenArtikel from '@/components/matsa/artikel/artikel-konten'
+"use server"
 import LandingFooter from '@/components/matsa/landing/footer/landing-footer'
-import Slideshow from '@/components/matsa/landing/landing-slideshow'
 import LandingNavbar from '@/components/matsa/landing/navbar/landing-navbar'
-import SelayangPandang from '@/components/matsa/landing/selayang-pandang'
-import StatistikLembaga from '@/components/matsa/landing/statistik-lembaga'
-import { createClient } from '@/utils/supabase/client'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 
 type Props = {
     children: React.ReactNode | null
