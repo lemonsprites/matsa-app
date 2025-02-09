@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 "use client"
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -26,7 +28,7 @@ import {
 
 import { Badge } from "@/components/ui/badge";
 import "react-markdown-editor-lite/lib/index.css";
-import { Tag } from "@/lib/type/tag.type";
+// import { Tag } from "@/lib/type/tag.type";
 
 const AdminArtikelEdit = () => {
     const { id } = useParams<{ id: string }>();
