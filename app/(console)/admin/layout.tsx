@@ -26,7 +26,7 @@ export default async function AdminLayout({ children }: Props) {
 
   return (
     user ? (<SidebarProvider>
-      <AdminSidebar />
+      <AdminSidebar className=""/>
       <SidebarInset>
         <AdminNavbar />
         <div className="flex flex-1 flex-col gap-4 px-6 py-4 overflow-y-auto">

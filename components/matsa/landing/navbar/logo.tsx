@@ -3,7 +3,7 @@ import React from 'react'
 const NavbarLogo = () => {
     return (
         <div id="brandLogo">
-            <img src='/public/logo.svg' className="h-[80px]" />
+            <img src='/logo.svg' className="h-[80px]" />
         </div>
     )
 }

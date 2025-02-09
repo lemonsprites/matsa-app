@@ -7,18 +7,17 @@ import { NavigationMenuList, NavigationMenuProps } from '@radix-ui/react-navigat
 type Props = {
     props?: NavigationMenuProps
     foods: any[]
-    travelMenuItems: any[]
 }
 
-const LandingNavbarMenu = ({foods, travelMenuItems }: Props) => {
+const LandingNavbarMenu = ({foods }: Props) => {
     return (
         <NavigationMenu className='hidden md:block'>
             <NavigationMenuList className="gap-0 space-x-0 text-sm mr-5 flex">
                 <LandingNavbarMenuItem href="/" label="Beranda" />
                 <LandingNavbarMenuExt title="Profil Madrasah" />
-                <LandingNavbarMenuList title="Informasi Publik" data={travelMenuItems} />
-                <LandingNavbarMenuItem href="/berita" label="Berita" />
+                <LandingNavbarMenuList title="Informasi Publik" data={foods} />
                 <LandingNavbarMenuItem href="/integritas" label="Zona Integritas" />
+                <LandingNavbarMenuItem href="/ppdb" label="PPDB" />
             </NavigationMenuList>
         </NavigationMenu>
     )

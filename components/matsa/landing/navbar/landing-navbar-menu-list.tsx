@@ -1,3 +1,4 @@
+import { Badge } from "@/components/ui/badge";
 import {
     NavigationMenuContent,
     NavigationMenuItem,
@@ -31,6 +32,9 @@ const LandingNavbarMenuList = ({ title, data = [] }: Props) => {
                 {title}
             </NavigationMenuTrigger>
             <NavigationMenuContent>
+                <div className="mt-2 w-full flex items-center justify-center">
+                    <Badge>⚠️Sebagian menu masih dalam tahap pengembangan.⚠️</Badge>
+                </div>
                 <ul className="grid w-[400px] gap-3 p-4 md:w-full md:grid-cols-2 lg:w-[600px]">
                     {data.map((item) => (
                         <ListItem

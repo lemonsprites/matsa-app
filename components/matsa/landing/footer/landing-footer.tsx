@@ -13,7 +13,7 @@ const LandingFooter = () => {
                         loading="lazy"
                         decoding="async"
                         width="320"
-                        src="/public/img/logo-putih-out-text.svg"
+                        src="/img/logo-putih-out-text.svg"
                         alt="MTsN 1 Ciamis Logo"
                         className="mb-4 mr-4 w-40 sm:w-48"
                     />

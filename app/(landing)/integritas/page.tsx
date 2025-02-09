@@ -24,7 +24,7 @@ const Page: NextPage<Props> = ({ }) => {
       <div className="matsa-wrapper my-4 px-4 sm:px-8">
         {/* Banner Section */}
         <div className="banner mb-5">
-          <img src="/public/assets/img/banner-zi-mtsn.jpg" className="w-full rounded-md" alt="Banner ZI" />
+          <img src="/img/banner-zi-mtsn.jpg" className="w-full rounded-md" alt="Banner ZI" />
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 mb-5">

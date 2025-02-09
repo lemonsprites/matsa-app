@@ -12,6 +12,8 @@ import {
 import { cn } from "@/lib/utils";
 import { LucideIcon } from "lucide-react";
 import Link from "next/link";
+import { Badge } from "@/components/ui/badge";
+import Image from "next/image";
 
 
 type MenuListItemProps = {
@@ -26,6 +28,9 @@ const LandingNavbarMenuExt: React.FC<MenuListItemProps> = ({ title }) => {
                 {title}
             </NavigationMenuTrigger>
             <NavigationMenuContent>
+                <div className="mt-2 w-full flex items-center justify-center">
+                    <Badge>⚠️Sebagian menu masih dalam tahap pengembangan.⚠️</Badge>
+                </div>
                 <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
                     <span className="row-span-3">
                         <NavigationMenuLink asChild>
@@ -33,23 +38,27 @@ const LandingNavbarMenuExt: React.FC<MenuListItemProps> = ({ title }) => {
                                 className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
                                 href="/profil"
                             >
+                                <div className="w-full flex justify-center">
+                                    <Image src="/img/logo.png" width={52} height={52} layout="intrinsic" alt="logo-profil-menu" />
+
+                                </div>
 
                                 <div className="mb-2 mt-4 text-lg font-medium">
                                     {title}
                                 </div>
                                 <p className="text-sm leading-tight text-muted-foreground">
-                                    Profil Madrasah berisi sejarah, visi, misi, serta data akreditasi, fasilitas, siswa, dan tenaga pengajar.
+                                    Profil Madrasah gambaran umum serta pandangan singkat madrasah.
                                 </p>
                             </Link>
                         </NavigationMenuLink>
                     </span>
-                    <ListItem href="/struktur" title="Struktur Organisasi">
+                    <ListItem href="/struktur" title="Struktur Organisasi" className="flex-1">
                         Menampilkan Struktur Kepengurusan Satuan Pendidikan.
                     </ListItem>
-                    <ListItem href="/pendidik" title="Pendidik">
+                    <ListItem href="/pendidik" title="Pendidik" className="flex-1">
                         Daftar Pendidik Satuan Pendidikan.
                     </ListItem>
-                    <ListItem href="/" title="Program dan Kegiatan">
+                    <ListItem href="/" title="Program dan Kegiatan" className="flex-1">
                         Menampilan Program dan Kegiatan pada Madrasah
                     </ListItem>
                 </ul>

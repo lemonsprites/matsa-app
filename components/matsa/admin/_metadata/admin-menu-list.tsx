@@ -1,4 +1,4 @@
-import { LayoutGrid, MailCheck, Feather, BookOpen, ShieldCheck, Settings2, School } from "lucide-react";
+import { LayoutGrid, MailCheck, Feather, BookOpen, ShieldCheck, Settings2, School, Book } from "lucide-react";
 
 export const adminMenulist = {
     main: [
@@ -12,6 +12,25 @@ export const adminMenulist = {
             title: "Profil Lembaga",
             url: "/admin/profil-lembaga",
             icon: School
+        },
+        {
+            title: "Aset dan Persediaan",
+            url: '/admin/aset',
+            icon: Book,
+            items: [
+                {
+                    title: 'Overview',
+                    url: '/admin/aset/'
+                },
+                {
+                    title: 'Buku Aset',
+                    url: '/admin/aset/buku'
+                },
+                {
+                    title: 'Transaksi Aset',
+                    url: '/admin/aset/trx'
+                },
+            ],
         },
         {
             title: "Kepegawaian",

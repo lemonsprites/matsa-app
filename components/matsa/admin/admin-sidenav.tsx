@@ -36,7 +36,7 @@ export function AdminSideNav({
 }) {
   return (
     <SidebarGroup>
-      <SidebarGroupLabel className="text-white">Main Menu</SidebarGroupLabel>
+      <SidebarGroupLabel>Main Menu</SidebarGroupLabel>
       <SidebarMenu>
         {items.map((item) => (
           <Collapsible
@@ -47,7 +47,7 @@ export function AdminSideNav({
           >
             <SidebarMenuItem>
               <CollapsibleTrigger asChild>
-                <Link href={item.url} className="text-[#e1e0e0]">
+                <Link href={item.url} >
                   <SidebarMenuButton tooltip={item.title}>
                     {item.icon && <item.icon />}
                     <span>{item.title}</span>
@@ -63,7 +63,7 @@ export function AdminSideNav({
                     {item.items.map((subItem) => (
                       <SidebarMenuSubItem key={subItem.title} >
                         <SidebarMenuSubButton asChild>
-                          <Link href={subItem.url} className="hover:text-black text-white">
+                          <Link href={subItem.url} className="text-black hover:text-gray-500">
                             <span>{subItem.title}</span>
                           </Link>
                         </SidebarMenuSubButton>

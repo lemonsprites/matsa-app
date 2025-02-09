@@ -15,8 +15,8 @@ const ProfilSejarah = () => {
                 <h1>Madrasah Negeri 1 Ciamis Kab. Ciamis</h1>
             </div>
 
-            <div className='bg-slate-200 min-h-[240px]'>
-                asdasd
+            <div className='bg-slate-200 min-h-[240px] rounded-md truncate'>
+                <Image src="/img/profil-banner.png" layout='responsive' width={1136} height={240} alt='profil-banner'/>
             </div>
 
             <div className='grid grid-cols-5 mt-5 gap-10'>
@@ -30,7 +30,7 @@ Sebagai lembaga pendidikan, MTsN 1 Ciamis juga turut serta dalam pengembangan ka
                 </div>
 
                 <div className='ilustrasi col-span-2 gap-5 relative justify-center bg-teal-500 px-4 pt-8  truncate flex items-end rounded-2xl'>
-                    <Image src="/public/img/pic-ibu-ibu.png" alt='Tim MTsN 1 Ciamis' width={500} height={1080} className='-mb-10' />
+                    <Image src="/img/pic-ibu-ibu-1.png" alt='Tim MTsN 1 Ciamis' width={500} height={1080} className='-mb-10' />
                 </div>
             </div>
         </section>

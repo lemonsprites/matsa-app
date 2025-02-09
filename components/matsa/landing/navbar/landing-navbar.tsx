@@ -4,88 +4,46 @@ import NavbarSheet from '@/components/matsa/landing/navbar/navbar-sheet'
 import { ThemeSwitcher } from '@/components/theme-switcher'
 import { Button } from '@/components/ui/button'
 import { createClient } from '@/utils/supabase/server'
-import { ArrowUpRight, Backpack, CakeSlice, Coffee, Grape, Hotel, IceCream, MapPin, Package, Pizza, Plane, Sandwich, Smile } from 'lucide-react'
+import { ArrowUpRight, Backpack, CakeSlice, ChartCandlestick, Coffee, Grape, Hotel, IceCream, Images, MapPin, MessageCircleQuestion, Newspaper, Package, Pizza, Plane, Sandwich, Smile, Speaker, SpeakerIcon, Trophy, UsersRound } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
 
 export const foods = [
     {
-        title: "Dessert",
-        icon: CakeSlice,
-        description: "Sweet treats to satisfy your cravings.",
-        link: "#"
+        title: "Berita dan Pengumuman",
+        icon: Newspaper,
+        description: "Berita dan Pengumuman  Madrasah.",
+        link: "/berita"
     },
     {
-        title: "Pizza",
-        icon: Pizza,
-        description: "Delicious, cheesy slices of goodness.",
-        link: "#"
-
-    },
-    {
-        title: "Sandwich",
-        icon: Sandwich,
-        description: "Classic and hearty fast food options.",
-        link: "#"
-    },
-    {
-        title: "Coffee",
-        icon: Coffee,
-        description: "Your go-to boost of caffeine.",
-        link: "#"
-    },
-    {
-        title: "Ice Cream",
-        icon: IceCream,
-        description: "Cold, creamy delights for any mood.",
-        link: "#"
-    },
-    {
-        title: "Fruit",
-        icon: Grape,
-        description: "Fresh and healthy natural snacks.",
-        link: "#"
-    },
-];
-export const travelMenuItems = [
-    {
-        title: "Destinations",
-        icon: MapPin,
-        description: "Discover amazing places to visit.",
-        link: "#"
-    },
-    {
-        title: "Hotels",
-        icon: Hotel,
-        description: "Find the best stays for your trips.",
+        title: "Galeri Kegiatan",
+        icon: Images,
+        description: "Galeri Kegiatan Madrasah",
         link: "#"
 
     },
     {
-        title: "Flights",
-        icon: Plane,
-        description: "Get deals and tips on air travel.",
+        title: "Prestasi dan Penghargaan",
+        icon: Trophy,
+        description: "Prestasi dan Capaian Madrasah.",
         link: "#"
-
     },
     {
-        title: "Packing",
-        icon: Package,
-        description: "Essential checklists for stress-free packing.",
+        title: "Anggaran dan Kinerja",
+        icon: ChartCandlestick,
+        description: "Kinerja dan Anggaran Madrasah",
         link: "#"
-
     },
     {
-        title: "Activities",
-        icon: Smile,
-        description: "Exciting things to do wherever you go.",
+        title: "Alumni dan Jejaring Lulusan",
+        icon: UsersRound,
+        description: "Alumni dan Lulusan",
         link: "#"
-
     },
     {
-        title: "Travel Tips",
-        icon: Backpack,
-        description: "Make every trip smooth and memorable.",
+        title: "Aduan & Masukan",
+        icon: MessageCircleQuestion,
+        description: "Berikan saran dan masukan.",
         link: "#"
     },
 ];
@@ -103,16 +61,27 @@ const LandingNavbar = async () => {
                     {/* Desktop Menu */}
                 </div>
                 <div className="flex items-center gap-3">
-                    <LandingNavbarMenu foods={foods} travelMenuItems={travelMenuItems} />
+                    <LandingNavbarMenu foods={foods} />
                     {/* <ThemeSwitcher /> */}
-                    <Link href="/masuk" className=''>
-                        <Button className='hidden md:flex' variant= {(await user).error ? "outline" : "default" }>
-                            {(await user).error ? (<>Masuk <ArrowUpRight /></>) : (<>Dashboard <ArrowUpRight /></>) }
-                        </Button>
-                    </Link>
+
+                    {(await user).error ? (
+                        <>
+                            <Link href="/masuk" className=''>
+                                <Button className='hidden md:flex' variant={"outline"}>
+                                    Masuk <ArrowUpRight />
+                                </Button>
+                            </Link>
+                        </>) : (
+                        <>
+                            <Link href="/admin" className=''>
+                                <Button className='hidden md:flex' variant={"default"}>
+                                    Dashboard <ArrowUpRight />
+                                </Button>
+                            </Link>
+                        </>)}
                     {/* Mobile Menu */}
                     <div className="md:hidden">
-                        <NavbarSheet foods={foods} travelMenuItems={travelMenuItems} />
+                        <NavbarSheet foods={foods} />
                     </div>
                 </div>
             </div>

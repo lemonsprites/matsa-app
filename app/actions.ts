@@ -53,7 +53,7 @@ export const signInAction = async (formData: FormData) => {
     return encodedRedirect("error", "/masuk", error.message);
   }
 
-  return redirect("/protected");
+  return redirect("/admin");
 };
 
 export const forgotPasswordAction = async (formData: FormData) => {
