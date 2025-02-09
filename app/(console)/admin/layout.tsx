@@ -28,7 +28,6 @@ export default async function AdminLayout({ children}: Props) {
       </SidebarInset>
     </SidebarProvider>) : (<>
       <Link href="/" />
-      asdasd
       {/* <Toast title="Auth Error" desc="Mohon maaf! Anda tidak terautentikasi!😉" variant="error" /> */}
     </>)
   )
