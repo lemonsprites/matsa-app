@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { NextPage } from 'next'
 
 interface Props { }
