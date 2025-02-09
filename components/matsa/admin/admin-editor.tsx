@@ -50,7 +50,6 @@ export default function AdminEditor({ content, setContent }: AdminEditorProps) {
         const imageUrl = supabase.storage.from("public-data").getPublicUrl(filePath).data.publicUrl;
         const markdownSyntax = `![${file.name}](${imageUrl})`;
 
-
         // @ts-ignore
         setContent((prev:any) => prev + `\n${markdownSyntax}\n`);
         setUploadProgress(null); // Reset progress after upload
