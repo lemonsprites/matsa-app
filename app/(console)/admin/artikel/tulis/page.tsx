@@ -1,4 +1,4 @@
-import AdminArtikelEditor from '@/components/matsa/admin/admin-artikel-editor'
+import AdminArtikelEditor from '@/app/(console)/admin/artikel/edit/[id]/admin-artikel-editor'
 import AdminContent from '@/components/matsa/admin/admin-content'
 import { NextPage } from 'next'
 import "react-markdown-editor-lite/lib/index.css"

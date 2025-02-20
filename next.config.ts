@@ -5,12 +5,36 @@ const nextConfig: NextConfig = {
     __APP_VERSION__: require('./package.json').version,
   },
   images: {
-    domains: [
-      "placehold.co",
-      "lottie.host",
-      "www.mtsn1ciamis.sch.id",
-      "yvlcbqoabvoapczvckny.supabase.co"
-    ]
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'placehold.co',
+        port: '',
+        pathname: '/**',
+        search: '',
+      },
+      {
+        protocol: 'https',
+        hostname: 'lottie.host',
+        port: '',
+        pathname: '/**',
+        search: '',
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.mtsn1ciamis.sch.id',
+        port: '',
+        pathname: '/**',
+        search: '',
+      },
+      {
+        protocol: 'https',
+        hostname: 'yvlcbqoabvoapczvckny.supabase.co',
+        port: '',
+        pathname: '/**',
+        search: '',
+      },
+    ],
   }
 };
 

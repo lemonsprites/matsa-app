@@ -42,7 +42,7 @@ const AdminArtikelList: React.FC = () => {
   }, []);
 
   const handleDelete = (uuid: string) => {
-    console.log(`Deleting article with ID: ${uuid}`);
+    // console.log(`Deleting article with ID: ${uuid}`);
     // Add deletion logic here (e.g., API call)
   };
 

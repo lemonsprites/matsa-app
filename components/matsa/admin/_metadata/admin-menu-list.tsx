@@ -148,7 +148,7 @@ export const adminMenulist = {
                 },
                 {
                     title: "Kategori/Tag",
-                    url: "#",
+                    url: "/admin/artikel/tag",
                 },
                 {
                     title: "Daftar Postingan",

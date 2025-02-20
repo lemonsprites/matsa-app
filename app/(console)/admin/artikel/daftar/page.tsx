@@ -17,6 +17,7 @@ import {
 import { createClient } from '@/utils/supabase/server';
 import Image from 'next/image';
 import Link from 'next/link';
+import { ArtikelProvider } from '@/lib/context/artikel-context';
 
 const articles = [
     {
@@ -51,14 +52,14 @@ const DaftarPage: NextPage = async () => {
         // Fetch all articles
         const { data: articles, error: articlesError } = await (await supabase)
             .from("tb_artikel")
-            .select("id, title, deskripsi, created_at, thumbnail_url, user_profiles(display_name),artikel_tag(tb_tag(tag))");
+            .select("id, title, deskripsi, slug, created_at, thumbnail_url, user_profiles(display_name),artikel_tag(tb_tag(tag))");
 
         if (articlesError || !articles) {
             console.error("Error fetching articles:", articlesError);
             return <div>Failed to load articles. Please try again later.</div>;
         }
         // @ts-ignore
-        console.log(articles)
+        // console.log(articles)
 
         return (
             <AdminContent title="Daftar Artikel">
@@ -90,7 +91,9 @@ const DaftarPage: NextPage = async () => {
                                         article.user_profiles.display_name
                                     }</Badge>
                                     <small className="text-muted-foreground">{article.id}</small>
-                                    <h2 className="text-md font-bold truncate text-wrap">{article.title}</h2>
+                                    <Link href={`/artikel/${article.slug}`}>
+                                        <h2 className="hover:underline text-md font-bold truncate text-wrap">{article.title}</h2>
+                                    </Link>
                                 </TableCell>
                                 <TableCell className="truncate max-w-[150px]">{article.deskripsi}</TableCell>
                                 <TableCell className='w-[250px] flex gap-2 flex-wrap'>
@@ -123,7 +126,9 @@ const DaftarPage: NextPage = async () => {
                                     <Link href={`/admin/artikel/edit/${article.id}`}>
                                         <Button variant="default" size="sm">Edit</Button>
                                     </Link>
-                                    <Link href={`/admin/artikel/delete/${article.id}`}>Hapus</Link>
+                                    <ArtikelProvider>
+                                        <Link href={`/admin/artikel/delete/${article.id}`}>Hapus</Link>
+                                    </ArtikelProvider>
                                 </TableCell>
                             </TableRow>
                         ))}

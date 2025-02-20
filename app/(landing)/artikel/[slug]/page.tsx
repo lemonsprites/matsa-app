@@ -2,6 +2,7 @@ import PostPageContent from '@/components/matsa/artikel/page-content'
 import LandingComponent from '@/components/matsa/landing/landing-component'
 import { Tag } from '@/lib/type/tag-type'
 import { createClient } from '@/utils/supabase/client'
+import Script from 'next/script'
 
 
 type Props = {
@@ -10,6 +11,7 @@ type Props = {
 
 
 async function Page({ params }: Props) {
+
     const supabase = createClient()
     const slug = (await params).slug
 
@@ -17,7 +19,7 @@ async function Page({ params }: Props) {
         // Fetch the article
         const { data: article, error: articleError } = await supabase
             .from('tb_artikel')
-            .select('id, title, content, created_at, thumbnail_url, user_profiles(display_name)')
+            .select('id, title, content, deskripsi, created_at, thumbnail_url, user_profiles(display_name), created_at, updated_at')
             .eq('slug', slug)
             .single()
 
@@ -38,7 +40,22 @@ async function Page({ params }: Props) {
             console.error('Error fetching tags:', tagsError)
         }
 
-        const formattedTags = tags?.map((item: any) => item.tb_tag) || []
+        const formattedTags = tags?.map((item: any) => item.tb_tag) || [];
+
+        const jsonLd = {
+            "@context": "https://schema.org",
+            "@type": "BlogPosting",
+            "headline": article.title,
+            "description": article.deskripsi,
+            "image": article.thumbnail_url,
+            "author": {
+                "@type": "Person",
+                // @ts-ignore
+                "name": article.user_profiles.display_name,
+            },
+            "datePublished": article.created_at,
+            "dateModified": article.updated_at,
+        };
 
         return (
             <LandingComponent>
@@ -50,6 +67,11 @@ async function Page({ params }: Props) {
                     }}
                     tags={formattedTags}
                     error={null}
+                />
+                <Script
+                    id="json-ld"
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
                 />
             </LandingComponent>
         )
@@ -72,9 +94,9 @@ export async function generateMetadata({ params }: Props) {
         // Fetch the article to get the title
         const { data: article, error } = await supabase
             .from('tb_artikel')
-            .select('title, thumbnail_url')
+            .select('id, title, content, deskripsi, created_at, thumbnail_url, user_profiles(display_name)')
             .eq('slug', slug)
-            .single();
+            .single()
 
         if (error || !article) {
             console.error('Error fetching article for metadata:', error);
@@ -83,24 +105,27 @@ export async function generateMetadata({ params }: Props) {
             };
         }
 
-        // Use the fetched article title in the metadata
-        const articleTitle = article.title;
-
         return {
-            title: `MTsN 1 | ${articleTitle}`,
-            description: `Baca artikel kami "${articleTitle}" on our platform.`,
+            title: `MTsN 1 Ciamis | ${article.title}`,
+            description: article.deskripsi,
             openGraph: {
-                title: articleTitle,
-                description: `Baca artikel kami "${articleTitle}" on our platform.`,
-                url: `https://mtsn1ciamis.sch.id/artikel/${slug}`,
-                image: `${article.thumbnail_url}`,
-                site_name: 'MTsN 1 Ciamis',
+                title: article.title,
+                description: article.deskripsi,
+                images: [
+                    {
+                        url: article.thumbnail_url || "/default-thumbnail.jpg",
+                        width: 1200,
+                        height: 630,
+                        alt: article.title,
+                    },
+                ],
+                type: "article",
             },
             twitter: {
-                card: 'summary_large_image',
-                title: articleTitle,
-                description: `Baca artikel kami "${articleTitle}" on our platform.`,
-                image: `${article.thumbnail_url}`
+                card: "summary_large_image",
+                title: article.title,
+                description: article.deskripsi,
+                images: [article.thumbnail_url || "/default-thumbnail.jpg"],
             },
         };
     } catch (error) {

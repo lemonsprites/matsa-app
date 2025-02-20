@@ -1,21 +1,19 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
-import MdEditor from "react-markdown-editor-lite";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
-import rehypeRaw from "rehype-raw";
+import { useArtikel } from "@/lib/context/artikel-context";
 import { createClient } from "@/utils/supabase/client";
+import React, { useEffect, useRef, useState } from "react";
+import ReactMarkdown from "react-markdown";
+import MdEditor from "react-markdown-editor-lite";
+import rehypeRaw from "rehype-raw";
+import remarkGfm from "remark-gfm";
 
-interface AdminEditorProps {
-    content: string;
-    setContent: (content: string) => void;
-}
 
-export default function AdminEditor({ content, setContent }: AdminEditorProps) {
+export default function AdminEditor() {
     const editorRef = useRef<MdEditor>(null);
     const supabase = createClient();
     const [wordCount, setWordCount] = useState<number>(0);
     const [uploadProgress, setUploadProgress] = useState<number | null>(null);
+    const { content, setContent } = useArtikel();
 
 
 
