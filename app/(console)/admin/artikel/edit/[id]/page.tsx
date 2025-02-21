@@ -13,7 +13,7 @@ const TulisPage: NextPage<Props> = async ({ params }: Props) => {
     console.log(id)
     return (
         <AdminContent title='Edit Artikel'>
-            <AdminArtikelEdit param={id} />
+            <AdminArtikelEdit param={id} mode="read" />
         </AdminContent>
     )
 }
