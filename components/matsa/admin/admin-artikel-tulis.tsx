@@ -7,8 +7,7 @@ import { ArtikelProvider } from '@/lib/context/artikel-context'
 
 const AdminArtikelTulis = () => {
     return (
-
-        <ArtikelProvider>
+        <ArtikelProvider mode="write">
             <div className='h-[100vh] overflow-hidden pl-2 mx-auto'>
                 <div className='grid grid-cols-7 gap-4 h-full'>
                     <div className='col-span-5'>
@@ -25,7 +24,6 @@ const AdminArtikelTulis = () => {
                 </div>
             </div>
         </ArtikelProvider>
-
     )
 }
 

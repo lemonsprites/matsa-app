@@ -1,11 +1,19 @@
-"use client"
+"use client";
+
 import { slugConvert } from "@/lib/function/slug-convert";
 import { Tag } from "@/lib/type/tag-type";
 import { createClient } from "@/utils/supabase/client";
 import { redirect } from "next/navigation";
 import { createContext, Dispatch, ReactNode, SetStateAction, useContext, useEffect, useState } from "react";
 
-// Define the type for the article context
+interface Artikel {
+  id: string;
+  title: string;
+  content: string;
+  deskripsi: string;
+  thumbnail_url: string;
+}
+
 interface ArtikelContextType {
   title: string;
   setTitle: Dispatch<SetStateAction<string>>;
@@ -22,20 +30,23 @@ interface ArtikelContextType {
   setSelectLabel: Dispatch<SetStateAction<Tag[]>>;
   tags: Tag[];
   setTags: Dispatch<SetStateAction<Tag[]>>;
+  artikelId: string | null;
+  setArtikelId: Dispatch<SetStateAction<string | null>>;
+  editingArtikel: Artikel | null;
 }
 
-// Create the context with a proper type
 const ArtikelContext = createContext<ArtikelContextType | undefined>(undefined);
 
-export const ArtikelProvider = ({ children }: { children: ReactNode }) => {
+export const ArtikelProvider = ({ children, mode }: { children: ReactNode, mode: "write" | "read" }) => {
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
   const [deskripsi, setDeskripsi] = useState<string>("");
   const [thumbnailUrl, setThumbnailUrl] = useState<string>("");
   const [user, setUser] = useState<any>(null);
   const [selectLabel, setSelectLabel] = useState<Tag[]>([]);
-  const [tags, setTags] = useState<Tag[]>([])
-
+  const [tags, setTags] = useState<Tag[]>([]);
+  const [artikelId, setArtikelId] = useState<string | null>(null);
+  const [editingArtikel, setEditingArtikel] = useState<Artikel | null>(null);
 
   const supabase = createClient();
 
@@ -43,6 +54,72 @@ export const ArtikelProvider = ({ children }: { children: ReactNode }) => {
   const addMarkdownImage = (imageUrl: string) => {
     setContent((prev) => prev + `\n![Image](${imageUrl})\n`);
   };
+
+  const submitArtikel = async (isDraft = false) => {
+    console.log("eksekusi submit!")
+    if (!title.trim() || !content.trim()) {
+      alert("Judul dan Konten harus diisi!")
+      return;
+    }
+    
+    if(mode === "read") {
+      const { data, error } = await supabase.from("tb_artikel").update([
+        {
+          title,
+          content,
+          deskripsi: deskripsi,
+          slug: slugConvert(title),
+          author_id: user?.id,
+          thumbnail_url: thumbnailUrl,
+          status: isDraft ? 2 : 1,
+          updated_at: new Date()
+        }
+      ]).eq('id', artikelId).select()
+  
+      if (data && data.length > 0) {
+        let tempId = data[0].id;
+  
+        for (const loop of selectLabel) {
+          const { error: tagError } = await supabase
+            .from('artikel_tag').insert({ artikel_id: tempId, tag_id: loop.id });
+  
+          if (tagError) {
+            console.error("error insert tag: ", tagError)
+          }
+        }
+        console.log("tag selesai diinput.")
+      }
+    } else {
+      const { data, error } = await supabase.from("tb_artikel").insert([
+        {
+          title,
+          content,
+          deskripsi: deskripsi,
+          slug: slugConvert(title),
+          author_id: user?.id,
+          thumbnail_url: thumbnailUrl,
+          status: isDraft ? 2 : 1,
+          created_at: new Date(),
+          updated_at: new Date()
+        }
+      ]).select()
+  
+      if (data && data.length > 0) {
+        let tempId = data[0].id;
+  
+        for (const loop of selectLabel) {
+          const { error: tagError } = await supabase
+            .from('artikel_tag').insert({ artikel_id: tempId, tag_id: loop.id });
+  
+          if (tagError) {
+            console.error("error insert tag: ", tagError)
+          }
+        }
+        console.log("tag selesai diinput.")
+      }
+    }
+  }
+
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -57,93 +134,61 @@ export const ArtikelProvider = ({ children }: { children: ReactNode }) => {
     fetchUser();
   }, []);
 
-  // ✅ Submit Artikel
-  const submitArtikel = async (isDraft = false) => {
-    if (!title.trim() || !content.trim()) {
-      alert("Judul dan konten harus diisi!");
-      return;
-    }
+  // ✅ Fetch artikel jika dalam mode "read"
+  useEffect(() => {
+    if (mode === "read" && artikelId) {
+      const fetchArtikel = async () => {
+        const { data, error } = await supabase
+          .from("tb_artikel")
+          .select("*")
+          .eq("id", artikelId)
+          .single();
 
-
-
-    const { data, error } = await supabase
-      .from("tb_artikel")
-      .insert([
-        {
-          title,
-          content,
-          deskripsi: deskripsi,
-          slug: slugConvert(title),
-          author_id: user?.id,
-          thumbnail_url: thumbnailUrl,
-          status: isDraft ? 2 : 1,
-          created_at: new Date(),
-          updated_at: new Date(),
-        },
-      ])
-      .select();
-
-      if (data && data.length > 0) {
-        const artikelId = data[0].id;
-
-        // Loop through selectLabel and insert each tag
-        for (const loop of selectLabel) {
-            const { error: tagError } = await supabase
-                .from("artikel_tag")
-                .insert({
-                    artikel_id: artikelId,
-                    tag_id: loop.id,
-                });
-
-            if (tagError) {
-                console.error("Error inserting artikel_tag:", tagError);
-            }
+        if (error) {
+          console.error("Error fetching artikel:", error.message);
+        } else {
+          if (data && data.id !== editingArtikel?.id) { // 🔥 Hanya update jika data berubah
+            setEditingArtikel(data);
+            setTitle(data.title);
+            setContent(data.content);
+            setDeskripsi(data.deskripsi);
+            setThumbnailUrl(data.thumbnail_url);
+          }
         }
+      };
 
-        console.log("[Page] Artikel and tags inserted successfully!");
+      fetchArtikel();
     }
-
-    if (error) {
-      console.error("Error submitting article:", error);
-      alert("Gagal menyimpan artikel.");
-    } else {
-      alert(isDraft ? "Artikel disimpan sebagai draft!" : "Artikel berhasil dipublikasikan!");
-      setTitle("");
-      setContent("");
-      setDeskripsi("");
-      setThumbnailUrl("");
-      redirect("/admin/artikel/daftar")
-    }
-  };
-
-  const deleteArtikel = async (param: string) => {
-    const { error } = await supabase.from("tb_artikel").delete().eq("id", param);
-
-    if (error) {
-      console.error("Error deleting article:", error);
-      alert("Gagal menghapus artikel.");
-    } else {
-      alert("Artikel berhasil dihapus!");
-      redirect("/admin/artikel/daftar"); // Redirect after delete
-    }
-  };
-
+  }, [mode, artikelId]);
 
   return (
-    <ArtikelContext.Provider value={{
-      title, setTitle, content, setContent,
-      deskripsi, setDeskripsi,
-      thumbnailUrl, setThumbnailUrl,
-      addMarkdownImage, submitArtikel, deleteArtikel,
-      selectLabel, setSelectLabel,
-      tags, setTags
-    }}>
+    <ArtikelContext.Provider
+      value={{
+        title,
+        setTitle,
+        content,
+        setContent,
+        deskripsi,
+        setDeskripsi,
+        thumbnailUrl,
+        setThumbnailUrl,
+        addMarkdownImage: (imageUrl: string) => setContent((prev) => prev + `\n![Image](${imageUrl})\n`),
+        submitArtikel,
+        deleteArtikel: async (param: string) => { },
+        selectLabel,
+        setSelectLabel,
+        tags,
+        setTags,
+        artikelId,
+        setArtikelId,
+        editingArtikel,
+      }}
+    >
       {children}
     </ArtikelContext.Provider>
   );
 };
 
-// Custom hook
 export const useArtikel = () => {
   const context = useContext(ArtikelContext);
   if (!context) {

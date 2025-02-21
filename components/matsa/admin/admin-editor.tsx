@@ -8,23 +8,27 @@ import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
 
 
-export default function AdminEditor() {
+export default function AdminEditor({ id }: { id: string | null }) {
     const editorRef = useRef<MdEditor>(null);
     const supabase = createClient();
     const [wordCount, setWordCount] = useState<number>(0);
     const [uploadProgress, setUploadProgress] = useState<number | null>(null);
     const { content, setContent } = useArtikel();
+    const { artikelId, setArtikelId } = useArtikel();
 
 
 
     // 🛠️ **Update Word Count**
     useEffect(() => {
+        if (id && id !== artikelId) {
+            setArtikelId(id);
+        }
         const countWords = (text: string) => {
             const words = text.match(/\b\w+\b/g) || []; // Count words using regex
             setWordCount(words.length);
         };
         countWords(content);
-    }, [content]);
+    }, [content, artikelId, setArtikelId]);
 
 
     // ✅ Upload with Progress
@@ -49,7 +53,7 @@ export default function AdminEditor() {
         const markdownSyntax = `![${file.name}](${imageUrl})`;
 
         // @ts-ignore
-        setContent((prev:any) => prev + `\n${markdownSyntax}\n`);
+        setContent((prev: any) => prev + `\n${markdownSyntax}\n`);
         setUploadProgress(null); // Reset progress after upload
     };
 

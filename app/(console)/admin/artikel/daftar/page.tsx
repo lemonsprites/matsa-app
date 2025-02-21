@@ -82,7 +82,7 @@ const DaftarPage: NextPage = async () => {
                     <TableBody>
                         {articles.map((article) => (
                             <TableRow key={article.id}>
-                                <TableCell className="font-medium">
+                                <TableCell className="font-medium h-full">
                                     <Image src={article.thumbnail_url} width={180} height={120} alt={article.title} />
                                 </TableCell>
                                 <TableCell className="flex flex-col items-start justify-center">
@@ -126,7 +126,7 @@ const DaftarPage: NextPage = async () => {
                                     <Link href={`/admin/artikel/edit/${article.id}`}>
                                         <Button variant="default" size="sm">Edit</Button>
                                     </Link>
-                                    <ArtikelProvider>
+                                    <ArtikelProvider mode="read">
                                         <Link href={`/admin/artikel/delete/${article.id}`}>Hapus</Link>
                                     </ArtikelProvider>
                                 </TableCell>

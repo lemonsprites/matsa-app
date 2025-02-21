@@ -12,10 +12,12 @@ import { createClient } from "@/utils/supabase/client";
 import { useCallback, useEffect, useState } from "react";
 import imageCompression from "browser-image-compression";
 
-export default function AdminArtikelGaleri() {
+export default function AdminArtikelGaleri({id}: {id:string | null}) {
     const {
+        title, deskripsi,
         setTitle, setDeskripsi, submitArtikel, addMarkdownImage,
-        selectLabel, setSelectLabel, tags, setTags, setThumbnailUrl, thumbnailUrl
+        selectLabel, setSelectLabel, tags, setTags, setThumbnailUrl, thumbnailUrl,
+        setArtikelId, artikelId,
     } = useArtikel();
     const [images, setImages] = useState<string[]>([]);
     const [uploading, setUploading] = useState(false);
@@ -23,6 +25,7 @@ export default function AdminArtikelGaleri() {
     const [open, setOpen] = useState(false)
 
     const supabase = createClient();
+
 
 
     // Fetch Images
@@ -68,6 +71,10 @@ export default function AdminArtikelGaleri() {
 
 
     useEffect(() => {
+        if (id && id !== artikelId) {
+            setArtikelId(id);
+            setSelectLabel(tags)
+        }
         fetchImages();
         fetchTags(searchQr);
     }, [fetchImages, fetchTags]);
@@ -103,7 +110,7 @@ export default function AdminArtikelGaleri() {
     };
 
     return (
-        <div className="h-full">
+        <div className="">
 
             <div className="flex space-x-2 w-full items-center gap-1.5 mb-4">
 
@@ -113,15 +120,15 @@ export default function AdminArtikelGaleri() {
             <Separator />
             <div className="grid w-full items-center gap-1.5 my-4">
                 <Label htmlFor="judul">Judul Artikel</Label>
-                <Input type="text" id="judul" placeholder="Judul Artikel" onChange={(e) => setTitle(e.target.value)} />
+                <Input type="text" id="judul" placeholder="Judul Artikel" value={title} onChange={(e) => setTitle(e.target.value)} />
             </div>
             <div className="grid w-full items-center gap-1.5 my-4">
                 <Label htmlFor="thumbnail_url">Thumbnail URL</Label>
-                <Input type="text" id="thumbnail_url" placeholder="Tarik gambar dari" onChange={(e) => setThumbnailUrl(e.target.value)} />
+                <Input type="text" id="thumbnail_url" placeholder="Tarik gambar dari" value={thumbnailUrl} onChange={(e) => setThumbnailUrl(e.target.value)} />
             </div>
             <div className="grid w-full items-center gap-1.5 mb-4">
                 <Label htmlFor="deskripsi">Desksripsi Artikel</Label>
-                <Textarea placeholder="Masukan Deskripsi Artikel" onChange={(e) => setDeskripsi(e.target.value)} />
+                <Textarea placeholder="Masukan Deskripsi Artikel" value={deskripsi || ""} onChange={(e) => setDeskripsi(e.target.value)} />
             </div>
             <div className="grid w-full items-center gap-1.5 mb-8 ">
                 <Label htmlFor="deskripsi">Tag Artikel</Label>
@@ -185,7 +192,7 @@ export default function AdminArtikelGaleri() {
                 <h2 className="font-bold text-lg italic mb-2">Foto Galeri</h2>
                 <label className="cursor-pointer bg-black text-white text-center px-4 py-2 rounded w-full block">
                     {uploading ? "Mengunggah..." : "Unggah Foto"}
-                    <input type="file" className="hidden" onChange={handleUpload} />
+                    <input type="file" className="hidden" onChange={handleUpload} disabled={uploading ? true : false}/>
                 </label>
                 <div className="grid grid-cols-3 gap-2 mt-4">
                     {images.map((url, idx) => (

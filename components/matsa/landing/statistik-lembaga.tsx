@@ -42,7 +42,7 @@ const StatistikLembaga = () => {
                     <div className="absolute inset-0 bg-black/20"></div>
                     <img
                         className="object-cover object-center w-full h-full"
-                        src="https://yvlcbqoabvoapczvckny.supabase.co/storage/v1/object/public/public-data/gallery/IMG_1551.JPG?t=2025-01-27T08%3A53%3A57.400Z"
+                        src="https://yvlcbqoabvoapczvckny.supabase.co/storage/v1/object/public/public-data/gallery/1740045123877-IMG_1551.JPG"
                         alt="stats"
                     />
                 </motion.div>
