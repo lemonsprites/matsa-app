@@ -1,4 +1,4 @@
-import { LayoutGrid, MailCheck, Feather, BookOpen, ShieldCheck, Settings2, School, Book } from "lucide-react";
+import { LayoutGrid, MailCheck, Feather, BookOpen, ShieldCheck, Settings2, School, Book, Users } from "lucide-react";
 
 export const adminMenulist = {
     main: [
@@ -8,34 +8,34 @@ export const adminMenulist = {
             icon: LayoutGrid,
             isActive: true
         },
-        {
-            title: "Profil Lembaga",
-            url: "/admin/profil-lembaga",
-            icon: School
-        },
-        {
-            title: "Aset dan Persediaan",
-            url: '/admin/aset',
-            icon: Book,
-            items: [
-                {
-                    title: 'Overview',
-                    url: '/admin/aset/'
-                },
-                {
-                    title: 'Buku Aset',
-                    url: '/admin/aset/buku'
-                },
-                {
-                    title: 'Transaksi Aset',
-                    url: '/admin/aset/trx'
-                },
-            ],
-        },
+        // {
+        //     title: "Profil Lembaga",
+        //     url: "/admin/profil-lembaga",
+        //     icon: School
+        // },
+        // {
+        //     title: "Aset dan Persediaan",
+        //     url: '/admin/aset',
+        //     icon: Book,
+        //     items: [
+        //         {
+        //             title: 'Overview',
+        //             url: '/admin/aset/'
+        //         },
+        //         {
+        //             title: 'Buku Aset',
+        //             url: '/admin/aset/buku'
+        //         },
+        //         {
+        //             title: 'Transaksi Aset',
+        //             url: '/admin/aset/trx'
+        //         },
+        //     ],
+        // },
         {
             title: "Kepegawaian",
             url: "#",
-            icon: LayoutGrid,
+            icon: Users,
             items: [
                 {
                     title: "Overview Pegawai",
@@ -75,64 +75,64 @@ export const adminMenulist = {
                 },
             ]
         },
-        {
-            title: "Sub-Organisasi",
-            url: "#",
-            icon: LayoutGrid,
-            items: [
-                {
-                    title: "Overview",
-                    url: '/admin/pegawai',
-                },
-                {
-                    title: "Manajemen Organisasi",
-                    url: '/admin/pegawai/manajemen'
-                },
-                {
-                    title: "Manajemen Beban Kerja",
-                    url: '/admin/pegawai/manajemen-abk'
-                },
-                {
-                    title: "Manajemen Jabatan",
-                    url: '/admin/pegawai/manajemen-jabatan'
-                },
-                {
-                    title: "Laporan/Cetak",
-                    url: '/admin/pegawai/laporan'
-                },
-                {
-                    title: "Monitoring Jadwal",
-                    url: '/admin/pegawai/monitoring-jadwal'
-                },
-                {
-                    title: "Referensi Kepegawaian",
-                    url: '/admin/pegawai/referensi'
-                },
-            ]
-        },
-        {
-            title: "Surat/Naskah Dinas",
-            url: "#",
-            icon: MailCheck,
-            items: [
-                {
-                    title: "Overview Naskah",
-                    url: 'surat',
-                },
-                {
-                    title: "Laporan/Cetak",
-                    url: '#'
-                },
-                {
-                    title: "Monitoring",
-                    url: '#'
-                },
-                {
-                    title: "Referensi Kodefikasi",
-                    url: 'surat/kodefikasi'
-                }
-            ]
-        },
+        // {
+        //     title: "Sub-Organisasi",
+        //     url: "#",
+        //     icon: LayoutGrid,
+        //     items: [
+        //         {
+        //             title: "Overview",
+        //             url: '/admin/pegawai',
+        //         },
+        //         {
+        //             title: "Manajemen Organisasi",
+        //             url: '/admin/pegawai/manajemen'
+        //         },
+        //         {
+        //             title: "Manajemen Beban Kerja",
+        //             url: '/admin/pegawai/manajemen-abk'
+        //         },
+        //         {
+        //             title: "Manajemen Jabatan",
+        //             url: '/admin/pegawai/manajemen-jabatan'
+        //         },
+        //         {
+        //             title: "Laporan/Cetak",
+        //             url: '/admin/pegawai/laporan'
+        //         },
+        //         {
+        //             title: "Monitoring Jadwal",
+        //             url: '/admin/pegawai/monitoring-jadwal'
+        //         },
+        //         {
+        //             title: "Referensi Kepegawaian",
+        //             url: '/admin/pegawai/referensi'
+        //         },
+        //     ]
+        // },
+        // {
+        //     title: "Surat/Naskah Dinas",
+        //     url: "#",
+        //     icon: MailCheck,
+        //     items: [
+        //         {
+        //             title: "Overview Naskah",
+        //             url: 'surat',
+        //         },
+        //         {
+        //             title: "Laporan/Cetak",
+        //             url: '#'
+        //         },
+        //         {
+        //             title: "Monitoring",
+        //             url: '#'
+        //         },
+        //         {
+        //             title: "Referensi Kodefikasi",
+        //             url: 'surat/kodefikasi'
+        //         }
+        //     ]
+        // },
         {
             title: "Artikel",
             url: "#",
@@ -148,45 +148,45 @@ export const adminMenulist = {
                 },
                 {
                     title: "Kategori/Tag",
-                    url: "#",
+                    url: "/admin/artikel/tag",
                 },
                 {
                     title: "Daftar Postingan",
                     url: "/admin/artikel/daftar",
                 },
-                {
-                    title: "Monitoring",
-                    url: "#",
-                },
-                {
-                    title: "Laporan",
-                    url: "#",
-                },
+                // {
+                //     title: "Monitoring",
+                //     url: "#",
+                // },
+                // {
+                //     title: "Laporan",
+                //     url: "#",
+                // },
             ],
         },
-        {
-            title: "Documentation",
-            url: "#",
-            icon: BookOpen,
-            items: [
-                {
-                    title: "Introduction",
-                    url: "#",
-                },
-                {
-                    title: "Get Started",
-                    url: "#",
-                },
-                {
-                    title: "Tutorials",
-                    url: "#",
-                },
-                {
-                    title: "Changelog",
-                    url: "#",
-                },
-            ],
-        },
+        // {
+        //     title: "Documentation",
+        //     url: "#",
+        //     icon: BookOpen,
+        //     items: [
+        //         {
+        //             title: "Introduction",
+        //             url: "#",
+        //         },
+        //         {
+        //             title: "Get Started",
+        //             url: "#",
+        //         },
+        //         {
+        //             title: "Tutorials",
+        //             url: "#",
+        //         },
+        //         {
+        //             title: "Changelog",
+        //             url: "#",
+        //         },
+        //     ],
+        // },
         {
             title: "Zona Integritas",
             url: "#",

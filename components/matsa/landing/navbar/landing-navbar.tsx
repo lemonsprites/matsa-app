@@ -19,32 +19,32 @@ export const foods = [
         title: "Galeri Kegiatan",
         icon: Images,
         description: "Galeri Kegiatan Madrasah",
-        link: "#"
+        link: "galeri"
 
     },
     {
         title: "Prestasi dan Penghargaan",
         icon: Trophy,
         description: "Prestasi dan Capaian Madrasah.",
-        link: "#"
+        link: "prestasi"
     },
     {
         title: "Anggaran dan Kinerja",
         icon: ChartCandlestick,
         description: "Kinerja dan Anggaran Madrasah",
-        link: "#"
+        link: "kinerja"
     },
     {
         title: "Alumni dan Jejaring Lulusan",
         icon: UsersRound,
         description: "Alumni dan Lulusan",
-        link: "#"
+        link: "alumni"
     },
     {
         title: "Aduan & Masukan",
         icon: MessageCircleQuestion,
         description: "Berikan saran dan masukan.",
-        link: "#"
+        link: "masukan"
     },
 ];
 

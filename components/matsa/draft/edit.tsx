@@ -178,7 +178,7 @@ const AdminArtikelEdit = () => {
                     }
                 }
 
-                console.log("Artikel and tags inserted successfully!");
+                console.log("[Page] Artikel and tags inserted successfully!");
             }
 
 

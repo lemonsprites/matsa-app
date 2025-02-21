@@ -153,7 +153,7 @@ const AdminArtikelAdd: React.FC = () => {
                 }
             }
 
-            console.log("Artikel and tags inserted successfully!");
+            // console.log("Artikel and tags inserted successfully!");
         }
 
 

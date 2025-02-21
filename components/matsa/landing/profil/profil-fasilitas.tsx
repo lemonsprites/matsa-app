@@ -49,7 +49,7 @@ const ProfilFasilitas = async () => {
                                 <div className="mr-8 md:text-4xl">{facility.icon}</div>
                                 <div className="flex-col">
                                     <h3 className="font-bold tex-lg">{facility.title}</h3>
-                                    <desc className="text-sm">{facility.description}</desc>
+                                    <p className="text-sm">{facility.description}</p>
                                 </div>
                             </CardContent>
                         </Card>
