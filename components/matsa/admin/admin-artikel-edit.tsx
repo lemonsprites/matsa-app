@@ -8,12 +8,13 @@ import { ArtikelProvider, useArtikel } from '@/lib/context/artikel-context'
 
 type Props = {
     param: string | null
+    mode: "read" | "write"
 }
 
-const AdminArtikelEdit = ({ param }: Props) => {
+const AdminArtikelEdit = ({ param = null, mode }: Props) => {
 
     return (
-        <ArtikelProvider mode="read">
+        <ArtikelProvider mode={mode}>
 
             <div className='pl-2 mx-auto relative'>
                 <div className='grid grid-cols-7 gap-4'>

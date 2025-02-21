@@ -2,17 +2,18 @@ import { createClient } from "@/utils/supabase/server"
 import { redirect } from "next/navigation"
 
 interface Props {
-  params: { id: string }
+  params: Promise<{ id: string | null }>
 }
 
 const DeleteArtikelPage = async ({ params }: Props) => {
   const supabase = createClient()
+  const id = (await params).id
 
   // Delete article
   const { error } = await (await supabase)
     .from("tb_artikel")
     .delete()
-    .eq("id", params.id)
+    .eq("id", id)
 
   if (error) {
     console.error("Error deleting article:", error)
