@@ -17,7 +17,7 @@ export default function AdminArtikelGaleri({id}: {id:string | null}) {
         title, deskripsi,
         setTitle, setDeskripsi, submitArtikel, addMarkdownImage,
         selectLabel, setSelectLabel, tags, setTags, setThumbnailUrl, thumbnailUrl,
-        setArtikelId, artikelId,
+        setArtikelId, artikelId, mode
     } = useArtikel();
     const [images, setImages] = useState<string[]>([]);
     const [uploading, setUploading] = useState(false);
@@ -114,8 +114,8 @@ export default function AdminArtikelGaleri({id}: {id:string | null}) {
 
             <div className="flex space-x-2 w-full items-center gap-1.5 mb-4">
 
-                <Button variant={"outline"} onClick={() => submitArtikel(false)}>Simpan Artikel</Button>
-                <Button variant={"secondary"} onClick={() => submitArtikel(true)}>Simpan Sebagai Draft</Button>
+                <Button variant={"outline"} className={mode == "read" ? "flex w-full" : ""} onClick={() => submitArtikel(false)}>{mode == "read" ? "Update Artikel" : "Simpan Artikel"}</Button>
+                {mode == "write" ? <Button variant={"secondary"} onClick={() => submitArtikel(true)}>Simpan Sebagai Draft</Button> : ""}
             </div>
             <Separator />
             <div className="grid w-full items-center gap-1.5 my-4">

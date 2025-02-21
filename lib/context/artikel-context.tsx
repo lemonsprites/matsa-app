@@ -33,6 +33,7 @@ interface ArtikelContextType {
   artikelId: string | null;
   setArtikelId: Dispatch<SetStateAction<string | null>>;
   editingArtikel: Artikel | null;
+  mode: "write" | "read" 
 }
 
 const ArtikelContext = createContext<ArtikelContextType | undefined>(undefined);
@@ -182,6 +183,7 @@ export const ArtikelProvider = ({ children, mode }: { children: ReactNode, mode:
         artikelId,
         setArtikelId,
         editingArtikel,
+        mode
       }}
     >
       {children}

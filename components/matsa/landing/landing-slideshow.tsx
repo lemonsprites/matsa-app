@@ -7,19 +7,19 @@ import { AiFillCaretRight, AiFillCaretLeft } from "react-icons/ai";
 const slides = [
   {
     id: 1,
-    imageUrl: 'https://lh3.googleusercontent.com/pw/AP1GczMstkmP_-a7F1Em1c0CFrMV4wZcOBXLpypN1r8PKrmwojvnDLPOnzJz5xhjtUf2eMy2lPwyJsZ99jKoEsiQL2d5r5_V7AUs56nshRcZaHdDUArcvpNtwRL3Fsz7ABL7gslJIB0cmKwCFiwN3wmeLwqGgw=w1304-h869-s-no-gm?authuser=0',
+    imageUrl: 'https://yvlcbqoabvoapczvckny.supabase.co/storage/v1/object/public/public-data/general/1740108096013-IMG_5798.JPG',
     headline: 'Welcome to Our Madrasah',
     subtitle: 'A Place of Excellence and Faith',
   },
   {
     id: 2,
-    imageUrl: 'https://lh3.googleusercontent.com/pw/AP1GczOuww3B5i5SXtYCx6iEVygCQLowMKl5VK8fdIGQmqrUHNDb3mevWiyWmzr0O3vatHxRTokny0ImZKoNh4d87BLz0bHb5LGxR12ATBKuZITkHkbVQef_g_IE4UFJBUdUkP2g_a8MbEFvbVu-mEbzEqmlZA=w1304-h869-s-no-gm?authuser=0',
+    imageUrl: 'https://yvlcbqoabvoapczvckny.supabase.co/storage/v1/object/public/public-data/general/1740108091200-IMG_2426.JPG',
     headline: 'Explore Our Programs',
     subtitle: 'Engaging and Inclusive Learning Experiences',
   },
   {
     id: 3,
-    imageUrl: 'https://lh3.googleusercontent.com/pw/AP1GczNJC01Ik59M-GXd8qya1xEeE5Mx5xyojKYtVnDI4W_b8gyS9z2jZmoYyIAlc4st4EMK2sry8PAkDX1EdUIy7-rlXkD395uHGXK-WmcNZ_KAdpIJ4u0fSrl6LhyJYPNQfhIRXmqtxQHanKj5YdK7PFIy=w1304-h869-s-no-gm?authuser=0',
+    imageUrl: 'https://yvlcbqoabvoapczvckny.supabase.co/storage/v1/object/public/public-data/general/1740108083712-IMG_8072.JPG',
     headline: 'Join Our Community',
     subtitle: 'Together in Learning and Growth',
   },
