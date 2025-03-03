@@ -1,4 +1,4 @@
-import { LayoutGrid, MailCheck, Feather, BookOpen, ShieldCheck, Settings2, School, Book, Users } from "lucide-react";
+import { Feather, LayoutGrid, School, Settings2, ShieldCheck, Users } from "lucide-react";
 
 export const adminMenulist = {
     main: [
@@ -8,11 +8,41 @@ export const adminMenulist = {
             icon: LayoutGrid,
             isActive: true
         },
-        // {
-        //     title: "Profil Lembaga",
-        //     url: "/admin/profil-lembaga",
-        //     icon: School
-        // },
+        {
+            title: "Komite Madrasah",
+            url: "#",
+            icon: School,
+            items: [
+                {
+                    title: "Ikhtisar Komite",
+                    url: "/admin/komite",
+                },
+                {
+                    title: "Daftar Tabungan",
+                    url: "/admin/komite/tabungan",
+                },
+                {
+                    title: "Transaksi Bendahara",
+                    url: "/admin/komite/transaksi",
+                },
+                {
+                    title: "Pemindahan Kas",
+                    url: "/admin/pindah-kas",
+                },
+                {
+                    title: "Laporan Keuangan",
+                    url: "/admin/transaksi-komite",
+                },
+                {
+                    title: "Pengurus Komite",
+                    url: "/admin/pengurus-komite",
+                },
+                {
+                    title: "Setting",
+                    url: "/admin/pengurus-komite",
+                },
+            ]
+        },
         // {
         //     title: "Aset dan Persediaan",
         //     url: '/admin/aset',
