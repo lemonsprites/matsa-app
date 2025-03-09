@@ -1,26 +1,21 @@
-import { Tag } from "@/lib/type/tag-type";
-import { createClient } from "@/utils/supabase/server";
+import { getSupabaseServer } from "@/lib/helper/supabase-server";
+import { HttpStatus } from "@/lib/httpEnum";
+import { apiRes } from "@/utils/apiRes";
 
 
 // GET request to fetch tags
 export async function GET() {
-  const supabase = await createClient();
+  const supabase = await getSupabaseServer();
   try {
     const { data, error } = await supabase.from("tb_artikel").select("*").limit(100);
 
     if (error) {
-      return new Response(
-        JSON.stringify({ error: "Error fetching tags" }),
-        { status: 500 }
-      );
+      return apiRes(false, null, { code: "FETCH_ERROR", message: error.message }, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    return new Response(JSON.stringify(data), { status: 200 });
-  } catch (error) {
-    return new Response(
-      JSON.stringify({ error: "An error occurred while fetching tags" }),
-      { status: 500 }
-    );
+    return apiRes(true, data, null, HttpStatus.OK);
+  } catch (error: Error | any) {
+    return apiRes(false, null, { code: "FETCH_ERROR", message: error.message }, HttpStatus.INTERNAL_SERVER_ERROR);
   }
 }
 
@@ -35,7 +30,7 @@ export async function POST(req: Request) {
     );
   }
 
-  const supabase = await createClient();
+  const supabase = await getSupabaseServer();
   try {
     const { data, error } = await supabase
       .from("tb_tag")
@@ -68,7 +63,7 @@ export async function PUT(req: Request) {
     );
   }
 
-  const supabase = await createClient();
+  const supabase = await getSupabaseServer();
   try {
     const { data, error } = await supabase
       .from("tb_tag")
@@ -102,7 +97,7 @@ export async function DELETE(req: Request) {
     );
   }
 
-  const supabase = await createClient();
+  const supabase = await getSupabaseServer();
   try {
     const { data, error } = await supabase
       .from("tb_tag")

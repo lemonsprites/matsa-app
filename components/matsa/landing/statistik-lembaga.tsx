@@ -1,6 +1,6 @@
 "use client"
 
-import { createClient } from "@/utils/supabase/client";
+import { getSupabaseClient } from "@/lib/helper/supabase-client";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
@@ -11,7 +11,7 @@ type Props = {
 const StatistikLembaga = () => {
 
     const [pegawaiData, setPegawaiData] = useState<number | null>(null);
-    const supabase = createClient();
+    const supabase = getSupabaseClient();
 
     useEffect(() => {
         const fetchPegawaiData = async () => {

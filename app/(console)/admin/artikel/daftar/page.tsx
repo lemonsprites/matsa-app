@@ -14,10 +14,10 @@ import {
     TableHeader,
     TableRow
 } from "@/components/ui/table";
-import { createClient } from '@/utils/supabase/server';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArtikelProvider } from '@/lib/context/artikel-context';
+import { getSupabaseServer } from '@/lib/helper/supabase-server';
 
 const articles = [
     {
@@ -46,7 +46,7 @@ const articles = [
 
 
 const DaftarPage: NextPage = async () => {
-    const supabase = createClient();
+    const supabase = getSupabaseServer();
 
     try {
         // Fetch all articles

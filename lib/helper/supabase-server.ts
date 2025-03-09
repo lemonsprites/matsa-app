@@ -1,7 +1,11 @@
 import { createServerClient } from "@supabase/ssr";
+
 import { cookies } from "next/headers";
 
-export const createClient = async () => {
+/**
+ * Create Supabase Client untuk Server (SSR)
+ */
+export async function getSupabaseServer() {
   const cookieStore = await cookies();
 
   return createServerClient(
@@ -18,12 +22,10 @@ export const createClient = async () => {
               cookieStore.set(name, value, options);
             });
           } catch (error) {
-            // The `set` method was called from a Server Component.
-            // This can be ignored if you have middleware refreshing
-            // user sessions.
+            // Bisa diabaikan jika middleware menangani sesi user
           }
         },
       },
     },
   );
-};
+}

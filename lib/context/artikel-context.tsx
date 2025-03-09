@@ -1,8 +1,8 @@
 "use client";
 
-import { slugConvert } from "@/lib/function/slug-convert";
+import { slugConvert } from "@/lib/helper/slug-convert";
 import { Tag } from "@/lib/type/tag-type";
-import { createClient } from "@/utils/supabase/client";
+import { getSupabaseClient } from "@/lib/helper/supabase-client";
 import { redirect } from "next/navigation";
 import { createContext, Dispatch, ReactNode, SetStateAction, useContext, useEffect, useState } from "react";
 
@@ -49,7 +49,7 @@ export const ArtikelProvider = ({ children, mode }: { children: ReactNode, mode:
   const [artikelId, setArtikelId] = useState<string | null>(null);
   const [editingArtikel, setEditingArtikel] = useState<Artikel | null>(null);
 
-  const supabase = createClient();
+  const supabase = getSupabaseClient();
 
   // ✅ Append Markdown Image to Content
   const addMarkdownImage = (imageUrl: string) => {

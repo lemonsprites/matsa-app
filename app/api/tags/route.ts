@@ -1,26 +1,22 @@
+import { getSupabaseServer } from "@/lib/helper/supabase-server";
+import { HttpStatus } from "@/lib/httpEnum";
 import { Tag } from "@/lib/type/tag-type";
-import { createClient } from "@/utils/supabase/server";
-
+import { apiRes } from "@/utils/apiRes";
+export const revalidate = 60
 
 // GET request to fetch tags
 export async function GET() {
-  const supabase = await createClient();
+  const supabase = await getSupabaseServer();
   try {
-    const { data, error } = await supabase.from("tb_tag").select("*").limit(100);
+    const { data, error, status } = await supabase.from("tb_tag").select("*").limit(100);
 
     if (error) {
-      return new Response(
-        JSON.stringify({ error: "Error fetching tags" }),
-        { status: 500 }
-      );
+     return apiRes(false, null, { code: "FETCH_ERROR", message: error.message }, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    return new Response(JSON.stringify(data), { status: 200 });
+    return Response.json(data, { status: status });
   } catch (error) {
-    return new Response(
-      JSON.stringify({ error: "An error occurred while fetching tags" }),
-      { status: 500 }
-    );
+    return apiRes(false, null, { code: "FETCH_ERROR", message: "An error occurred while fetching tags" }, HttpStatus.INTERNAL_SERVER_ERROR);
   }
 }
 
@@ -29,31 +25,22 @@ export async function POST(req: Request) {
   const { tag }: { tag: string } = await req.json();
 
   if (!tag) {
-    return new Response(
-      JSON.stringify({ error: "Tag is required" }),
-      { status: 400 }
-    );
+    return apiRes(false, null, { code: "VALIDATION_ERROR", message: "Tag is required" }, HttpStatus.BAD_REQUEST);
   }
 
-  const supabase = await createClient();
+  const supabase = await getSupabaseServer();
   try {
     const { data, error } = await supabase
       .from("tb_tag")
       .insert([{ tag }]).select();
 
     if (error) {
-      return new Response(
-        JSON.stringify({ error: "Error adding tag" }),
-        { status: 500 }
-      );
+      return apiRes(false, null, { code: "INSERT_ERROR", message: error.message }, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    return new Response(JSON.stringify(data), { status: 201 });
+    return Response.json(data, { status: 201 });
   } catch (error) {
-    return new Response(
-      JSON.stringify({ error: "An error occurred while adding the tag" }),
-      { status: 500 }
-    );
+    return apiRes(false, null, { code: "INSERT_ERROR", message: "An error occurred while adding the tag" }, HttpStatus.INTERNAL_SERVER_ERROR);
   }
 }
 
@@ -62,13 +49,10 @@ export async function PUT(req: Request) {
   const { id, tag }: { id: number; tag: string } = await req.json();
 
   if (!id || !tag) {
-    return new Response(
-      JSON.stringify({ error: "ID and tag are required" }),
-      { status: 400 }
-    );
+    return apiRes(false, null, { code: "VALIDATION_ERROR", message: "ID and tag are required" }, HttpStatus.BAD_REQUEST);
   }
 
-  const supabase = await createClient();
+  const supabase = await getSupabaseServer();
   try {
     const { data, error } = await supabase
       .from("tb_tag")
@@ -76,18 +60,12 @@ export async function PUT(req: Request) {
       .match({ id });
 
     if (error) {
-      return new Response(
-        JSON.stringify({ error: "Error updating tag" }),
-        { status: 500 }
-      );
+      return apiRes(false, null, { code: "UPDATE_ERROR", message: error.message }, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    return new Response(JSON.stringify(data), { status: 200 });
+    return Response.json(data, { status: 200 });
   } catch (error) {
-    return new Response(
-      JSON.stringify({ error: "An error occurred while editing the tag" }),
-      { status: 500 }
-    );
+    return apiRes(false, null, { code: "UPDATE_ERROR", message: "An error occurred while editing the tag" }, HttpStatus.INTERNAL_SERVER_ERROR);
   }
 }
 
@@ -96,13 +74,10 @@ export async function DELETE(req: Request) {
   const { id }: { id: number } = await req.json();
 
   if (!id) {
-    return new Response(
-      JSON.stringify({ error: "ID is required" }),
-      { status: 400 }
-    );
+    return apiRes(false, null, { code: "VALIDATION_ERROR", message: "ID is required" }, HttpStatus.BAD_REQUEST);
   }
 
-  const supabase = await createClient();
+  const supabase = await getSupabaseServer();
   try {
     const { data, error } = await supabase
       .from("tb_tag")
@@ -110,17 +85,12 @@ export async function DELETE(req: Request) {
       .match({ id });
 
     if (error) {
-      return new Response(
-        JSON.stringify({ error: "Error deleting tag" }),
-        { status: 500 }
-      );
+      return apiRes(false, null, { code: "DELETE_ERROR", message: error.message }, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    return new Response(JSON.stringify(data), { status: 200 });
+    return Response.json(data, { status: 200 });
   } catch (error) {
-    return new Response(
-      JSON.stringify({ error: "An error occurred while deleting the tag" }),
-      { status: 500 }
-    );
+    return apiRes(false, null, { code: "DELETE_ERROR", message: "An error occurred while deleting the tag" }, HttpStatus.INTERNAL_SERVER_ERROR);
   }
 }
+

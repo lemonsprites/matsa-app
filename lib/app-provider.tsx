@@ -4,25 +4,18 @@ import Slideshow from '@/components/matsa/landing/landing-slideshow';
 import SelayangPandang from '@/components/matsa/landing/selayang-pandang';
 import StatistikLembaga from '@/components/matsa/landing/statistik-lembaga';
 import MaintenancePage from '@/components/matsa/maintenance-page';
-import { createClient } from '@/utils/supabase/client';
+import { getSupabaseClient } from '@/lib/helper/supabase-client';
 import React from 'react'
-const supabase = createClient();
+const supabase = getSupabaseClient();
 
 
 const AppProvider = async () => {
     try {
-        const { data, error } = await supabase
-            .from('web_config')
-            .select('web_mode')
-            .eq('id', 1)
-            .single();
+        const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"; // Fallback if env is missing
+        const response = await fetch(`${baseUrl}/api/config`, { cache: "no-store" });
+        const result = await response.json();
 
-        if (error) {
-            console.error(error);
-            return <div>Error loading data</div>; // Handle error case
-        }
-
-        return data?.web_mode === 1 ? (
+        return result?.data.web_mode === 1 ? (
             <MaintenancePage />
         ) : (
             <LandingComponent>
