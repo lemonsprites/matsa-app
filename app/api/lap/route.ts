@@ -1,4 +1,4 @@
-import { LaporanParams } from "@/app/api/laporan/laporan-type";
+import { LaporanParams } from "@/app/api/lap/laporan-type";
 import { createClient } from "@/lib/helper/supabase-server";
 import { HttpStatus } from "@/lib/httpEnum";
 import { apiRes } from "@/utils/apiRes";
@@ -37,7 +37,7 @@ export async function POST(request: Request) {
 }
 
 // ✅ GET: Ambil laporan pegawai berdasarkan sesi pengguna
-export async function GET(request: Request, { params }: { params: LaporanParams }) {
+export async function GET(request: Request) {
     const supabase = createClient();
 
     try {
@@ -70,33 +70,33 @@ export async function GET(request: Request, { params }: { params: LaporanParams 
 }
 
 
-export default async function DELETE(request: Request,
-    { params }: { params: Promise<{ id: string }> }) {
-    const supabase = createClient();
-    const { id } = await params;
+// export default async function DELETE(request: Request,
+//     { params }: { params: Promise<{ id: string }> }) {
+//     const supabase = createClient();
+//     const { id } = await params;
 
-    try {
-        // 🔹 Cek jika id tidak ada
-        if (!id) {
-            return apiRes(false, null, { code: "BAD_REQUEST", message: "Missing id" }, HttpStatus.BAD_REQUEST);
-        }
+//     try {
+//         // 🔹 Cek jika id tidak ada
+//         if (!id) {
+//             return apiRes(false, null, { code: "BAD_REQUEST", message: "Missing id" }, HttpStatus.BAD_REQUEST);
+//         }
 
-        // 🔹 Hapus data laporan berdasarkan id
-        const { error } = await (await supabase)
-            .from("tb_laporan_pegawai")
-            .delete()
-            .eq("id", id);
+//         // 🔹 Hapus data laporan berdasarkan id
+//         const { error } = await (await supabase)
+//             .from("tb_laporan_pegawai")
+//             .delete()
+//             .eq("id", id);
 
-        // 🔴 Cek error saat menghapus data
-        if (error) {
-            console.error("Supabase Delete Error:", error);
-            return apiRes(false, null, { code: "INTERNAL_SERVER_ERROR", message: error.message }, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+//         // 🔴 Cek error saat menghapus data
+//         if (error) {
+//             console.error("Supabase Delete Error:", error);
+//             return apiRes(false, null, { code: "INTERNAL_SERVER_ERROR", message: error.message }, HttpStatus.INTERNAL_SERVER_ERROR);
+//         }
 
-        // Return a success response after deletion
-        return apiRes(true, null, null, HttpStatus.INTERNAL_SERVER_ERROR); // or HttpStatus.OK if you want to return a message
-    } catch (error) {
-        console.error("Server Error:", error);
-        return apiRes(false, null, { code: "INTERNAL_SERVER_ERROR", message: "Internal Server Error" }, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-}
+//         // Return a success response after deletion
+//         return apiRes(true, null, null, HttpStatus.INTERNAL_SERVER_ERROR); // or HttpStatus.OK if you want to return a message
+//     } catch (error) {
+//         console.error("Server Error:", error);
+//         return apiRes(false, null, { code: "INTERNAL_SERVER_ERROR", message: "Internal Server Error" }, HttpStatus.INTERNAL_SERVER_ERROR);
+//     }
+// }

@@ -76,7 +76,7 @@ const Page = async ({ searchParams }: { searchParams: { page?: string } }) => {
                 <TableCell>
                   <div className="grid grid-cols-2 items-center">
                     <span>{item.volume}</span>
-                    <MoreButton id={item.id} />
+                    <MoreButton id={item.id} initData={item} />
                   </div>
                 </TableCell>
               </TableRow>

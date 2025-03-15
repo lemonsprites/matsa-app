@@ -22,7 +22,7 @@ type LaporanFormValues = {
 
 const supabase = createClient();
 
-const FormLaporan = () => {
+const FormLaporan = (data?: any) => {
   const router = useRouter();
   const {
     register,
@@ -30,7 +30,7 @@ const FormLaporan = () => {
     formState: { errors },
     reset,
   } = useForm<LaporanFormValues>({
-    defaultValues: {
+    defaultValues: data || {
       tanggal: "",
       kegiatan: "",
       pekerjaan: "",
@@ -49,7 +49,7 @@ const FormLaporan = () => {
 
       const remapData = { ...data, pegawai_id: userData.user.id };
 
-      const res = await fetch("/api/laporan", {
+      const res = await fetch("/api/lap", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(remapData),

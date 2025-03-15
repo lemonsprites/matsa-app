@@ -20,8 +20,10 @@ const geistSans = Geist({
 
 export default function RootLayout({
   children,
+  modal
 }: Readonly<{
   children: React.ReactNode;
+  modal: React.ReactNode;
 }>) {
 
   return (
@@ -63,6 +65,8 @@ export default function RootLayout({
           <main className="min-h-4">
             {children}
           </main>
+          
+
         </ThemeProvider>
 
       </body>

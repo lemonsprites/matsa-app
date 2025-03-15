@@ -6,11 +6,12 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 
 type Props = {
-  children: React.ReactNode,
+  children: React.ReactNode
+  modal: React.ReactNode
 }
 
-export default async function AdminLayout({ children }: Props) {
-  const supabase = await createClient();
+export default async function AdminLayout({ children, modal }: Props) {
+  const supabase = await createClient()
 
   const {
     data: { user },
@@ -27,6 +28,7 @@ export default async function AdminLayout({ children }: Props) {
       <SidebarInset>
         <AdminNavbar />
         {children}
+        {modal}
       </SidebarInset>
     </SidebarProvider>) : (<>
       <Link href="/" />
