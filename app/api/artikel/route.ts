@@ -1,11 +1,11 @@
-import { getSupabaseServer } from "@/lib/helper/supabase-server";
+import { createClient } from "@/lib/helper/supabase-server";
 import { HttpStatus } from "@/lib/httpEnum";
 import { apiRes } from "@/utils/apiRes";
 
 
 // GET request to fetch tags
 export async function GET() {
-  const supabase = await getSupabaseServer();
+  const supabase = await createClient();
   try {
     const { data, error } = await supabase.from("tb_artikel").select("*").limit(100);
 
@@ -30,7 +30,7 @@ export async function POST(req: Request) {
     );
   }
 
-  const supabase = await getSupabaseServer();
+  const supabase = await createClient();
   try {
     const { data, error } = await supabase
       .from("tb_tag")
@@ -63,7 +63,7 @@ export async function PUT(req: Request) {
     );
   }
 
-  const supabase = await getSupabaseServer();
+  const supabase = await createClient();
   try {
     const { data, error } = await supabase
       .from("tb_tag")
@@ -97,7 +97,7 @@ export async function DELETE(req: Request) {
     );
   }
 
-  const supabase = await getSupabaseServer();
+  const supabase = await createClient();
   try {
     const { data, error } = await supabase
       .from("tb_tag")

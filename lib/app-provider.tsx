@@ -4,9 +4,9 @@ import Slideshow from '@/components/matsa/landing/landing-slideshow';
 import SelayangPandang from '@/components/matsa/landing/selayang-pandang';
 import StatistikLembaga from '@/components/matsa/landing/statistik-lembaga';
 import MaintenancePage from '@/components/matsa/maintenance-page';
-import { getSupabaseClient } from '@/lib/helper/supabase-client';
+import { createClient } from '@/lib/helper/supabase-client';
 import React from 'react'
-const supabase = getSupabaseClient();
+const supabase = createClient();
 
 
 const AppProvider = async () => {

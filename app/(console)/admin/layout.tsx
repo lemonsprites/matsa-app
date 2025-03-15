@@ -1,7 +1,7 @@
 import AdminNavbar from "@/components/matsa/admin/admin-navbar";
 import { AdminSidebar } from "@/components/matsa/admin/admin-sidebar";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-import { getSupabaseServer } from "@/lib/helper/supabase-server";
+import { createClient } from "@/lib/helper/supabase-server";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
@@ -10,7 +10,7 @@ type Props = {
 }
 
 export default async function AdminLayout({ children }: Props) {
-  const supabase = await getSupabaseServer();
+  const supabase = await createClient();
 
   const {
     data: { user },

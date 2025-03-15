@@ -8,41 +8,41 @@ export const adminMenulist = {
             icon: LayoutGrid,
             isActive: true
         },
-        {
-            title: "Komite Madrasah",
-            url: "#",
-            icon: School,
-            items: [
-                {
-                    title: "Ikhtisar Komite",
-                    url: "/admin/komite",
-                },
-                {
-                    title: "Daftar Tabungan",
-                    url: "/admin/komite/tabungan",
-                },
-                {
-                    title: "Transaksi Bendahara",
-                    url: "/admin/komite/transaksi",
-                },
-                {
-                    title: "Pemindahan Kas",
-                    url: "/admin/pindah-kas",
-                },
-                {
-                    title: "Laporan Keuangan",
-                    url: "/admin/transaksi-komite",
-                },
-                {
-                    title: "Pengurus Komite",
-                    url: "/admin/pengurus-komite",
-                },
-                {
-                    title: "Setting",
-                    url: "/admin/pengurus-komite",
-                },
-            ]
-        },
+        // {
+        //     title: "Komite Madrasah",
+        //     url: "#",
+        //     icon: School,
+        //     items: [
+        //         {
+        //             title: "Ikhtisar Komite",
+        //             url: "/admin/komite",
+        //         },
+        //         {
+        //             title: "Daftar Tabungan",
+        //             url: "/admin/komite/tabungan",
+        //         },
+        //         {
+        //             title: "Transaksi Bendahara",
+        //             url: "/admin/komite/transaksi",
+        //         },
+        //         {
+        //             title: "Pemindahan Kas",
+        //             url: "/admin/pindah-kas",
+        //         },
+        //         {
+        //             title: "Laporan Keuangan",
+        //             url: "/admin/transaksi-komite",
+        //         },
+        //         {
+        //             title: "Pengurus Komite",
+        //             url: "/admin/pengurus-komite",
+        //         },
+        //         {
+        //             title: "Setting",
+        //             url: "/admin/pengurus-komite",
+        //         },
+        //     ]
+        // },
         // {
         //     title: "Aset dan Persediaan",
         //     url: '/admin/aset',
@@ -73,36 +73,44 @@ export const adminMenulist = {
                 },
                 {
                     title: "Manajemen Pegawai",
-                    url: '/admin/pegawai/manajemen'
+                    url: '/admin/pegawai/manage'
                 },
                 {
-                    title: "Manajemen Mapel Pegawai",
-                    url: '/admin/pegawai/manajemen-mapel'
-                },
-                {
-                    title: "Manajemen Jabatan",
-                    url: '/admin/pegawai/manajemen-jabatan'
-                },
-                {
-                    title: "Manajemen Kelas",
-                    url: '/admin/pegawai/manajemen-kelas'
-                },
-                {
-                    title: "Laporan/Cetak",
+                    title: "Laporan Kinerja",
                     url: '/admin/pegawai/laporan'
                 },
                 {
-                    title: "Monitoring Jadwal",
-                    url: '/admin/pegawai/monitoring-jadwal'
+                    title: "Monitoring Laporan Kinerja",
+                    url: '/admin/pegawai/monlap'
                 },
-                {
-                    title: "Referensi Kepegawaian",
-                    url: '/admin/pegawai/referensi'
-                },
-                {
-                    title: "Referensi Kurikulum",
-                    url: '/admin/pegawai/kurikulum'
-                },
+                // {
+                //     title: "Manajemen Mapel Pegawai",
+                //     url: '/admin/pegawai/manajemen-mapel'
+                // },
+                // {
+                //     title: "Manajemen Jabatan",
+                //     url: '/admin/pegawai/manajemen-jabatan'
+                // },
+                // {
+                //     title: "Manajemen Kelas",
+                //     url: '/admin/pegawai/manajemen-kelas'
+                // },
+                // {
+                //     title: "Laporan/Cetak",
+                //     url: '/admin/pegawai/laporan'
+                // },
+                // {
+                //     title: "Monitoring Jadwal",
+                //     url: '/admin/pegawai/monitoring-jadwal'
+                // },
+                // {
+                //     title: "Referensi Kepegawaian",
+                //     url: '/admin/pegawai/referensi'
+                // },
+                // {
+                //     title: "Referensi Kurikulum",
+                //     url: '/admin/pegawai/kurikulum'
+                // },
             ]
         },
         // {

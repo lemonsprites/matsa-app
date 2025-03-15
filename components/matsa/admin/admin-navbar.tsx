@@ -1,10 +1,10 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { SidebarTrigger } from '@/components/ui/sidebar'
-import { getSupabaseServer } from '@/lib/helper/supabase-server';
+import { createClient } from '@/lib/helper/supabase-server';
 
 const AdminNavbar = async () => {
-    const supabase = getSupabaseServer();
+    const supabase = createClient();
     const user = (await supabase).auth.getUser();
 
 

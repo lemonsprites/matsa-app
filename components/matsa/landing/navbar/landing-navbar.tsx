@@ -3,7 +3,7 @@ import NavbarLogo from '@/components/matsa/landing/navbar/logo'
 import NavbarSheet from '@/components/matsa/landing/navbar/navbar-sheet'
 import { ThemeSwitcher } from '@/components/theme-switcher'
 import { Button } from '@/components/ui/button'
-import { getSupabaseClient } from '@/lib/helper/supabase-client'
+import { createClient } from '@/lib/helper/supabase-client'
 import { ArrowUpRight, Backpack, CakeSlice, ChartCandlestick, Coffee, Grape, Hotel, IceCream, Images, MapPin, MessageCircleQuestion, Newspaper, Package, Pizza, Plane, Sandwich, Smile, Speaker, SpeakerIcon, Trophy, UsersRound } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
@@ -50,7 +50,7 @@ export const foods = [
 
 
 const LandingNavbar = async () => {
-    const supabase = getSupabaseClient();
+    const supabase = createClient();
     const user = (await supabase).auth.getUser();
 
     return (

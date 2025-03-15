@@ -1,10 +1,10 @@
-import { getSupabaseServer } from "@/lib/helper/supabase-server";
+import { createClient } from "@/lib/helper/supabase-server";
 import { HttpStatus } from "@/lib/httpEnum";
 import { apiRes } from "@/utils/apiRes";
 
 
 export async function GET(req: Request) {
-    const supabase = await getSupabaseServer();
+    const supabase = await createClient();
     const { data, error } = await supabase.rpc("get_pegawai_growth");
 
     if (error) {

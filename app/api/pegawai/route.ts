@@ -1,4 +1,4 @@
-import { getSupabaseServer } from "@/lib/helper/supabase-server";
+import { createClient } from "@/lib/helper/supabase-server";
 import { HttpStatus } from "@/lib/httpEnum";
 import { apiRes } from "@/utils/apiRes";
 export const revalidate = 60;
@@ -14,7 +14,7 @@ export const revalidate = 60;
  * => [{ "id": 1, "nama": "John Doe", ... }, ...]
  */
 export async function GET(req: Request) {
-    const supabase = await getSupabaseServer();
+    const supabase = await createClient();
     const { searchParams } = new URL(req.url);
 
     const countOnly = searchParams.get("count") === "true";

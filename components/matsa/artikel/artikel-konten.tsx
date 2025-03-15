@@ -8,7 +8,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Artikel } from "@/lib/type/artikel-type";
 import { Badge } from "@/components/ui/badge";
-import { getSupabaseClient } from "@/lib/helper/supabase-client";
+import { createClient } from "@/lib/helper/supabase-client";
 
 const KontenArtikel = () => {
   const firstWords = (content: string, wordLimit: number) =>
@@ -17,7 +17,7 @@ const KontenArtikel = () => {
   const [mainArticle, setMainArticle] = useState<any | null>(null);
   const [smallArticles, setSmallArticles] = useState<any[]>([]);
 
-  const supabase = getSupabaseClient();
+  const supabase = createClient();
   useEffect(() => {
 
     const fetchArticles = async () => {
