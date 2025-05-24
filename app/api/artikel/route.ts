@@ -1,15 +1,16 @@
+import { POST_STATUS } from "@/lib/enum/post-status.enum";
 import createAdminClient from "@/lib/supabase-admin";
 import { NextRequest, NextResponse } from "next/server";
 
 
 export async function GET() {
   const supabase = createAdminClient();
-
   // 1. Ambil data artikel
   const { data: artikel, error: artikelError } = await supabase
     .from('artikel')
     .select('*')
-    .order('created_at', { ascending: false });
+    .order('created_at', { ascending: false })
+    .eq('status', POST_STATUS.PUBLISH);
 
   if (artikelError)
     return NextResponse.json({ error: artikelError.message }, { status: 500 });
@@ -60,8 +61,8 @@ export async function GET() {
   const mergedData = artikel.map(item => ({
     id: item.id,
     judul: item.judul,
-    deskripsi:item.deskripsi,
-    thumbnail_url:item.thumbnail_url,
+    deskripsi: item.deskripsi,
+    thumbnail_url: item.thumbnail_url,
     slug: item.slug,
     penulis: {
       id: item.penulis_id,

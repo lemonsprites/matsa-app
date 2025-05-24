@@ -2,6 +2,7 @@
 
 import ImageUploadArea from "@/components/matsa/artikel/artikel-image-upload-area";
 import { useArtikel } from "@/lib/context/artikel-context";
+import { hitungKata } from "@/lib/helper/hitung-kata";
 import { createClient } from "@supabase/supabase-js";
 import { useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
@@ -20,7 +21,7 @@ export default function ArtikelMarkEditor() {
     const { content, setContent } = useArtikel();
     const [gallery, setGallery] = useState<string[]>([]);
 
-    const handleUpload = async (file: File) => {
+    const handleUpload = async (file: any): Promise<string | null> => {
         const fileExt = file.name.split(".").pop();
         const fileName = `${Date.now()}.${fileExt}`;
         const filePath = `artikel/${fileName}`;
@@ -31,15 +32,14 @@ export default function ArtikelMarkEditor() {
 
         if (error) {
             console.error("Upload error:", error.message);
-            return;
+            return null;  // return null jika gagal
         }
 
         const {
             data: { publicUrl },
         } = supabase.storage.from("public-assets").getPublicUrl(filePath);
 
-        const imageMarkdown = `![gambar](${publicUrl})`;
-        setContent((prev) => prev + `\n\n${imageMarkdown}`);
+        return publicUrl || null;
     };
 
     return (
@@ -47,13 +47,40 @@ export default function ArtikelMarkEditor() {
             <div className="flex flex-col gap-4">
                 <ImageUploadArea onUpload={handleUpload} />
             </div>
-            <div className="border rounded-md p-2 relative h-[80%]">
+            <div className="border rounded-md p-2  min-h-[400px] h-fit">
 
                 <MdEditor
+                    style={{ width: "100%", minHeight: "500px" }}
                     ref={editorRef}
                     value={content}
-                    view={{ menu: true, md: true, html: false }}  // Single column: only the editor, no preview
+                    config={{
+                        view: {
+                            menu: true,
+                            md: true,
+                            html: false,
+                        },
+                        canView: {
+                            menu: true,
+                            md: true,
+                            html: false,
+                            syncScroll: false,
+                        },
+                        // Customize toolbar: add your own buttons
+                        toolbar: {
+                            bold: true,
+                            italic: true,
+                            // ... other default buttons
+                            importImage: {
+                                icon: '<svg>...</svg>', // you can provide SVG icon or text
+                                title: "Import Image",
+                                onClick: () => {
+                                    // Your custom action here
+                                },
+                            },
+                        },
+                    }}
                     onChange={({ text }) => setContent(text)}
+
                     renderHTML={(text) => (
                         <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>
                             {text}
@@ -61,9 +88,10 @@ export default function ArtikelMarkEditor() {
                     )}
                 />
 
-                {/* <div className="text-right text-gray-500 mt-2 text-sm">
-                    Jumlah Kata: <span className="font-semibold">{wordCount}</span>
-                </div> */}
+                <div className="text-gray-500 mt-2 text-sm grid col-2 w-full">
+                    <div>Karakter: {content ? content.length : 0}</div>
+                    <div className="col-start-2 text-right">Kata: {hitungKata(content)}</div>
+                </div>
             </div>
 
         </>

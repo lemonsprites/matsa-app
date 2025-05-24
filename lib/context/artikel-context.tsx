@@ -33,12 +33,13 @@ interface ArtikelContextType {
   artikelId: string | null;
   setArtikelId: Dispatch<SetStateAction<string | null>>;
   editingArtikel: Artikel | null;
-  mode: "write" | "read" 
+  mode: "write" | "read" ,
+  paramID?: string
 }
 
 const ArtikelContext = createContext<ArtikelContextType | undefined>(undefined);
 
-export const ArtikelProvider = ({ children, mode }: { children: ReactNode, mode: "write" | "read" }) => {
+export const ArtikelProvider = ({ children, mode, paramID }: { children: ReactNode, mode: "write" | "read", paramID?: string }) => {
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
   const [deskripsi, setDeskripsi] = useState<string>("");
@@ -48,6 +49,7 @@ export const ArtikelProvider = ({ children, mode }: { children: ReactNode, mode:
   const [tags, setTags] = useState<Tag[]>([]);
   const [artikelId, setArtikelId] = useState<string | null>(null);
   const [editingArtikel, setEditingArtikel] = useState<Artikel | null>(null);
+  const [isReady, setIsReady] = useState(mode === "write"); // langsung true jika mode tulis
 
   const supabase = createClient();
 
@@ -122,27 +124,27 @@ export const ArtikelProvider = ({ children, mode }: { children: ReactNode, mode:
   }
 
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      const { data, error } = await supabase.auth.getUser();
-      if (!error) {
-        setUser(data?.user);
-      } else {
-        console.error("Error fetching user:", error.message);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchUser = async () => {
+  //     const { data, error } = await supabase.auth.getUser();
+  //     if (!error) {
+  //       setUser(data?.user);
+  //     } else {
+  //       console.error("Error fetching user:", error.message);
+  //     }
+  //   };
 
-    fetchUser();
-  }, []);
+  //   fetchUser();
+  // }, []);
 
   // ✅ Fetch artikel jika dalam mode "read"
   useEffect(() => {
-    if (mode === "read" && artikelId) {
+    if (mode === "read" && paramID) {
       const fetchArtikel = async () => {
         const { data, error } = await supabase
-          .from("tb_artikel")
+          .from("artikel")
           .select("*")
-          .eq("id", artikelId)
+          .eq("id", paramID)
           .single();
 
         if (error) {
@@ -150,17 +152,18 @@ export const ArtikelProvider = ({ children, mode }: { children: ReactNode, mode:
         } else {
           if (data && data.id !== editingArtikel?.id) { // 🔥 Hanya update jika data berubah
             setEditingArtikel(data);
-            setTitle(data.title);
-            setContent(data.content);
+            setTitle(data.judul);
+            setContent(data.konten);
             setDeskripsi(data.deskripsi);
             setThumbnailUrl(data.thumbnail_url);
           }
+          setIsReady(true); // ⬅️ aktifkan render konten
         }
       };
 
       fetchArtikel();
     }
-  }, [mode, artikelId]);
+  }, [mode, paramID]);
 
   return (
     <ArtikelContext.Provider
@@ -186,7 +189,7 @@ export const ArtikelProvider = ({ children, mode }: { children: ReactNode, mode:
         mode
       }}
     >
-      {children}
+      {isReady ? children : <div>Loading artikel...</div>}
     </ArtikelContext.Provider>
   );
 };

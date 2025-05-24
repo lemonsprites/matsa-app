@@ -230,19 +230,19 @@ export const adminMenulist = {
             items: [
                 {
                     title: "Overview",
-                    url: "#",
+                    url: "/admin/artikel/",
                 },
                 {
-                    title: "Tulis Artikel",
-                    url: "/admin/artikel/tulis",
+                    title: "Daftar Artikel",
+                    url: "/admin/artikel/daftar",
                 },
                 {
                     title: "Kategori/Tag",
                     url: "/admin/artikel/tag",
                 },
                 {
-                    title: "Daftar Postingan",
-                    url: "/admin/artikel/daftar",
+                    title: "Artikel Takedown",
+                    url: "/admin/artikel/takedown",
                 },
                 // {
                 //     title: "Monitoring",

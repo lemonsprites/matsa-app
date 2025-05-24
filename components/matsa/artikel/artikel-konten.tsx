@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { Artikel } from "@/lib/type/artikel-type";
 import { Badge } from "@/components/ui/badge";
 import { createClient } from "@/lib/supabase-client";
+import { POST_STATUS } from "@/lib/enum/post-status.enum";
 
 const KontenArtikel = () => {
   const firstWords = (content: string, wordLimit: number) =>
@@ -26,7 +27,8 @@ const KontenArtikel = () => {
           .from("artikel")
           .select("*")
           .limit(5)
-          .order("created_at", { ascending: false });
+          .order("created_at", { ascending: false })
+          .eq("status", POST_STATUS.PUBLISH);
 
         if (error) throw error;
 

@@ -1,21 +1,22 @@
 import AdminArtikelEdit from '@/components/matsa/admin/admin-artikel-edit'
 import AdminContent from '@/components/matsa/admin/admin-content'
+import ArtikelEditor from '@/components/matsa/artikel/artikel-editor'
 import { NextPage } from 'next'
 import "react-markdown-editor-lite/lib/index.css"
 
 
 type Props = {
-    params: Promise<{ id: string | null }>
+    params: { id: string }
 }
 
-const TulisPage: NextPage<Props> = async ({ params }: Props) => {
-    const id = (await params).id
-    console.log(id)
+const EditPage: NextPage<Props> = async ({ params }: Props) => {
+    const id = params.id
+
     return (
         <AdminContent title='Edit Artikel'>
-            <AdminArtikelEdit param={id} mode="read" />
+            <ArtikelEditor param={id} mode="read" />
         </AdminContent>
     )
 }
 
-export default TulisPage
+export default EditPage
