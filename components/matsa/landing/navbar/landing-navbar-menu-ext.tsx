@@ -58,7 +58,7 @@ const LandingNavbarMenuExt: React.FC<MenuListItemProps> = ({ title }) => {
                     <ListItem href="/pendidik" title="Pendidik" className="flex-1">
                         Daftar Pendidik Satuan Pendidikan.
                     </ListItem>
-                    <ListItem href="/" title="Program dan Kegiatan" className="flex-1">
+                    <ListItem href="/program-kegiatan" title="Program dan Kegiatan" className="flex-1">
                         Menampilan Program dan Kegiatan pada Madrasah
                     </ListItem>
                 </ul>

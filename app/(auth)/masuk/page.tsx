@@ -1,4 +1,4 @@
-import { signInAction } from "@/app/actions";
+import { signInAction } from "@/app/(auth)/actions";
 import { FormMessage, Message } from "@/components/form-message";
 import { SubmitButton } from "@/components/matsa/autentikasi/submit-button";
 import { Button } from "@/components/ui/button";
@@ -9,8 +9,7 @@ import { cn } from "@/lib/utils";
 import getConfig from "next/config";
 import Link from "next/link";
 
-export default async function Login(props: { searchParams: Promise<Message> }) {
-  const searchParams = await props.searchParams;
+export default async function Login() {
   const { publicRuntimeConfig } = getConfig();
   const { __APP_VERSION__ } = publicRuntimeConfig;
   return (
@@ -99,9 +98,9 @@ export default async function Login(props: { searchParams: Promise<Message> }) {
                     // }}
                     />
                   </div>
-                  <FormMessage message={searchParams} />
+                  {/* <FormMessage message={searchParams} /> */}
 
-                  <SubmitButton pendingText="Memproses.." formAction={signInAction}>
+                  <SubmitButton pendingText="Memproses.." formAction={signInAction} >
                     Masuk
                   </SubmitButton>
                 </div>

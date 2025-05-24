@@ -1,12 +1,10 @@
 import LandingNavbarMenu from '@/components/matsa/landing/navbar/landing-navbar-menu'
 import NavbarLogo from '@/components/matsa/landing/navbar/logo'
 import NavbarSheet from '@/components/matsa/landing/navbar/navbar-sheet'
-import { ThemeSwitcher } from '@/components/theme-switcher'
 import { Button } from '@/components/ui/button'
-import { createClient } from '@/lib/helper/supabase-client'
-import { ArrowUpRight, Backpack, CakeSlice, ChartCandlestick, Coffee, Grape, Hotel, IceCream, Images, MapPin, MessageCircleQuestion, Newspaper, Package, Pizza, Plane, Sandwich, Smile, Speaker, SpeakerIcon, Trophy, UsersRound } from 'lucide-react'
+import { createClient } from '@/lib/supabase-client'
+import { ArrowUpRight, ChartCandlestick, Images, MessageCircleQuestion, Newspaper, Trophy, UsersRound } from 'lucide-react'
 import Link from 'next/link'
-import React from 'react'
 
 export const foods = [
     {
@@ -51,7 +49,8 @@ export const foods = [
 
 const LandingNavbar = async () => {
     const supabase = createClient();
-    const user = (await supabase).auth.getUser();
+    const { data, error } = await supabase.auth.getUser();
+    const user = data.user;
 
     return (
         <nav className="h-20 bg-background border-b sticky z-50 shadow-md top-0">
@@ -64,7 +63,7 @@ const LandingNavbar = async () => {
                     <LandingNavbarMenu foods={foods} />
                     {/* <ThemeSwitcher /> */}
 
-                    {(await user).error ? (
+                    {user?.id == null ? (
                         <>
                             <Link href="/masuk" className=''>
                                 <Button className='hidden md:flex' variant={"outline"}>

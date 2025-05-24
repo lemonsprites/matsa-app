@@ -1,8 +1,8 @@
+"use client"
+
 import AdminBreadcrumb from '@/components/matsa/admin-breadcrumb'
-import AdminNavbar from '@/components/matsa/admin/admin-navbar'
 import { NextPage } from 'next'
-import getConfig from 'next/config'
-import { title } from 'process'
+// import getConfig from 'next/config'
 
 interface Props {
     children: React.ReactNode
@@ -11,8 +11,8 @@ interface Props {
 
 const AdminContent: NextPage<Props> = ({ children, title }: Props) => {
 
-    const { publicRuntimeConfig } = getConfig();
-    const { __APP_VERSION__ } = publicRuntimeConfig;
+    // const { serverRuntimeConfig } = getConfig();
+    // const { __APP_VERSION__ } = serverRuntimeConfig;
     return (
         <>
             <div className="flex flex-1 flex-col gap-4 px-6 py-4 overflow-y-auto mt-5 relative">
@@ -22,7 +22,7 @@ const AdminContent: NextPage<Props> = ({ children, title }: Props) => {
                 </div>
                 <>{children}</>
             </div>
-            <div className="flex justify-center text-xs text-muted-foreground p-4 italic ">Versi {__APP_VERSION__} © Copyright {new Date().getFullYear()}, Tim PIDL MTsN 1 Ciamis</div>
+            {/* <div className="flex justify-center text-xs text-muted-foreground p-4 italic ">Versi {__APP_VERSION__} © Copyright {new Date().getFullYear()}, Tim PIDL MTsN 1 Ciamis</div> */}
         </>
     )
 }

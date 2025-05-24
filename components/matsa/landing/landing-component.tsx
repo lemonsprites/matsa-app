@@ -5,7 +5,7 @@ import React from 'react'
 
 type Props = {
     children: React.ReactNode | null
-    className?: string
+    className?: string | null
 }
 
 const LandingComponent = ({ children, className }: Props) => {

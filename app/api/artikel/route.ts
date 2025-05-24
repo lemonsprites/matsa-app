@@ -1,121 +1,141 @@
-import { createClient } from "@/lib/helper/supabase-server";
-import { HttpStatus } from "@/lib/httpEnum";
-import { apiRes } from "@/utils/apiRes";
+import createAdminClient from "@/lib/supabase-admin";
+import { NextRequest, NextResponse } from "next/server";
 
 
-// GET request to fetch tags
 export async function GET() {
-  const supabase = await createClient();
-  try {
-    const { data, error } = await supabase.from("tb_artikel").select("*").limit(100);
+  const supabase = createAdminClient();
 
-    if (error) {
-      return apiRes(false, null, { code: "FETCH_ERROR", message: error.message }, HttpStatus.INTERNAL_SERVER_ERROR);
+  // 1. Ambil data artikel
+  const { data: artikel, error: artikelError } = await supabase
+    .from('artikel')
+    .select('*')
+    .order('created_at', { ascending: false });
+
+  if (artikelError)
+    return NextResponse.json({ error: artikelError.message }, { status: 500 });
+
+  // 2. Ambil unique penulis_id dan reviewer_id dalam array
+  const penulisIds = Array.from(new Set(artikel.map(r => r.penulis_id).filter(Boolean)));
+  const reviewerIds = Array.from(new Set(artikel.map(r => r.reviewer_id).filter(Boolean)));
+
+  // 3. Ambil data penulis dari tabel profil
+  const { data: penulis, error: penulisError } = await supabase
+    .from('profil')
+    .select('id, nama')
+    .in('id', penulisIds);
+
+  if (penulisError)
+    return NextResponse.json({ error: penulisError.message }, { status: 500 });
+
+  // 4. Ambil data reviewer dari tabel profil
+  const { data: reviewer, error: reviewerError } = await supabase
+    .from('profil')
+    .select('id, nama')
+    .in('id', reviewerIds);
+
+  if (reviewerError)
+    return NextResponse.json({ error: reviewerError.message }, { status: 500 });
+
+  // 5. Buat map id -> nama untuk penulis dan reviewer agar mudah lookup
+  const penulisMap = new Map(penulis.map(p => [p.id, p.nama]));
+  const reviewerMap = new Map(reviewer.map(r => [r.id, r.nama]));
+
+  const { data: tags } = await supabase.from('tag').select('id, tag');
+
+  const tagMap = new Map(tags?.map(t => [t.id, t.tag]));
+  const { data: artikelTags, error: artikelTagError } = await supabase.from('artikel_tag').select('artikel_id, tag_id');
+  if (artikelTagError)
+    return NextResponse.json({ error: artikelTagError.message }, { status: 500 });
+
+  const artikelTagMap = new Map<string, string[]>();
+
+  artikelTags?.forEach(({ artikel_id, tag_id }) => {
+    if (!artikelTagMap.has(artikel_id)) {
+      artikelTagMap.set(artikel_id, []);
     }
+    artikelTagMap.get(artikel_id)?.push(tag_id);
+  });
 
-    return apiRes(true, data, null, HttpStatus.OK);
-  } catch (error: Error | any) {
-    return apiRes(false, null, { code: "FETCH_ERROR", message: error.message }, HttpStatus.INTERNAL_SERVER_ERROR);
-  }
+  // 6. Gabungkan data artikel dengan nama penulis dan reviewer
+  const mergedData = artikel.map(item => ({
+    id: item.id,
+    judul: item.judul,
+    deskripsi:item.deskripsi,
+    thumbnail_url:item.thumbnail_url,
+    slug: item.slug,
+    penulis: {
+      id: item.penulis_id,
+      nama: penulisMap.get(item.penulis_id) || null,
+    },
+    reviewer: {
+      id: item.reviewer_id,
+      nama: reviewerMap.get(item.reviewer_id) || null,
+    },
+    tags: artikelTagMap.get(item.id)?.map((tagId: string) => tagMap.get(tagId)) || [],
+    created_at: item.created_at,
+    updated_at: item.updated_at,
+  }));
+
+  return NextResponse.json(mergedData, { status: 200 });
 }
 
-// POST request to add a tag
-export async function POST(req: Request) {
-  const { tag }: { tag: string } = await req.json();
 
-  if (!tag) {
-    return new Response(
-      JSON.stringify({ error: "Tag is required" }),
-      { status: 400 }
-    );
-  }
+// export async function POST(req: NextRequest) {
+//   const supabase = createAdminClient();
 
-  const supabase = await createClient();
-  try {
-    const { data, error } = await supabase
-      .from("tb_tag")
-      .insert([{ tag }]).select();
 
-    if (error) {
-      return new Response(
-        JSON.stringify({ error: "Error adding tag" }),
-        { status: 500 }
-      );
-    }
+//   const { email, password, nama, roles, jenis_profil } = await req.json();
 
-    return new Response(JSON.stringify(data), { status: 201 });
-  } catch (error) {
-    return new Response(
-      JSON.stringify({ error: "An error occurred while adding the tag" }),
-      { status: 500 }
-    );
-  }
-}
+//   // 1. Create auth user in Supabase auth
+//   const { data: user, error: authError } = await supabase.auth.admin.createUser({
+//     email,
+//     password,
+//     email_confirm: true,
+//   });
 
-// PUT request to edit a tag
-export async function PUT(req: Request) {
-  const { id, tag }: { id: number; tag: string } = await req.json();
+//   if (authError) {
+//     return NextResponse.json({ error: authError.message }, { status: 400 });
+//   }
 
-  if (!id || !tag) {
-    return new Response(
-      JSON.stringify({ error: "ID and tag are required" }),
-      { status: 400 }
-    );
-  }
+//   const userId = user?.user?.id;
+//   if (!userId) {
+//     return NextResponse.json({ error: 'User ID not found after creation' }, { status: 500 });
+//   }
 
-  const supabase = await createClient();
-  try {
-    const { data, error } = await supabase
-      .from("tb_tag")
-      .update({ tag })
-      .match({ id });
+//   // 2. Create profile in your profil table
+//   const { error: profilError } = await supabase.from('profil').insert({
+//     id: userId,
+//     nama,
+//     approved: false,
+//   });
 
-    if (error) {
-      return new Response(
-        JSON.stringify({ error: "Error updating tag" }),
-        { status: 500 }
-      );
-    }
+//   if (profilError) {
+//     return NextResponse.json({ error: profilError.message }, { status: 500 });
+//   }
 
-    return new Response(JSON.stringify(data), { status: 200 });
-  } catch (error) {
-    return new Response(
-      JSON.stringify({ error: "An error occurred while editing the tag" }),
-      { status: 500 }
-    );
-  }
-}
+//   // 3. Insert roles
+//   if (roles?.length) {
+//     const roleData = roles.map((role_id: string) => ({
+//       profil_id: userId,
+//       role_id,
+//     }));
 
-// DELETE request to delete a tag
-export async function DELETE(req: Request) {
-  const { id }: { id: number } = await req.json();
+//     const { error: roleError } = await supabase.from('profil_role').insert(roleData);
+//     if (roleError) {
+//       return NextResponse.json({ error: roleError.message }, { status: 500 });
+//     }
+//   }
 
-  if (!id) {
-    return new Response(
-      JSON.stringify({ error: "ID is required" }),
-      { status: 400 }
-    );
-  }
+//   // 4. Insert subtypes
+//   if (jenis_profil?.includes(ROLETYPE.SISWA)) {
+//     await supabase.from('siswa').insert({ profil_id: userId });
+//   }
+//   if (jenis_profil?.includes(ROLETYPE.LEMBAGA)) {
+//     await supabase.from('pegawai').insert({ profil_id: userId });
+//   }
+//   if (jenis_profil?.includes(ROLETYPE.KOMITE)) {
+//     await supabase.from('komite').insert({ profil_id: userId });
+//   }
 
-  const supabase = await createClient();
-  try {
-    const { data, error } = await supabase
-      .from("tb_tag")
-      .delete()
-      .match({ id });
-
-    if (error) {
-      return new Response(
-        JSON.stringify({ error: "Error deleting tag" }),
-        { status: 500 }
-      );
-    }
-
-    return new Response(JSON.stringify(data), { status: 200 });
-  } catch (error) {
-    return new Response(
-      JSON.stringify({ error: "An error occurred while deleting the tag" }),
-      { status: 500 }
-    );
-  }
-}
+//   return NextResponse.json({ success: true, id: userId });
+// }

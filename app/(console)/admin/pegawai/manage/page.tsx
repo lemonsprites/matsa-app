@@ -16,6 +16,8 @@ const ManagePage: NextPage<Props> = async ({ }) => {
 
     console.log(data)
 
+    return(data);
+
 
     return (
         <AdminContent title="Manage Pegawai">

@@ -1,6 +1,7 @@
 "use client";
 import { useArtikel } from "@/lib/context/artikel-context";
-import { createClient } from "@/utils/supabase/client";
+import { createClient } from "@/lib/supabase-client";
+
 import React, { useEffect, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import MdEditor from "react-markdown-editor-lite";
@@ -66,6 +67,7 @@ export default function AdminEditor({ id }: { id: string | null }) {
             await handleImageUpload(file);
         }
     };
+    
 
     return (
         <div className="border rounded-md p-2 relative h-[80%]">
@@ -77,9 +79,10 @@ export default function AdminEditor({ id }: { id: string | null }) {
             )}
 
             {/* 📝 Markdown Editor */}
-            <MdEditor className="h-full"
+            <MdEditor
                 ref={editorRef}
                 value={content}
+                view={{ menu: true, md: true, html: false }}  // Single column: only the editor, no preview
                 onChange={({ text }) => setContent(text)}
                 renderHTML={(text) => (
                     <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>

@@ -1,5 +1,5 @@
 
-import { createClient } from '@/lib/helper/supabase-server';
+import { createClient } from '@/lib/supabase-server';
 import { HttpStatus } from '@/lib/httpEnum';
 import { apiRes } from '@/utils/apiRes';
 

@@ -2,6 +2,7 @@ import { ThemeProvider } from "next-themes";
 import { Geist } from "next/font/google";
 import "@/app/globals.css";
 import Script from "next/script";
+import AppProvider from "@/lib/app-provider";
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`

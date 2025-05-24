@@ -1,4 +1,4 @@
-import { getSupabaseServer } from "@/lib/helper/supabase-server";
+import { getSupabaseServer } from "@/lib/supabase-server";
 import { HttpStatus } from "@/lib/httpEnum";
 import { Tag } from "@/lib/type/tag-type";
 import { apiRes } from "@/utils/apiRes";

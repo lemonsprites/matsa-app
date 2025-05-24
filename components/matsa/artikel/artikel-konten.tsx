@@ -8,7 +8,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Artikel } from "@/lib/type/artikel-type";
 import { Badge } from "@/components/ui/badge";
-import { createClient } from "@/lib/helper/supabase-client";
+import { createClient } from "@/lib/supabase-client";
 
 const KontenArtikel = () => {
   const firstWords = (content: string, wordLimit: number) =>
@@ -23,7 +23,7 @@ const KontenArtikel = () => {
     const fetchArticles = async () => {
       try {
         const { data, error } = await supabase
-          .from("tb_artikel")
+          .from("artikel")
           .select("*")
           .limit(5)
           .order("created_at", { ascending: false });
@@ -55,7 +55,7 @@ const KontenArtikel = () => {
           <img
             className="h-44 rounded w-full object-cover object-center mb-4"
             src={article.thumbnail_url || "https://dummyimage.com/721x401"}
-            alt={article.title}
+            alt={article.judul}
           />
           <Badge className="tracking-widest mb-2">
             {article.created_at
@@ -67,7 +67,7 @@ const KontenArtikel = () => {
               : "SUBTITLE"}
           </Badge>
           <h2 className="text-base truncate line-clamp-2 text-wrap text-gray-900 font-medium mb-2">
-            {article.title}
+            {article.judul}
           </h2>
           {/* <p className="leading-relaxed text-sm line-clamp-2">
             {article.description}
@@ -121,15 +121,15 @@ const KontenArtikel = () => {
                 <img
                   className="w-full h-full object-cover"
                   src={mainArticle.thumbnail_url || "https://dummyimage.com/400x400"}
-                  alt={mainArticle.title}
+                  alt={mainArticle.judul}
                 />
               </CardHeader>
               <CardContent className="absolute bottom-0 bg-gradient-to-t from-black/75 via-black/65 to-transparent p-4 text-white">
                 <h2 className="text-xl sm:text-2xl font-bold mb-4">
-                  {mainArticle.title}
+                  {mainArticle.judul}
                 </h2>
                 <div className="leading-relaxed text-sm sm:text-base">
-                  <ReactMarkdown>{firstWords(mainArticle.content, 50)}</ReactMarkdown>
+                  <ReactMarkdown>{firstWords(mainArticle.deskripsi, 50)}</ReactMarkdown>
                 </div>
               </CardContent>
             </Card>

@@ -1,7 +1,7 @@
 import AdminNavbar from "@/components/matsa/admin/admin-navbar";
 import { AdminSidebar } from "@/components/matsa/admin/admin-sidebar";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-import { createClient } from "@/lib/helper/supabase-server";
+import { createClient } from "@/lib/supabase-server";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
@@ -39,5 +39,5 @@ export default async function AdminLayout({ children, modal }: Props) {
 }
 
 export const generateMetadata = () => ({
-  title: "Daftar Artikel",
+  title: "Matsa Console",
 });

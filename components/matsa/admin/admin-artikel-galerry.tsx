@@ -8,9 +8,10 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
 import { useArtikel } from "@/lib/context/artikel-context";
-import { createClient } from "@/utils/supabase/client";
+
 import { useCallback, useEffect, useState } from "react";
 import imageCompression from "browser-image-compression";
+import { createClient } from "@/lib/supabase-client";
 
 export default function AdminArtikelGaleri({id}: {id:string | null}) {
     const {

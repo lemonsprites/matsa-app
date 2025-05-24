@@ -1,6 +1,6 @@
 import EditLaporan from '@/app/(console)/admin/pegawai/(lapkin)/laporan/edit-laporan';
 import { Modal } from '@/components/modal';
-import { createClient } from '@/lib/helper/supabase-server';
+import { createClient } from '@/lib/supabase-server';
 import { NextPage } from 'next';
 
 interface Props {

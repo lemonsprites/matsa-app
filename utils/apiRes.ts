@@ -1,60 +1,34 @@
-/**
- * Buat respon API dengan format JSON.
- *
- * @param {boolean} success status keberhasilan operasi
- * @param {T | null} data data yang dikembalikan, atau null jika terjadi error
- * @param {{ code: string; message: string } | null} error informasi error, atau null jika tidak ada error
- * @param {number} status kode status HTTP
- * @returns {Response} respon API dalam format JSON
- */
+import { NextResponse } from "next/server";
+
 export function apiRes<T>(
   success: boolean,
   data: T | null,
   error: { code: string; message: string } | null,
   status: number
 ) {
-  return new Response(
-    JSON.stringify({
+  return NextResponse.json(
+    {
       success,
       data,
       error,
       status,
-    }),
-    {
-      status,
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
+    },
+    { status }
   );
 }
 
-
-/**
- * Buat respon API dengan format JSON untuk operasi POST.
- *
- * @param {T | null} data data yang dikembalikan, atau null jika terjadi error
- * @param {{ code: string; message: string } | null} error informasi error, atau null jika tidak ada error
- * @param {number} status kode status HTTP
- * @returns {Response} respon API dalam format JSON
- */
 export function apiPostRes<T>(
   data: T | null,
   error: { code: string; message: string } | null,
   status: number
 ) {
-  return new Response(
-    JSON.stringify({
+  return NextResponse.json(
+    {
       success: !error,
       data,
       error,
       status,
-    }),
-    {
-      status,
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
+    },
+    { status }
   );
 }

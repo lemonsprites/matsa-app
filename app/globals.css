@@ -1,3 +1,4 @@
+@import 'react-markdown-editor-lite/lib/index.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
