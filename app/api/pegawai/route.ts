@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase-server";
 import { HttpStatus } from "@/lib/httpEnum";
 import { apiRes } from "@/utils/apiRes";
+import { NextResponse } from "next/server";
 
 export async function GET() {
 
@@ -12,5 +13,5 @@ export async function GET() {
         .select('*')
 
 
-    return apiRes(true, tb_pegawai, null, HttpStatus.OK);
+    return NextResponse.json(tb_pegawai, { status: 200 });
 }

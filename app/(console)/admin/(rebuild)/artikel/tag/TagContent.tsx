@@ -1,10 +1,9 @@
 "use client";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { X, Pencil } from "lucide-react";
-import { parseCookies, setCookie } from "nookies";
 import { Tag } from "@/lib/type/tag-type";
 
 
@@ -14,19 +13,7 @@ const fetchTags = async (): Promise<Tag[]> => {
   return data;
 };
 
-const storeTagsInCookies = (tags: Tag[]) => {
-  // Store the tags in cookies
-  setCookie(null, "tags", JSON.stringify(tags), {
-    maxAge: 60 * 60 * 24 * 7, // 7 days expiry
-    path: "/",
-  });
-};
 
-const getTagsFromCookies = (): Tag[] => {
-  const cookies = parseCookies();
-  const tags = cookies.tags ? JSON.parse(cookies.tags) : [];
-  return tags;
-};
 
 export const TagContent = () => {
   const [tags, setTags] = useState<Tag[]>([]);
@@ -35,22 +22,6 @@ export const TagContent = () => {
   const [editValue, setEditValue] = useState<string>("");
   const [showDeleteDialog, setShowDeleteDialog] = useState<boolean>(false);
   const [showEditDialog, setShowEditDialog] = useState<boolean>(false);
-
-  useEffect(() => {
-    // Check if tags are in cookies first
-    const cookiesTags = getTagsFromCookies();
-    if (cookiesTags.length > 0) {
-      setTags(cookiesTags);
-    } else {
-      // If not in cookies, fetch them from the API
-      const getTags = async () => {
-        const data = await fetchTags();
-        setTags(data);
-        storeTagsInCookies(data); // Store fetched tags in cookies
-      };
-      getTags();
-    }
-  }, []);
 
   // Add tag
   const addTag = async (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -69,7 +40,7 @@ export const TagContent = () => {
       const data: Tag[] = await res.json();
       console.log(data)
       setTags((prevTags) => [...prevTags, data[0]]);
-      storeTagsInCookies([...tags, data[0]]); // Store the updated tags in cookies
+
       setInputValue("");
     }
   };
@@ -93,12 +64,16 @@ export const TagContent = () => {
 
       const data = await res.json();
       setTags((prevTags) => prevTags.filter((t) => t.id !== selectedTag.id));
-      storeTagsInCookies(tags.filter((t) => t.id !== selectedTag.id)); // Store updated tags in cookies
-    }
-    setShowDeleteDialog(false);
+
+      setShowDeleteDialog(false);
+    };
+
+    // Open edit dialog
+
+
+
   };
 
-  // Open edit dialog
   const editTag = (tag: Tag) => {
     setSelectedTag(tag);
     setEditValue(tag.tag);
@@ -123,7 +98,7 @@ export const TagContent = () => {
       setTags((prevTags) =>
         prevTags.map((t) => (t.id === selectedTag.id ? { ...t, tag: editValue.trim() } : t))
       );
-      storeTagsInCookies(tags.map((t) => (t.id === selectedTag.id ? { ...t, tag: editValue.trim() } : t))); // Store updated tags in cookies
+
     }
     setShowEditDialog(false);
   };
@@ -170,7 +145,7 @@ export const TagContent = () => {
           <DialogHeader>
             <DialogTitle>Delete Tag</DialogTitle>
           </DialogHeader>
-          <p>Ubur-ubur ikan lele, yakin hapus ini le?<br/> <b>"{selectedTag?.tag}"</b>?</p>
+          <p>Ubur-ubur ikan lele, yakin hapus ini le?<br /> <b>"{selectedTag?.tag}"</b>?</p>
           <div className="flex justify-end gap-2 mt-4">
             <Button variant="outline" onClick={() => setShowDeleteDialog(false)}>Cancel</Button>
             <Button variant="destructive" onClick={removeTag}>Delete</Button>
@@ -197,7 +172,5 @@ export const TagContent = () => {
         </DialogContent>
       </Dialog>
     </div>
-  );
-};
-
-export default TagContent;
+  )
+}

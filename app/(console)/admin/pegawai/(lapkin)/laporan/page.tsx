@@ -2,11 +2,8 @@ import FormLaporan from "@/app/(console)/admin/pegawai/(lapkin)/laporan/form-lap
 import MoreButton from "@/app/(console)/admin/pegawai/(lapkin)/laporan/more-button";
 import AdminContent from "@/components/matsa/admin/admin-content";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { createClient } from "@/lib/supabase-server";
-import { MoreHorizontal, MoreVertical } from "lucide-react";
+import { createClient } from "@/lib/supabase-client";
 import Link from "next/link";
 
 const getLaporan = async (userId: string, page: number, limit: number) => {
@@ -14,7 +11,7 @@ const getLaporan = async (userId: string, page: number, limit: number) => {
   const start = (page - 1) * limit;
   const end = start + limit - 1;
 
-  const { data, error, count } = await (await supabase)
+  const { data, error, count } = await supabase
     .from("tb_laporan_pegawai")
     .select("id, tanggal, kegiatan, pekerjaan, volume", { count: "exact" })
     .eq("pegawai_id", userId)
@@ -29,24 +26,19 @@ const getLaporan = async (userId: string, page: number, limit: number) => {
   return { data, total: count || 0 };
 };
 
-
-
-
-const Page = async ({ searchParams }: { searchParams: { page?: string } }) => {
+const Page = async ({ searchParams }: { searchParams: Promise<{ page?: string }> }) => {
   const supabase = createClient();
-  const { data: sessionData, error: userError } = await (await supabase).auth.getUser();
+  const { page } = await searchParams
+  const { data: sessionData, error: userError } = await supabase.auth.getUser();
 
   if (userError || !sessionData?.user) {
     return <p className="text-red-500">Anda harus login untuk melihat data laporan.</p>;
   }
 
   const limit = 10;
-  const currentPage = Number(await searchParams.page) || 1;
+  const currentPage = Number(page) || 1;
   const { data: laporanData, total } = await getLaporan(sessionData.user.id, currentPage, limit);
   const totalPages = Math.ceil(total / limit);
-
-
-
 
   return (
     <AdminContent title="Laporan Kinerja">
@@ -110,7 +102,6 @@ const Page = async ({ searchParams }: { searchParams: { page?: string } }) => {
           <Link href={`?page=${currentPage + 1}`}>Selanjutnya</Link>
         </Button>
       </div>
-
     </AdminContent>
   );
 };

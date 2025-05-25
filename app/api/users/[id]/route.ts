@@ -18,9 +18,9 @@ const roleTableMap: Record<ROLETYPE, string> = {
     [ROLETYPE.GUEST]: '',
     [ROLETYPE.SYSTEM]: ''
 };
-export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
     const supabase = createAdminClient();
-    const id = params.id;
+    const { id } = await params;
     const body = await req.json();
     const { nama, approved, roles, jenis_profil } = body;
 
@@ -76,9 +76,9 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
 }
 
 
-export async function DELETE(_: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(_: NextRequest, { params }: { params: Promise<{ id: string }> }) {
     const supabase = createAdminClient();
-    const id = params.id;
+    const { id } = await params;
 
     if (!id) {
         return NextResponse.json({ error: 'Missing user ID' }, { status: 400 });

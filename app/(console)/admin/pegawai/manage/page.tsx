@@ -1,23 +1,20 @@
-import AdminContent from '@/components/matsa/admin/admin-content'
+import AdminContent from '@/components/matsa/admin/admin-content';
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { Table, TableCaption, TableHeader, TableRow, TableHead, TableBody, TableCell, TableFooter } from '@/components/ui/table'
-import { fetchAPI } from '@/utils/fetcher'
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { fetchAPI } from '@/utils/fetcher';
 import { Ellipsis } from 'lucide-react';
-import { NextPage } from 'next'
+import { NextPage } from 'next';
 
 interface Props { }
 
 
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 const ManagePage: NextPage<Props> = async ({ }) => {
-    const data = await fetchAPI(`${baseUrl}/api/pegawai/`)
+    const promisePegawai = await fetchAPI(`${baseUrl}/api/pegawai/`)
 
-    console.log(data)
-
-    return(data);
-
+    const pegawai = await promisePegawai().json();
 
     return (
         <AdminContent title="Manage Pegawai">
@@ -34,7 +31,7 @@ const ManagePage: NextPage<Props> = async ({ }) => {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {data.data.map((item: any) => (
+                    {pegawai.map((item: any) => (
                         <TableRow key={item.id}>
                             <TableCell >
                                 <Avatar>

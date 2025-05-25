@@ -1,4 +1,5 @@
-import { createClient } from "@/utils/supabase/server"
+
+import { createClient } from "@/lib/supabase-server"
 import { redirect } from "next/navigation"
 
 interface Props {
@@ -6,7 +7,7 @@ interface Props {
 }
 
 const DeleteArtikelPage = async ({ params }: Props) => {
-  const supabase = createClient()
+  const supabase = await createClient()
   const id = (await params).id
 
   // Delete article

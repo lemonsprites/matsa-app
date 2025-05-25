@@ -1,17 +1,18 @@
-import { getSupabaseServer } from "@/lib/supabase-server";
+
 import { HttpStatus } from "@/lib/httpEnum";
+import { createClient } from "@/lib/supabase-server";
 import { Tag } from "@/lib/type/tag-type";
 import { apiRes } from "@/utils/apiRes";
 export const revalidate = 60
 
 // GET request to fetch tags
 export async function GET() {
-  const supabase = await getSupabaseServer();
+  const supabase = await createClient();
   try {
     const { data, error, status } = await supabase.from("tb_tag").select("*").limit(100);
 
     if (error) {
-     return apiRes(false, null, { code: "FETCH_ERROR", message: error.message }, HttpStatus.INTERNAL_SERVER_ERROR);
+      return apiRes(false, null, { code: "FETCH_ERROR", message: error.message }, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     return Response.json(data, { status: status });
@@ -28,7 +29,7 @@ export async function POST(req: Request) {
     return apiRes(false, null, { code: "VALIDATION_ERROR", message: "Tag is required" }, HttpStatus.BAD_REQUEST);
   }
 
-  const supabase = await getSupabaseServer();
+  const supabase = await createClient();
   try {
     const { data, error } = await supabase
       .from("tb_tag")
@@ -52,7 +53,7 @@ export async function PUT(req: Request) {
     return apiRes(false, null, { code: "VALIDATION_ERROR", message: "ID and tag are required" }, HttpStatus.BAD_REQUEST);
   }
 
-  const supabase = await getSupabaseServer();
+  const supabase = await createClient();
   try {
     const { data, error } = await supabase
       .from("tb_tag")
@@ -77,7 +78,7 @@ export async function DELETE(req: Request) {
     return apiRes(false, null, { code: "VALIDATION_ERROR", message: "ID is required" }, HttpStatus.BAD_REQUEST);
   }
 
-  const supabase = await getSupabaseServer();
+  const supabase = await createClient();
   try {
     const { data, error } = await supabase
       .from("tb_tag")

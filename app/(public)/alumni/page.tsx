@@ -1,4 +1,4 @@
-import AlumniDashboard from '@/app/(landing)/alumni/alumni-konten'
+import AlumniDashboard from '@/app/(public)/alumni/alumni-konten'
 import LandingComponent from '@/components/matsa/landing/landing-component'
 import { NextPage } from 'next'
 

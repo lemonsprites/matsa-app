@@ -3,15 +3,16 @@ import createAdminClient from '@/lib/supabase-admin';
 import { NextResponse } from 'next/server';
 
 
-export async function GET(req: Request, { params }: { params: { id: string } }) {
+export async function GET(req: Request, { params }: { params: Promise<{ id: string }> }) {
     const supabase = await createAdminClient();
+    const { id } = await params
 
     // 1. Ambil data artikel (single record)
     const { data: artikel, error: artikelError } = await supabase
         .from('artikel')
         .select('*')
         .eq('status', POST_STATUS.PUBLISH)
-        .eq('id', params.id)
+        .eq('id', id)
         .single();  // <= pakai .single()
 
     if (artikelError) {
