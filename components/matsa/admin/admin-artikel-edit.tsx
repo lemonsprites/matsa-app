@@ -1,10 +1,9 @@
 "use client"
 
-import Loader from '@/app/(console)/admin/artikel/edit/[id]/loader'
 import AdminArtikelGaleri from '@/components/matsa/admin/admin-artikel-galerry'
 import AdminEditor from '@/components/matsa/admin/admin-editor'
 import { Label } from '@/components/ui/label'
-import { ArtikelProvider, useArtikel } from '@/lib/context/artikel-context'
+import { ArtikelProvider } from '@/lib/context/artikel-context'
 
 type Props = {
     param: string | null

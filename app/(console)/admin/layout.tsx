@@ -1,15 +1,17 @@
+import AdminNavbar from "@/components/matsa/admin/admin-navbar";
 import { AdminSidebar } from "@/components/matsa/admin/admin-sidebar";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-import { createClient } from "@/utils/supabase/server";
+import { createClient } from "@/lib/supabase-server";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
 type Props = {
-  children: React.ReactNode,
+  children: React.ReactNode
+  modal: React.ReactNode
 }
 
-export default async function AdminLayout({ children}: Props) {
-  const supabase = await createClient();
+export default async function AdminLayout({ children, modal }: Props) {
+  const supabase = await createClient()
 
   const {
     data: { user },
@@ -24,7 +26,9 @@ export default async function AdminLayout({ children}: Props) {
     user ? (<SidebarProvider>
       <AdminSidebar className="" />
       <SidebarInset>
+        <AdminNavbar />
         {children}
+        {modal}
       </SidebarInset>
     </SidebarProvider>) : (<>
       <Link href="/" />
@@ -35,5 +39,5 @@ export default async function AdminLayout({ children}: Props) {
 }
 
 export const generateMetadata = () => ({
-  title: "Daftar Artikel",
+  title: "Matsa Console",
 });

@@ -1,6 +1,6 @@
+import "@/app/globals.css";
 import { ThemeProvider } from "next-themes";
 import { Geist } from "next/font/google";
-import "@/app/globals.css";
 import Script from "next/script";
 
 const defaultUrl = process.env.VERCEL_URL
@@ -19,7 +19,7 @@ const geistSans = Geist({
 });
 
 export default function RootLayout({
-  children,
+  children
 }: Readonly<{
   children: React.ReactNode;
 }>) {
@@ -63,6 +63,8 @@ export default function RootLayout({
           <main className="min-h-4">
             {children}
           </main>
+
+
         </ThemeProvider>
 
       </body>

@@ -1,13 +1,12 @@
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
-import { SidebarTrigger } from '@/components/ui/sidebar'
-import { createClient } from '@/utils/supabase/server';
+"use client"
+import { signOutAction } from '@/app/(auth)/actions';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { SidebarTrigger } from '@/components/ui/sidebar';
 
-const AdminNavbar = async () => {
-    const supabase = createClient();
-    const user = (await supabase).auth.getUser();
-
-
+const AdminNavbar = () => {
     return (
         <nav className="bg-sidebar text-sidebar-foreground shadow-md sticky top-0 z-50 flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-16">
             <div className="flex items-center gap-2 px-4 justify-between relative w-full">
@@ -28,20 +27,31 @@ const AdminNavbar = async () => {
                             <DropdownMenuTrigger asChild>
                                 <Avatar>
                                     <AvatarImage src="https://github.com/lemonsprites.png" alt="@shadcn" />
-                                    <AvatarFallback>CN</AvatarFallback>
+                                    <AvatarFallback>MA</AvatarFallback>
                                 </Avatar>
                             </DropdownMenuTrigger>
-                            <DropdownMenuContent>
-                                <DropdownMenuItem>Profile</DropdownMenuItem>
-                                <DropdownMenuItem>Settings</DropdownMenuItem>
-                                <DropdownMenuItem>Sign out</DropdownMenuItem>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
-                    </div>
+                            <DropdownMenuContent align="end" className='min-w-[250px]'>
+                                <DropdownMenuLabel className='text-center uppercase flex flex-col justify-center items-center gap-1'>
+                                    Nidaan Khofiyah Matsa
+                                    <Badge variant={"secondary"} className=" block w-fit">Guru Mapel</Badge>
+                                </DropdownMenuLabel>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuLabel>Main Menu</DropdownMenuLabel>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem>Profil Pengguna</DropdownMenuItem>
+                                <DropdownMenuItem>Pengaturan Pengguna</DropdownMenuItem>
+                                <DropdownMenuItem>Notifikasi</DropdownMenuItem>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuLabel onClick={() => signOutAction()} className='bg-red-400 text-white text-center cursor-pointer hover:bg-red-600 hover:text-white hover rounded-md'>
+                                    Keluar Aplikasi
+                                </DropdownMenuLabel>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
                 </div>
             </div>
+        </div>
 
-        </nav>
+        </nav >
 
         // <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
         //     <div className="flex items-center gap-2 px-4">

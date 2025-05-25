@@ -1,4 +1,5 @@
+/** @type {import('next-sitemap').IConfig} */
 module.exports = {
-    siteUrl: 'https://www.mtsn1ciamis.sch.id',
-    generateRobotsTxt: true, // Generates robots.txt
-};
+    siteUrl: process.env.SITE_URL || "https://www.mtsn1ciamis.sch.id",
+    generateRobotsTxt: true,
+  };

@@ -1,6 +1,6 @@
 "use client"
 
-import { createClient } from "@/utils/supabase/client";
+import { createClient } from "@/lib/supabase-client";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 

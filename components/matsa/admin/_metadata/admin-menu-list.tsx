@@ -1,4 +1,4 @@
-import { LayoutGrid, MailCheck, Feather, BookOpen, ShieldCheck, Settings2, School, Book, Users } from "lucide-react";
+import { Feather, LayoutGrid, LucideGraduationCap, School, Settings2, ShieldCheck, Users } from "lucide-react";
 
 export const adminMenulist = {
     main: [
@@ -9,9 +9,39 @@ export const adminMenulist = {
             isActive: true
         },
         // {
-        //     title: "Profil Lembaga",
-        //     url: "/admin/profil-lembaga",
-        //     icon: School
+        //     title: "Komite Madrasah",
+        //     url: "#",
+        //     icon: School,
+        //     items: [
+        //         {
+        //             title: "Ikhtisar Komite",
+        //             url: "/admin/komite",
+        //         },
+        //         {
+        //             title: "Daftar Tabungan",
+        //             url: "/admin/komite/tabungan",
+        //         },
+        //         {
+        //             title: "Transaksi Bendahara",
+        //             url: "/admin/komite/transaksi",
+        //         },
+        //         {
+        //             title: "Pemindahan Kas",
+        //             url: "/admin/pindah-kas",
+        //         },
+        //         {
+        //             title: "Laporan Keuangan",
+        //             url: "/admin/transaksi-komite",
+        //         },
+        //         {
+        //             title: "Pengurus Komite",
+        //             url: "/admin/pengurus-komite",
+        //         },
+        //         {
+        //             title: "Setting",
+        //             url: "/admin/pengurus-komite",
+        //         },
+        //     ]
         // },
         // {
         //     title: "Aset dan Persediaan",
@@ -43,36 +73,96 @@ export const adminMenulist = {
                 },
                 {
                     title: "Manajemen Pegawai",
-                    url: '/admin/pegawai/manajemen'
+                    url: '/admin/pegawai/manage'
                 },
                 {
-                    title: "Manajemen Mapel Pegawai",
-                    url: '/admin/pegawai/manajemen-mapel'
-                },
-                {
-                    title: "Manajemen Jabatan",
-                    url: '/admin/pegawai/manajemen-jabatan'
-                },
-                {
-                    title: "Manajemen Kelas",
-                    url: '/admin/pegawai/manajemen-kelas'
-                },
-                {
-                    title: "Laporan/Cetak",
+                    title: "Laporan Kinerja",
                     url: '/admin/pegawai/laporan'
                 },
                 {
-                    title: "Monitoring Jadwal",
-                    url: '/admin/pegawai/monitoring-jadwal'
+                    title: "Monitoring Laporan Kinerja",
+                    url: '/admin/pegawai/monlap'
+                },
+                // {
+                //     title: "Manajemen Mapel Pegawai",
+                //     url: '/admin/pegawai/manajemen-mapel'
+                // },
+                // {
+                //     title: "Manajemen Jabatan",
+                //     url: '/admin/pegawai/manajemen-jabatan'
+                // },
+                // {
+                //     title: "Manajemen Kelas",
+                //     url: '/admin/pegawai/manajemen-kelas'
+                // },
+                // {
+                //     title: "Laporan/Cetak",
+                //     url: '/admin/pegawai/laporan'
+                // },
+                // {
+                //     title: "Monitoring Jadwal",
+                //     url: '/admin/pegawai/monitoring-jadwal'
+                // },
+                // {
+                //     title: "Referensi Kepegawaian",
+                //     url: '/admin/pegawai/referensi'
+                // },
+                // {
+                //     title: "Referensi Kurikulum",
+                //     url: '/admin/pegawai/kurikulum'
+                // },
+            ]
+        },
+        {
+            title: "Akademik",
+            url: "#",
+            icon: LucideGraduationCap,
+            items: [
+                {
+                    title: "Overview Siswa",
+                    url: '/admin/siswa',
+                    icon: Feather,
+
                 },
                 {
-                    title: "Referensi Kepegawaian",
-                    url: '/admin/pegawai/referensi'
+                    title: "Manajemen Siswa",
+                    url: '/admin/siswa',
+                    icon: Feather,
+                    items: [
+                        {
+                            title: "Manajemen Siswa",
+                            url: '/admin/siswa/manajemen'
+                        },
+                        {
+                            title: "Manajemen Kelas",
+                            url: '/admin/siswa/manajemen-kelas'
+                        },
+                        {
+                            title: "Mutasi Internal",
+                            url: '/admin/siswa/mutasi-internal'
+                        },
+                        {
+                            title: "Mutasi Eksternal",
+                            url: '/admin/siswa/mutasi-eksternal'
+                        },
+                    ]
                 },
                 {
-                    title: "Referensi Kurikulum",
-                    url: '/admin/pegawai/kurikulum'
+                    title: "Manajemen Kelas",
+                    url: '/admin/siswa/manajemen-kelas',
+                    items: [
+                        {
+                            title: "Mutasi Internal",
+                            url: '/admin/siswa/mutasi-internal'
+                        },
+                        {
+                            title: "Mutasi Eksternal",
+                            url: '/admin/siswa/mutasi-eksternal'
+                        }
+                    ]
                 },
+
+
             ]
         },
         // {
@@ -140,19 +230,19 @@ export const adminMenulist = {
             items: [
                 {
                     title: "Overview",
-                    url: "#",
+                    url: "/admin/artikel/",
                 },
                 {
-                    title: "Tulis Artikel",
-                    url: "/admin/artikel/tulis",
+                    title: "Daftar Artikel",
+                    url: "/admin/artikel/daftar",
                 },
                 {
                     title: "Kategori/Tag",
                     url: "/admin/artikel/tag",
                 },
                 {
-                    title: "Daftar Postingan",
-                    url: "/admin/artikel/daftar",
+                    title: "Artikel Takedown",
+                    url: "/admin/artikel/takedown",
                 },
                 // {
                 //     title: "Monitoring",
@@ -224,8 +314,8 @@ export const adminMenulist = {
                     url: "/admin/setting/general"
                 },
                 {
-                    title: "Team",
-                    url: "#",
+                    title: "Users",
+                    url: "/admin/setting/users",
                 },
                 {
                     title: "Billing",

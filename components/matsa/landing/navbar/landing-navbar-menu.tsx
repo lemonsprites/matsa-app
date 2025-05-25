@@ -17,7 +17,7 @@ const LandingNavbarMenu = ({foods }: Props) => {
                 <LandingNavbarMenuExt title="Profil Madrasah" />
                 <LandingNavbarMenuList title="Informasi Publik" data={foods} />
                 <LandingNavbarMenuItem href="/integritas" label="Zona Integritas" />
-                <LandingNavbarMenuItem href="https://ppdb.mtsn1ciamis.sch.id/" label="PPDB" />
+                <LandingNavbarMenuItem href="https://ppdb.mtsn1ciamis.sch.id/" label="PPDBM" />
             </NavigationMenuList>
         </NavigationMenu>
     )
