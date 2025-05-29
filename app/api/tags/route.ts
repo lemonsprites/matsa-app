@@ -1,5 +1,5 @@
 
-import { HttpStatus } from "@/lib/httpEnum";
+import { HttpStatus } from "@/lib/enums/http";
 import { createClient } from "@/lib/supabase-server";
 import { Tag } from "@/lib/type/tag-type";
 import { apiRes } from "@/utils/apiRes";

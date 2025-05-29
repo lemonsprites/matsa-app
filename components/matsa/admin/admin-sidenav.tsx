@@ -18,7 +18,7 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar"
-import { IAdminMenuItem } from "@/lib/interface/admin-menu.interface"
+import { IAdminMenuItem } from "@/lib/interfaces/admin-menu.interface"
 
 
 export function AdminSideNav({ items, title }: { items: IAdminMenuItem[], title?: string }) {

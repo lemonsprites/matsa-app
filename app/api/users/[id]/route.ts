@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import createAdminClient from '@/lib/supabase-admin';
-import { ROLETYPE } from '@/lib/enum/role.enum';
+import { ROLETYPE } from '@/lib/enums/role.enum';
 
 export async function GET() {
     const { data, error } = await createAdminClient().auth.admin.listUsers();

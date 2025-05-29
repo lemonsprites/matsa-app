@@ -10,8 +10,8 @@ import {
   fetchUsers,
   updateUser,
 } from '@/lib/api/users'; // Make sure you export these properly
-import { ROLETYPE } from '@/lib/enum/role.enum';
-import { Role } from '@/lib/interface/role.interface';
+import { ROLETYPE } from '@/lib/enums/role.enum';
+import { Role } from '@/lib/interfaces/role.interface';
 import { useEffect, useState } from 'react';
 
 type User = {

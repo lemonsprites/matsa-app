@@ -2,7 +2,7 @@
 
 import ImageUploadArea from "@/components/matsa/artikel/artikel-image-upload-area";
 import { useArtikel } from "@/lib/context/artikel-context";
-import { hitungKata } from "@/lib/helper/hitung-kata";
+import { hitungKata } from "@/lib/helpers/hitung-kata";
 import { createClient } from "@supabase/supabase-js";
 import { useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";

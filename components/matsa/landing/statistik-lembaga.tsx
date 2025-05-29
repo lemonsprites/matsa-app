@@ -1,6 +1,6 @@
 "use client"
 import { Skeleton } from "@/components/ui/skeleton";
-import { hitunganGenz } from "@/lib/helper/hitung-genz";
+import { hitunganGenz } from "@/lib/helpers/hitung-genz";
 import { createClient } from "@/lib/supabase-client";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";

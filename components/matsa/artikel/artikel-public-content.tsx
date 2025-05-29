@@ -1,6 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
-import { estimasiMembaca } from "@/lib/helper/estimasi-membaca"
+import { estimasiMembaca } from "@/lib/helpers/estimasi-membaca"
 import { Tag } from "@/lib/type/tag-type"
 import dynamic from "next/dynamic"
 import Link from "next/link"

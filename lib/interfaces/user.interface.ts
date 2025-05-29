@@ -1,4 +1,4 @@
-import { Profil } from "@/lib/interface/profil.interface";
+import { Profil } from "@/lib/interfaces/profil.interface";
 
 export interface User extends Profil {
   roles: string[];

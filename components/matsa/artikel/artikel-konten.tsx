@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { Artikel } from "@/lib/type/artikel-type";
 import { Badge } from "@/components/ui/badge";
 import { createClient } from "@/lib/supabase-client";
-import { POST_STATUS } from "@/lib/enum/post-status.enum";
+import { POST_STATUS } from "@/lib/enums/post-status.enum";
 
 const KontenArtikel = () => {
   const firstWords = (content: string, wordLimit: number) =>

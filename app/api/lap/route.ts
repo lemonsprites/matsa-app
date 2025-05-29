@@ -1,6 +1,6 @@
 import { LaporanParams } from "@/app/api/lap/laporan-type";
 import { createClient } from "@/lib/supabase-server";
-import { HttpStatus } from "@/lib/httpEnum";
+import { HttpStatus } from "@/lib/enums/http";
 import { apiRes } from "@/utils/apiRes";
 
 // ✅ POST: Tambah laporan pegawai

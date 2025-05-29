@@ -1,4 +1,4 @@
-import { Tag } from "@/lib/interface/tag.interface";
+import { Tag } from "@/lib/interfaces/tag.interface";
 
 export interface Artikel {
     id: string;

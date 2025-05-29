@@ -1,5 +1,5 @@
 
-import { PegawaiContextType } from "@/lib/interface/pegawai.interface";
+import { PegawaiContextType } from "@/lib/interfaces/pegawai.interface";
 import { createContext, ReactNode, useContext } from "react";
 
 

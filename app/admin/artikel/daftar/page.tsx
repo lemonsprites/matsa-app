@@ -1,7 +1,7 @@
 
 import ArtikelList from "@/components/matsa/artikel/artikel-list";
 import AdminContent from "@/components/matsa/admin/admin-content";
-import { Artikel } from "@/lib/interface/artikel.interface";
+import { Artikel } from "@/lib/interfaces/artikel.interface";
 
 
 const AdminArtikelList = async () => {

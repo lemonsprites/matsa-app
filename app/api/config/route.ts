@@ -1,5 +1,5 @@
 import { createClient } from "@/lib/supabase-client";  // Supabase client
-import { HttpStatus } from "@/lib/httpEnum";  // HTTP status codes
+import { HttpStatus } from "@/lib/enums/http";  // HTTP status codes
 import { NextResponse } from "next/server";  // NextResponse for API responses
 import { DateTime } from "luxon";
 

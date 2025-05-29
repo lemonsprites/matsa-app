@@ -1,6 +1,6 @@
 "use client";
 
-import { slugConvert } from "@/lib/helper/slug-convert";
+import { slugConvert } from "@/lib/helpers/slug-convert";
 import { createClient } from "@/lib/supabase-client";
 import { Tag } from "@/lib/type/tag-type";
 import { createContext, Dispatch, ReactNode, SetStateAction, useContext, useEffect, useState } from "react";

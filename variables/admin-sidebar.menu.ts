@@ -1,4 +1,4 @@
-import { IAdminSideMenu } from "@/lib/interface/admin-menu.interface";
+import { IAdminSideMenu } from "@/lib/interfaces/admin-menu.interface";
 import { LayoutGrid } from "lucide-react";
 
 import { kepegawaianMenu } from "@/lib/var/kepegawaian-menu";

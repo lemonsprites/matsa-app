@@ -1,4 +1,4 @@
-import { POST_STATUS } from "@/lib/enum/post-status.enum";
+import { POST_STATUS } from "@/lib/enums/post-status.enum";
 import createAdminClient from "@/lib/supabase-admin";
 import { NextRequest, NextResponse } from "next/server";
 

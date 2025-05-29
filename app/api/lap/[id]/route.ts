@@ -1,6 +1,6 @@
 
 import { createClient } from '@/lib/supabase-server';
-import { HttpStatus } from '@/lib/httpEnum';
+import { HttpStatus } from '@/lib/enums/http';
 import { apiRes } from '@/utils/apiRes';
 
 interface Data {
