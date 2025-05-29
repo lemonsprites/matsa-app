@@ -1,5 +1,5 @@
 
-import PrestasiMasonry from '@/app/(public)/prestasi/prestasi-konten'
+import PrestasiMasonry from '@/app/prestasi/prestasi-konten'
 import LandingComponent from '@/components/matsa/landing/landing-component'
 import { NextPage } from 'next'
 

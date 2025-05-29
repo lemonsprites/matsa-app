@@ -1,5 +1,5 @@
 
-import GaleriKonten from "@/app/(public)/galeri/galeri-konten";
+import GaleriKonten from "@/app/galeri/galeri-konten";
 import LandingComponent from "@/components/matsa/landing/landing-component";
 
 export default function GalleryPage() {

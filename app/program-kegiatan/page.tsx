@@ -1,7 +1,7 @@
-import AgendaSection from '@/app/(public)/program-kegiatan/agenda';
-import TimelineSection from '@/app/(public)/program-kegiatan/journey-list';
-import FeaturedActivities from '@/app/(public)/program-kegiatan/kegiatan-list';
-import SchoolProgramsSection from '@/app/(public)/program-kegiatan/program-list';
+import AgendaSection from '@/app/program-kegiatan/agenda';
+import TimelineSection from '@/app/program-kegiatan/journey-list';
+import FeaturedActivities from '@/app/program-kegiatan/kegiatan-list';
+import SchoolProgramsSection from '@/app/program-kegiatan/program-list';
 import LandingComponent from '@/components/matsa/landing/landing-component';
 
 export default function InteractivePrograms() {

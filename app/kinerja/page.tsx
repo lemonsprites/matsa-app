@@ -1,5 +1,5 @@
 
-import KPIMadrasah from '@/app/(public)/kinerja/kinerja-konten'
+import KPIMadrasah from '@/app/kinerja/kinerja-konten'
 import LandingComponent from '@/components/matsa/landing/landing-component'
 import { NextPage } from 'next'
 

@@ -1,5 +1,5 @@
 
-import CalendarTimeline from '@/app/(public)/berita/calendar-timeline'
+import CalendarTimeline from '@/app/berita/calendar-timeline'
 import LandingComponent from '@/components/matsa/landing/landing-component'
 import { NextPage } from 'next'
 
