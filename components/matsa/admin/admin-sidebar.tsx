@@ -1,9 +1,10 @@
 "use client"
 
-import * as React from "react";
 import Image from "next/image";
+import * as React from "react";
 
 
+import { AdminSideNav } from "@/components/matsa/admin/admin-sidenav";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
     Sidebar,
@@ -12,9 +13,9 @@ import {
     SidebarMenuButton,
     SidebarRail
 } from "@/components/ui/sidebar";
-import { adminMenulist } from "@/components/matsa/admin/_metadata/admin-menu-list";
 import Link from "next/link";
-import { AdminSideNav } from "@/components/matsa/admin/admin-sidenav";
+import { AdminSideMenu } from "@/lib/var/admin-sidebar.menu";
+
 
 export function AdminSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     return (
@@ -34,7 +35,9 @@ export function AdminSidebar({ ...props }: React.ComponentProps<typeof Sidebar>)
 
 
                 <SidebarContent className="pb-20">
-                    <AdminSideNav items={adminMenulist.main} />
+                    {Object.entries(AdminSideMenu).map(([key, group], index) => (
+                        <AdminSideNav key={index} items={group} title={key} />
+                    ))}
                 </SidebarContent>
 
                 <SidebarRail />

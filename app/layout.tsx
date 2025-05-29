@@ -1,7 +1,11 @@
 import "@/app/globals.css";
+import { AuthProvider } from "@/lib/context/auth-context";
+import { ToastProvider } from "@/lib/context/toast-context";
 import { ThemeProvider } from "next-themes";
 import { Geist } from "next/font/google";
 import Script from "next/script";
+
+import { Toaster } from "@/components/ui/sonner"
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -28,6 +32,8 @@ export default function RootLayout({
     <html lang="id" className={geistSans.className} suppressHydrationWarning>
       <head>
         <link rel="icon" href="/favicon.ico" />
+        <link rel="manifest" href="/manifest.webmanifest" />
+
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-WX176DS1C4"></script>
         <Script
           id="gtm-script"
@@ -61,7 +67,12 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <main className="min-h-4">
-            {children}
+            <ToastProvider>
+              <AuthProvider>
+                {children}
+              </AuthProvider>
+              <Toaster />
+            </ToastProvider>
           </main>
 
 

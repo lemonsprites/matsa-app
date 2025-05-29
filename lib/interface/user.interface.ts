@@ -6,3 +6,10 @@ export interface User extends Profil {
   is_pegawai: boolean;
   is_komite: boolean;
 }
+
+
+export interface UserContextType {
+  user: User | null,
+  isLoggedIn: boolean,
+  loading: boolean
+}

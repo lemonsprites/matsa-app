@@ -6,14 +6,10 @@ export async function GET() {
 
     const supabase = await createClient();
 
-    let { data, error } = await supabase
-        .from('pegawai')
-        .select('*')
+    let { count, error } = await supabase
+        .from('siswa')
+        .select('*', { count: 'exact', head: true });
 
 
-    return NextResponse.json(data, { status: 200 });
-}
-
-export async function POST() {
-
+    return NextResponse.json(count, { status: 200 });
 }

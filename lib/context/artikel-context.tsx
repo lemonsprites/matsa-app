@@ -3,7 +3,6 @@
 import { slugConvert } from "@/lib/helper/slug-convert";
 import { createClient } from "@/lib/supabase-client";
 import { Tag } from "@/lib/type/tag-type";
-import { redirect } from "next/navigation";
 import { createContext, Dispatch, ReactNode, SetStateAction, useContext, useEffect, useState } from "react";
 
 interface Artikel {

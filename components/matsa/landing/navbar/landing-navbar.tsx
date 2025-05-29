@@ -1,8 +1,9 @@
+"use client"
 import LandingNavbarMenu from '@/components/matsa/landing/navbar/landing-navbar-menu'
 import NavbarLogo from '@/components/matsa/landing/navbar/logo'
 import NavbarSheet from '@/components/matsa/landing/navbar/navbar-sheet'
 import { Button } from '@/components/ui/button'
-import { createClient } from '@/lib/supabase-client'
+import { useAuth } from '@/lib/context/auth-context'
 import { ArrowUpRight, ChartCandlestick, Images, MessageCircleQuestion, Newspaper, Trophy, UsersRound } from 'lucide-react'
 import Link from 'next/link'
 
@@ -47,10 +48,8 @@ export const foods = [
 ];
 
 
-const LandingNavbar = async () => {
-    const supabase = createClient();
-    const { data, error } = await supabase.auth.getUser();
-    const user = data.user;
+const LandingNavbar = () => {
+    const { isGuest, user } = useAuth()
 
     return (
         <nav className="h-20 bg-background border-b sticky z-50 shadow-md top-0">
@@ -63,7 +62,7 @@ const LandingNavbar = async () => {
                     <LandingNavbarMenu foods={foods} />
                     {/* <ThemeSwitcher /> */}
 
-                    {user?.id == null ? (
+                    {isGuest ? (
                         <>
                             <Link href="/masuk" className=''>
                                 <Button className='hidden md:flex' variant={"outline"}>

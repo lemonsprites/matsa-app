@@ -20,7 +20,7 @@ export const signInAction = async (formData: FormData) => {
   if (error) {
     redirect('/error')
   }
-  
+
 
   revalidatePath('/', 'layout')
   redirect(`/admin`)

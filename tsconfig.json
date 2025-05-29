@@ -4,7 +4,7 @@
     "lib": [
       "dom",
       "dom.iterable",
-      "esnext"
+      "esnext",
     ],
     "allowJs": true,
     "skipLibCheck": true,
@@ -35,7 +35,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "lib/type",
-    "postcss.config.js"
+    "postcss.config.js",
   ],
   "exclude": [
     "node_modules"

@@ -1,4 +1,4 @@
-"use server"
+"use client"
 import LandingFooter from '@/components/matsa/landing/footer/landing-footer'
 import LandingNavbar from '@/components/matsa/landing/navbar/landing-navbar'
 import React from 'react'

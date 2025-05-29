@@ -2,11 +2,14 @@
 import { signOutAction } from '@/app/(auth)/actions';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { SidebarTrigger } from '@/components/ui/sidebar';
+import { useAuth } from '@/lib/context/auth-context';
 
 const AdminNavbar = () => {
+
+    const {user} = useAuth()
+    
     return (
         <nav className="bg-sidebar text-sidebar-foreground shadow-md sticky top-0 z-50 flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-16">
             <div className="flex items-center gap-2 px-4 justify-between relative w-full">
@@ -32,7 +35,7 @@ const AdminNavbar = () => {
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end" className='min-w-[250px]'>
                                 <DropdownMenuLabel className='text-center uppercase flex flex-col justify-center items-center gap-1'>
-                                    Nidaan Khofiyah Matsa
+                                    {user?.email}
                                     <Badge variant={"secondary"} className=" block w-fit">Guru Mapel</Badge>
                                 </DropdownMenuLabel>
                                 <DropdownMenuSeparator />

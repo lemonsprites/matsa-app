@@ -1,12 +1,12 @@
 "use client"
+import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { Artikel } from '@/lib/interface/artikel.interface'
-import Link from 'next/link'
 import Image from 'next/image'
-import React, { useState } from 'react'
-import { Badge } from '@/components/ui/badge'
+import Link from 'next/link'
+import { useState } from 'react'
 
 type Props = {
     artikel_list: Artikel[]
@@ -16,13 +16,13 @@ const ArtikelList = ({ artikel_list }: Props) => {
     const [filter, setFilter] = useState('');
 
     const filteredArtikel = artikel_list.filter((article) => article.judul.toLowerCase().includes(filter.toLowerCase()));
-
     return (
         <>
             <div className="flex justify-between items-center mt-4">
                 <Input placeholder="Cari artikel..." className="w-[300px]" onChange={(e) => setFilter(e.target.value)} />
                 <Link href={"/admin/artikel/tulis"}>
                     <Button className="bg-blue-600 text-white">Tambah Artikel</Button>
+
                 </Link>
             </div>
             <Table>

@@ -1,5 +1,6 @@
 "use client"
-
+import { Skeleton } from "@/components/ui/skeleton";
+import { hitunganGenz } from "@/lib/helper/hitung-genz";
 import { createClient } from "@/lib/supabase-client";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
@@ -9,24 +10,27 @@ type Props = {
 };
 
 const StatistikLembaga = () => {
+    const [pegawaiCount, setPegawaiCount] = useState<number>(0);
+    const [siswaCount, setSiswaCount] = useState<number>(0);
+    const [isLoading, setIsLoading] = useState(true);
 
-    const [pegawaiData, setPegawaiData] = useState<number | null>(null);
-    const supabase = createClient();
+
 
     useEffect(() => {
-        const fetchPegawaiData = async () => {
-            const { count, error } = await supabase
-                .from("tb_pegawai")
-                .select("*", { count: "exact" });
+        const data = Promise.all([
+            fetch('/api/siswa/count'),
+            fetch('/api/pegawai/count')
+        ]);
 
-            if (error) {
-                console.error("Error fetching pegawai data:", error);
-            } else {
-                setPegawaiData(count || 0);
-            }
-        };
+        data.then(async ([siswa, pegawai]) => {
+            setSiswaCount(await siswa.json());
+            setPegawaiCount(await pegawai.json());
+        }).finally(() => {
+            setTimeout(() => {
+                setIsLoading(false);
+            }, 2000)
+        });
 
-        fetchPegawaiData();
     }, []);
     return (
         <section className="text-gray-600 body-font bg-gradient-to-bl from-cyan-500 via-teal-500 to-cyan-600">
@@ -67,8 +71,8 @@ const StatistikLembaga = () => {
                     {/* Individual Stat Items */}
                     <div className="flex flex-wrap justify-center sm:justify-start w-full">
                         {[
-                            { label: "Pegawai", value: pegawaiData },
-                            { label: "Siswa", value: "1.8K" },
+                            { label: "Pegawai", value: hitunganGenz(pegawaiCount) },
+                            { label: "Siswa", value: hitunganGenz(siswaCount) },
                             { label: "Prestasi", value: "35" },
                             { label: "Akreditasi", value: "A" },
                         ].map((stat, index) => (
@@ -84,10 +88,19 @@ const StatistikLembaga = () => {
                                 }}
                                 viewport={{ once: true }}
                             >
-                                <h2 className="title-font font-medium text-3xl text-gray-900 text-center sm:text-left">
-                                    {stat.value}
-                                </h2>
-                                <p className="leading-relaxed text-center sm:text-left">{stat.label}</p>
+                                {!isLoading ? (
+                                    <>
+                                        <h2 className="title-font font-medium text-3xl text-gray-900 text-center sm:text-left">
+                                            {stat.value}
+                                        </h2>
+                                        <p className="leading-relaxed text-center sm:text-left">{stat.label}</p>
+                                    </>
+                                ) : (
+                                    <>
+                                        <Skeleton className="h-12 w-full rounded-md" />
+                                        <p className="leading-relaxed text-center sm:text-left mt-2">{stat.label}</p>
+                                    </>
+                                )}
                             </motion.div>
                         ))}
                     </div>

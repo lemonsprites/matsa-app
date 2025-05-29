@@ -1,4 +1,5 @@
 import { getMaintenanceModeFlag } from '@/lib/services/getMaintenanceModeFlag';
+import { publicDuringMaintenance } from '@/lib/var/publicMaintenance';
 import { createServerClient } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
 
@@ -36,7 +37,7 @@ export async function updateSession(request: NextRequest) {
 
   // ✅ Maintenance check
   const isMaintenanceMode = await getMaintenanceModeFlag();
-  const publicDuringMaintenance = ['/masuk', '/admin', '/status','/api'];
+
 
   if (
     isMaintenanceMode &&

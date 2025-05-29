@@ -1,6 +1,6 @@
 "use client"
 
-import { ChevronRight, type LucideIcon } from "lucide-react"
+import { ChevronRight } from "lucide-react"
 import Link from "next/link"
 
 import {
@@ -18,20 +18,16 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar"
+import { IAdminMenuItem } from "@/lib/interface/admin-menu.interface"
 
-// Define the type recursively
-type NavItem = {
-  title: string
-  url: string
-  icon?: LucideIcon
-  isActive?: boolean
-  items?: NavItem[]
-}
 
-export function AdminSideNav({ items }: { items: NavItem[] }) {
+export function AdminSideNav({ items, title }: { items: IAdminMenuItem[], title?: string }) {
+  function upperCase(arg: any) {
+    return arg.charAt(0).toUpperCase() + arg.slice(1) + " Menu";
+  }
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>Main Menu</SidebarGroupLabel>
+      <SidebarGroupLabel>{upperCase(title)}</SidebarGroupLabel>
       <SidebarMenu>
         {items.map((item) => (
           <RecursiveNavItem key={item.title} item={item} depth={0} />
@@ -41,16 +37,16 @@ export function AdminSideNav({ items }: { items: NavItem[] }) {
   )
 }
 
-function RecursiveNavItem({ item, depth }: { item: NavItem; depth: number }) {
+function RecursiveNavItem({ item, depth }: { item: IAdminMenuItem; depth: number }) {
   const hasChildren = item.items && item.items.length > 0
 
-  // Top level items (depth 0)
+
   if (depth === 0) {
     if (!hasChildren) {
       return (
         <SidebarMenuItem>
           <Link href={item.url}>
-            <SidebarMenuButton tooltip={item.title}>
+            <SidebarMenuButton tooltip={item.title} className="hover:bg-none">
               {item.icon && <item.icon />}
               <span>{item.title}</span>
             </SidebarMenuButton>
@@ -63,7 +59,7 @@ function RecursiveNavItem({ item, depth }: { item: NavItem; depth: number }) {
       <Collapsible key={item.title} asChild defaultOpen={item.isActive} className="group/collapsible">
         <SidebarMenuItem>
           <CollapsibleTrigger asChild>
-            <SidebarMenuButton tooltip={item.title}>
+            <SidebarMenuButton tooltip={item.title} className="hover:bg-none">
               {item.icon && <item.icon />}
               <span>{item.title}</span>
               <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
@@ -82,12 +78,12 @@ function RecursiveNavItem({ item, depth }: { item: NavItem; depth: number }) {
     )
   }
 
-  // Deeper level items (depth > 0)
+
   if (!hasChildren) {
     return (
       <SidebarMenuSubItem>
         <SidebarMenuSubButton asChild>
-          <Link href={item.url} className="text-black hover:text-gray-500">
+          <Link href={item.url} className="text-black hover:text-gray-500 hover:bg-none bg-none">
             <span>{item.title}</span>
           </Link>
         </SidebarMenuSubButton>
